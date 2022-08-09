@@ -1,4 +1,3 @@
-import createError from "http-errors";
 import express, { Application } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
@@ -19,18 +18,8 @@ app.use(express.static("./public"));
 app.use("/", indexRouter);
 app.use("/docs", docsRouter);
 
-app.use((req, res, next) => {
-    next(createError(404));
+app.use((_, res) => {
+    res.status(404).send("404 - Not Found");
 });
-
-// app.use((err, req, res, next) => {
-//     // set locals, only providing error in development
-//     res.locals.message = err.message;
-//     res.locals.error = req.app.get("env") === "development" ? err : {};
-
-//     // render the error page
-//     res.status(err.status || 500);
-//     res.render("error");
-// });
 
 app.listen(process.env.PORT);
