@@ -16,9 +16,9 @@ export const getUser = async (req: Request) => {
         return authorizationClaim.uid;
     } catch (err) {
         if (process.env.DEBUG === "true") {
-            return "TestUser"
+            return "TestUser";
         } else {
-            throw new Error('401 - Unauthorized');
+            throw new Error("401 - Unauthorized");
         }
     }
 };
@@ -31,9 +31,9 @@ export const getApp = async (req: Request) => {
         return signatureClaim.appId;
     } catch (err) {
         if (process.env.DEBUG === "true") {
-            return "TestApp"
+            return "TestApp";
         } else {
-            throw new Error('403 - Forbidden');
+            throw new Error("403 - Forbidden");
         }
     }
 };

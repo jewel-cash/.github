@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { ApolloServer, gql } from 'apollo-server';
-import { ApolloServerPluginLandingPageProductionDefault } from 'apollo-server-core';
+import { ApolloServer, gql } from "apollo-server";
+import { ApolloServerPluginLandingPageProductionDefault } from "apollo-server-core";
 import { getApp, getUser } from "./firebase.js";
 import IContext from "./context.js";
 import Logger from "./logger.js";
@@ -19,18 +19,18 @@ const typeDefs = gql`
 
 const books = [
     {
-      title: 'The Awakening',
-      author: 'Kate Chopin',
+        title: "The Awakening",
+        author: "Kate Chopin",
     },
     {
-      title: 'City of Glass',
-      author: 'Paul Auster',
+        title: "City of Glass",
+        author: "Paul Auster",
     },
 ];
 
 const resolvers = {
     Query: {
-      books: () => books,
+        books: () => books,
     },
 };
 
@@ -39,8 +39,8 @@ const context = async (ctx: any): Promise<IContext> => {
         appId: await getApp(ctx.req),
         userId: await getUser(ctx.req),
         ip: ctx.req.hostname
-    }
-}
+    };
+};
 
 const landingPage = ApolloServerPluginLandingPageProductionDefault({ 
     footer: false
@@ -52,7 +52,7 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     csrfPrevention: true,
-    cache: 'bounded',
+    cache: "bounded",
     context,
     introspection: true,
     plugins: [ landingPage, logger ],
