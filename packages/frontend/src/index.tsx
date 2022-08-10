@@ -6,11 +6,12 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import { auth } from "./firebase";
 import "./styles/index.css";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Root = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-    auth.onAuthStateChanged((user: any) => {
+    onAuthStateChanged(auth, (user: any) => {
         setIsLoggedIn(user != null);
     });
 

@@ -2,6 +2,7 @@ import "../styles/header.css";
 import React, { Component } from "react";
 import Login from "./login";
 import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 interface IProps {
     isLoggedIn: boolean
@@ -17,8 +18,10 @@ export default class Header extends Component<IProps, IState> {
         this.state = { showLoginPopup: false };
         this.loginPressed = this.loginPressed.bind(this);
         this.backgroundPressed = this.backgroundPressed.bind(this);
+    }
 
-        auth.onAuthStateChanged(() => {
+    componentDidMount() {
+        onAuthStateChanged(auth, () => {
             this.setState({ showLoginPopup: false });
         });
     }
