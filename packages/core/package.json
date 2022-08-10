@@ -23,7 +23,7 @@
         "exec": "npm run build"
     },
     "jest": {
-        "preset": "ts-jest/presets/default-esm",
+        "preset": "ts-jest",
         "testEnvironment": "node"
     }
 }

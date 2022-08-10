@@ -1,4 +1,4 @@
-import PingController from "../src/controllers/ping";
+import PingController from "../../src/controllers/ping";
 
 it("Ping should return pong",  async () => {
     const controller = new PingController();
