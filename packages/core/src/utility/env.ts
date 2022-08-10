@@ -5,9 +5,9 @@ export enum EnvKeyTransform {
     PascalCase
 }
 
-export const extractFromEnv = (prefix: string, transform: EnvKeyTransform = EnvKeyTransform.SnakeCase, env: any = process.env) => {
+export const extractFromEnv = (prefix: string = "", transform: EnvKeyTransform = EnvKeyTransform.SnakeCase, env: any = process.env) => {
     const search = prefix.toLowerCase();
-    const prefixCount = prefix.length + 1;
+    const prefixCount = prefix === "" ? 0 : prefix.length + 1;
     const keys = Object.keys(env);
     const selected = keys.filter(x => x.toLowerCase().startsWith(search));
     const pairs = selected.map(x => [ x.slice(prefixCount), env[x] ?? "" ] );
@@ -22,11 +22,11 @@ const transformKey = (transform: EnvKeyTransform, str: string): string => {
         return str.toLowerCase();
     case EnvKeyTransform.CamelCase: 
         const pascal = transformKey(EnvKeyTransform.PascalCase, str);
-        return `${pascal.charAt(0).toLowerCase()}${pascal.slice(1)}`
+        return `${pascal.slice(0, 1).toLowerCase()}${pascal.slice(1)}`
     case EnvKeyTransform.PascalCase: 
         return str
             .split("_")
-            .map(x => `${x.charAt(0).toUpperCase()}${x.slice(1).toLowerCase()}`)
+            .map(x => `${x.slice(0, 1).toUpperCase()}${x.slice(1).toLowerCase()}`)
             .join("");
     }
 }

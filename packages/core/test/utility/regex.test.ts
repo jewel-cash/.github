@@ -1,4 +1,4 @@
-import { isValidEmail, isValidPassword } from "../../src/utility/regex.js";
+import { isValidEmail, isValidPassword } from "../../src/utility/regex";
 
 describe("Email Validator", () => {
     it("Valid emails should be marked as valid", () => {
@@ -14,6 +14,7 @@ describe("Email Validator", () => {
         ].map(isValidEmail);
         expect(array).not.toContain(false);
     });
+
     it("Invalid emails should be marked as invalid", () => {
         const array = [
             "abc..def@mail.com",
@@ -40,6 +41,7 @@ describe("Password Validator", () => {
         ].map(isValidPassword);
         expect(array).not.toContain(false);
     });
+    
     it("Invalid passwords should be marked as invalid", () => {
         const array = [
             "abc123abc!",

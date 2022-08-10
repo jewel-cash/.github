@@ -5,7 +5,9 @@ import { getPerformance } from "firebase/performance";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { EnvKeyTransform, extractFromEnv } from "core";
 
-const firebaseKey = extractFromEnv("FIREBASE", EnvKeyTransform.CamelCase);
+console.log(process.env);
+
+const firebaseKey = extractFromEnv("REACT_APP_FIREBASE", EnvKeyTransform.CamelCase);
 const app = initializeApp(firebaseKey);
 
 export const sginature = initializeAppCheck(app, {

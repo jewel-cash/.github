@@ -1,4 +1,4 @@
-import { EnvKeyTransform, extractFromEnv } from "../../src/utility/env.js";
+import { EnvKeyTransform, extractFromEnv } from "../../src/utility/env";
 
 const testEnv = {
     "ABC": "value1",
@@ -12,29 +12,65 @@ const testEnv = {
 describe("Key Transform", () => {
     it("Should transform key to valid snake case.", () => {
         const object = extractFromEnv("", EnvKeyTransform.SnakeCase, testEnv);
-        expect(Object.keys(object)).toBe(["abc", "abc_def", "123", "123_456", "abc_123", "123_abc"]);
-        expect(Object.values(object)).toBe(Object.values(testEnv));
+        const expected = {
+            "abc": "value1",
+            "abc_def": "value2",
+            "123": "value3",
+            "123_456": "value4",
+            "abc_123": "value5",
+            "123_abc": "value6"
+        }
+        expect(object).toStrictEqual(expected)
     });
+
     it("Should transform key to valid camel case.", () => {
         const object = extractFromEnv("", EnvKeyTransform.CamelCase, testEnv);
-        expect(Object.keys(object)).toBe(["abc", "abc_def", "123", "123_456", "abc_123", "123_abc"]);
-        expect(Object.values(object)).toBe(Object.values(testEnv));
+        const expected = {
+            "abc": "value1",
+            "abcDef": "value2",
+            "123": "value3",
+            "123456": "value4",
+            "abc123": "value5",
+            "123Abc": "value6"
+        }
+        expect(object).toStrictEqual(expected)
     });
+
     it("Should transform key to valid pascal case.", () => {
         const object = extractFromEnv("", EnvKeyTransform.PascalCase, testEnv);
-        expect(Object.keys(object)).toBe(["abc", "abc_def", "123", "123_456", "abc_123", "123_abc"]);
-        expect(Object.values(object)).toBe(Object.values(testEnv));
+        const expected = {
+            "Abc": "value1",
+            "AbcDef": "value2",
+            "123": "value3",
+            "123456": "value4",
+            "Abc123": "value5",
+            "123Abc": "value6"
+        }
+        expect(object).toStrictEqual(expected)
     });
+
     it("Should default to snake case.", () => {
         const object = extractFromEnv("", undefined, testEnv);
-        expect(Object.keys(object)).toBe(["abc", "abc_def", "123", "123_456", "abc_123", "123_abc"]);
-        expect(Object.values(object)).toBe(Object.values(testEnv));
+        const expected = {
+            "abc": "value1",
+            "abc_def": "value2",
+            "123": "value3",
+            "123_456": "value4",
+            "abc_123": "value5",
+            "123_abc": "value6"
+        }
+        expect(object).toStrictEqual(expected)
     })
 });
 
 describe("Extract Keys", () => {
     it("Should only extract keys with certain prefix.", () => {
         const object = extractFromEnv("ABC", EnvKeyTransform.SnakeCase, testEnv);
-        expect(Object.keys(object)).toBe(["abc", "abc_def"]);
+        const expected = {
+            "": "value1",
+            "def": "value2",
+            "123": "value5"
+        }
+        expect(object).toStrictEqual(expected)
     });
 });
