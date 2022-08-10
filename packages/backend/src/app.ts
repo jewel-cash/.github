@@ -1,29 +1,64 @@
-import express, { Application } from "express";
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
 import dotenv from "dotenv";
-
-import index from "./routes/index.js";
-import docs from "./routes/docs.js";
-import security from "./middlewares/security.js";
-import auth from "./middlewares/auth.js";
+import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServerPluginLandingPageProductionDefault } from 'apollo-server-core';
+import { getApp, getUser } from "./firebase.js";
+import IContext from "./context.js";
+import Logger from "./logger.js";
 
 dotenv.config();
-const app: Application = express();
 
-app.use(morgan("tiny"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static("./public"));
-app.use(security);
-app.use(auth);
+const typeDefs = gql`
+    type Book {
+        title: String
+        author: String
+    }
+    type Query {
+        books: [Book]
+    }
+`;
 
-app.use("/", index);
-app.use("/docs", docs);
+const books = [
+    {
+      title: 'The Awakening',
+      author: 'Kate Chopin',
+    },
+    {
+      title: 'City of Glass',
+      author: 'Paul Auster',
+    },
+];
 
-app.use((_, res) => {
-    res.status(404).send("404 - Not Found");
+const resolvers = {
+    Query: {
+      books: () => books,
+    },
+};
+
+const context = async (ctx: any): Promise<IContext> => {
+    return {
+        appId: await getApp(ctx.req),
+        userId: await getUser(ctx.req),
+        ip: ctx.req.hostname
+    }
+}
+
+const landingPage = ApolloServerPluginLandingPageProductionDefault({ 
+    footer: false
 });
 
-app.listen(process.env.PORT);
+const logger = new Logger();
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    csrfPrevention: true,
+    cache: 'bounded',
+    context,
+    introspection: true,
+    plugins: [ landingPage, logger ],
+});
+
+
+await server.listen({
+    port: process.env.PORT,      
+});
