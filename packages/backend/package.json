@@ -14,7 +14,7 @@
         "core": "*",
         "dotenv": "^16.0.0",
         "firebase-admin": "^11.0.1",
-        "graphql": "^15.8.0"
+        "graphql": "^16.5.0"
     },
     "eslintConfig": {
         "extends": "../../.eslintrc.json"
