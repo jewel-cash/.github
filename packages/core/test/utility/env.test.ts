@@ -7,7 +7,7 @@ const testEnv = {
     "123_456": "value4",
     "ABC_123": "value5",
     "123_ABC": "value6"
-}
+};
 
 describe("Key Transform", () => {
     it("Should transform key to valid snake case.", () => {
@@ -19,8 +19,8 @@ describe("Key Transform", () => {
             "123_456": "value4",
             "abc_123": "value5",
             "123_abc": "value6"
-        }
-        expect(object).toStrictEqual(expected)
+        };
+        expect(object).toStrictEqual(expected);
     });
 
     it("Should transform key to valid camel case.", () => {
@@ -32,8 +32,8 @@ describe("Key Transform", () => {
             "123456": "value4",
             "abc123": "value5",
             "123Abc": "value6"
-        }
-        expect(object).toStrictEqual(expected)
+        };
+        expect(object).toStrictEqual(expected);
     });
 
     it("Should transform key to valid pascal case.", () => {
@@ -45,8 +45,8 @@ describe("Key Transform", () => {
             "123456": "value4",
             "Abc123": "value5",
             "123Abc": "value6"
-        }
-        expect(object).toStrictEqual(expected)
+        };
+        expect(object).toStrictEqual(expected);
     });
 
     it("Should default to snake case.", () => {
@@ -58,9 +58,9 @@ describe("Key Transform", () => {
             "123_456": "value4",
             "abc_123": "value5",
             "123_abc": "value6"
-        }
-        expect(object).toStrictEqual(expected)
-    })
+        };
+        expect(object).toStrictEqual(expected);
+    });
 });
 
 describe("Extract Keys", () => {
@@ -70,7 +70,7 @@ describe("Extract Keys", () => {
             "": "value1",
             "def": "value2",
             "123": "value5"
-        }
-        expect(object).toStrictEqual(expected)
+        };
+        expect(object).toStrictEqual(expected);
     });
 });

@@ -19,10 +19,10 @@ export const performance = getPerformance(app);
 export const auth = getAuth(app);
 
 onTokenChanged(appCheck, (result) => {
-    console.log(result.token)
+    console.log(result.token);
 });
 
 onIdTokenChanged(auth, async (user) => {
-    const token = await user?.getIdTokenResult()
+    const token = await user?.getIdTokenResult();
     console.log(token);
-})
+});
