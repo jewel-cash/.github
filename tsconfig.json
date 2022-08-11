@@ -8,7 +8,7 @@
         ],
         "outDir": "./build",
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "nodeNext",
         "strict": true,
         "removeComments": true,
         "esModuleInterop": true,

@@ -6,20 +6,54 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"PingResponse": {
+			"IKeyPayload": {
 				"properties": {
-					"message": {
+					"keyId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"name": {
 						"type": "string"
 					}
 				},
 				"required": [
-					"message"
+					"keyId",
+					"userId",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"INewKey": {
+				"properties": {
+					"payload": {
+						"$ref": "#/components/schemas/IKeyPayload"
+					},
+					"key": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"payload",
+					"key"
 				],
 				"type": "object",
 				"additionalProperties": false
 			}
 		},
-		"securitySchemes": {}
+		"securitySchemes": {
+			"key": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			},
+			"token": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
 	},
 	"info": {
 		"title": "backend",
@@ -27,7 +61,125 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/ping": {
+		"/v1/auth/key": {
+			"get": {
+				"operationId": "GetKeys",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IKeyPayload"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"token": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateKey",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/INewKey"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"token": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1/auth/key/{id}": {
+			"get": {
+				"operationId": "GetKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IKeyPayload"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": ""
+					}
+				},
+				"security": [
+					{
+						"token": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteKey",
+				"responses": {
+					"204": {
+						"description": ""
+					},
+					"404": {
+						"description": ""
+					}
+				},
+				"security": [
+					{
+						"token": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/v1/ping": {
 			"get": {
 				"operationId": "GetMessage",
 				"responses": {
@@ -36,7 +188,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/PingResponse"
+									"type": "string"
 								}
 							}
 						}

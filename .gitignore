@@ -21,3 +21,4 @@ artifacts
 assets
 lerna-debug.log
 __snapshots__
+*.gen.*

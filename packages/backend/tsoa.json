@@ -1,8 +1,28 @@
 {
     "entryFile": "src/app.ts",
     "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": [ "src/controllers/**/*.ts" ],
     "spec": {
         "outputDirectory": "public",
-        "specVersion": 3
+        "specVersion": 3,
+        "securityDefinitions": {
+            "key": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            },
+            "token": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "routes": {
+        "routesDir": "src/modules",
+        "routesFileName": "routes.gen.ts",
+        "authenticationModule": "src/modules/auth.ts",
+        "noWriteIfUnchanged": true,
+        "useSuccessResponseCode": true,
+        "esm": true
     }
 }
