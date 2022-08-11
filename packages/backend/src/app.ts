@@ -24,7 +24,7 @@ app.use((_0: Request, _1: Response, next: NextFunction) => {
     next({ status: 404, message: "Not Found"});
 });
 
-app.use((err: any, _0: Request, res: Response, _1: NextFunction) => {
+app.use((err: any, _0: Request, res: Response) => {
     res.status(err.status || 500).send(err.message);
 });
 

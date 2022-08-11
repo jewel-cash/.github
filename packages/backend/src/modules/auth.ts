@@ -1,11 +1,12 @@
 import { Request } from "express";
 import { HttpError } from "../modules/error.js";
 import { appCheck, auth } from "./firebase.js";
+import jwt from "jsonwebtoken";
 
-export const expressAuthentication = async (req: Request, securityName: string, _?: string[]) => {
+export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
     const appId = await getAppId[securityName](req);
     const userId = await getUserId[securityName](req);
-    return { appId, userId };
+    return { appId, userId, scopes };
 };
 
 interface Handler { 
@@ -27,7 +28,7 @@ const getAppId: Handler = {
         }
     },
     key: async (req: Request) => {
-        return "TODO";
+        return req.toString();
     }
 };
 
@@ -46,6 +47,24 @@ const getUserId: Handler = {
         }
     },
     key: async (req: Request) => {
-        return "TODO";
+        return req.toString();
     }
+};
+
+export interface IKeyPayload {
+    keyId: string
+    userId: string
+    name: string
+}
+
+export const createApiKey = (payload: IKeyPayload) => {
+    const options: jwt.SignOptions = { 
+        algorithm: "PS256",
+        expiresIn: "1 year",
+        notBefore: "1s",
+        mutatePayload: true
+    };
+
+    const secretKey = process.env.JWT_KEY ?? "";
+    return jwt.sign(payload, secretKey, options);
 };

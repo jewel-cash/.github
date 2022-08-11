@@ -1,52 +1,48 @@
-import { Body, Delete, Get, Path, Post, Route, Security, Response, SuccessResponse, Inject } from "tsoa";
+import { Body, Delete, Get, Path, Post, Route, Security, Response, SuccessResponse, Request } from "tsoa";
 import { v4 as uuid } from "uuid";
-import jwt from "jsonwebtoken";
+import { createApiKey, IKeyPayload } from "../../modules/auth.js";
 import { HttpError } from "../../modules/error.js";
 
-interface IKeyPayload {
-    keyId: string
-    userId: string
-    name: string
-}
-
-interface INewKey {
+interface INewKeyResponse {
     payload: IKeyPayload
     key: string
+}
+
+interface IKeyResponse {
+    id: string,
+    name: string,
+    expires: number
 }
 
 @Route("/v1/auth")
 @Security("token")
 export class AuthController {
     @Get("/key")
-    public async getKeys(@Inject() userId: string): Promise<Array<IKeyPayload>> {
+    public async getKeys(@Request() req: any): Promise<Array<IKeyResponse>> {
+        const userId = req.user.userId;
+        console.log(userId);
         //TODO: get from db
         return [];
     }
 
     @Get("/key/:id")
     @Response("404")
-    public async getKey(@Path() id: string, @Inject() userId: string): Promise<IKeyPayload> {
+    public async getKey(@Request() req: any, @Path() id: string): Promise<IKeyResponse> {
         //TODO: get from DB
+        const userId = req.user.userId;
         throw new HttpError(404, `Key with id ${id} for user ${userId} does not exist.`);
     }
 
     @Post("/key")
     @SuccessResponse("201")
-    public async createKey(@Body() name: string, @Inject() userId: string): Promise<INewKey> {
+    public async createKey(@Request() req: any, @Body() name: string): Promise<INewKeyResponse> {
         const payload: IKeyPayload = {
             keyId: uuid(),
-            userId: userId,
+            userId: req.user.userId,
             name: name
         };
 
-        const options: jwt.SignOptions = { 
-            algorithm: "PS256",
-            expiresIn: "1 year",
-            notBefore: "1s",
-            mutatePayload: true
-        };
-
-        const key = jwt.sign(payload, "ABC", options);
+        const key = createApiKey(payload);
 
         //TODO: store in DB
         return {
@@ -58,7 +54,8 @@ export class AuthController {
     @Delete("/key/:id")
     @SuccessResponse("204")
     @Response("404")
-    public async deleteKey(@Path() id: string, @Inject() userId: string): Promise<void> {
+    public async deleteKey(@Request() req: any, @Path() id: string): Promise<void> {
+        const userId = req.user.userId;
         //TODO: Delete from db
         throw new HttpError(404, `Key with id ${id} for user ${userId} does not exist.`);
     }

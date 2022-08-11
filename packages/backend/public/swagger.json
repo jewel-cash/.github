@@ -6,6 +6,27 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"IKeyResponse": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"expires": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"expires"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IKeyPayload": {
 				"properties": {
 					"keyId": {
@@ -26,7 +47,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"INewKey": {
+			"INewKeyResponse": {
 				"properties": {
 					"payload": {
 						"$ref": "#/components/schemas/IKeyPayload"
@@ -71,7 +92,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/IKeyPayload"
+										"$ref": "#/components/schemas/IKeyResponse"
 									},
 									"type": "array"
 								}
@@ -94,7 +115,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/INewKey"
+									"$ref": "#/components/schemas/INewKeyResponse"
 								}
 							}
 						}
@@ -127,7 +148,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/IKeyPayload"
+									"$ref": "#/components/schemas/IKeyResponse"
 								}
 							}
 						}

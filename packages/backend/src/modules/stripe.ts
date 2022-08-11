@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const stripeKey = process.env.STRIPE_KEY ?? "";
-const client = new Stripe(stripeKey, { apiVersion: "2022-08-01" });
+export const client = new Stripe(stripeKey, { apiVersion: "2022-08-01" });
 
 // export class StripeSource extends DataSource {
 //     //TODO: create account. Store id in the DB. If already an id skip this.
