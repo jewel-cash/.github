@@ -3,7 +3,8 @@ import { HttpError } from "../modules/error.js";
 import { appCheck, auth } from "./firebase.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { ApiKey, IApiKey } from "../entities/apikey.js";
+import { v4 as uuid } from "uuid";
+import { ApiKey } from "../entities/apikey.js";
 
 dotenv.config();
 
@@ -35,9 +36,9 @@ const getAppId: Handler = {
         try {
             const authorizationToken = req.header("Signature");
             if (!authorizationToken) { throw new Error("NoSignatureHeader"); }
-            const authorizationClaim = <IApiKey>jwt.verify(authorizationToken, secretKey);
-            if (await ApiKey.findOne({ keyId: authorizationClaim.keyId }).exec() == null) { throw new Error("ApiKeyRevoked"); };
-            return authorizationClaim.keyId;
+            const authorizationClaim = <jwt.JwtPayload>jwt.verify(authorizationToken, secretKey);
+            if (await ApiKey.findOne({ kid: authorizationClaim.kid }).exec() == null) { throw new Error("ApiKeyRevoked"); }
+            return authorizationClaim.kid;
         } catch (err) {
             if (process.env.DEBUG === "true") {
                 return "TestAppId";
@@ -65,8 +66,8 @@ const getUserId: Handler = {
         try {
             const authorizationToken = req.header("Authorization");
             if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-            const authorizationClaim = <IApiKey>jwt.verify(authorizationToken, secretKey);
-            return authorizationClaim.userId;
+            const authorizationClaim = <jwt.JwtPayload>jwt.verify(authorizationToken, secretKey);
+            return authorizationClaim.uid;
         } catch (err) {
             if (process.env.DEBUG === "true") {
                 return "TestUserId";
@@ -78,14 +79,22 @@ const getUserId: Handler = {
 
 const secretKey = process.env.JWT_KEY ?? "";
 
-export const createApiKey = (payload: IApiKey) => {
+export const createApiKey = (userId: string, name: string) => {
+    const payload: jwt.JwtPayload = {
+        kid: uuid(),
+        uid: userId,
+        cid: name
+    };
+
     const options: jwt.SignOptions = { 
-        algorithm: "PS256",
+        algorithm: "HS512",
         expiresIn: "1 year",
         notBefore: "1s",
         issuer: "jewel.cash",
         mutatePayload: true
     };
-    
-    return jwt.sign(payload, secretKey, options);
+
+    const key = jwt.sign(payload, secretKey, options);
+
+    return { payload, key };
 };

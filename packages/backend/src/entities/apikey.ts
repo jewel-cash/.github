@@ -1,17 +1,13 @@
-// import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
-// export interface IApiKey extends mongoose.Document {
-//     keyId: string;
-//     userId: string;
-//     name: string;
-// }
+export const ApiKeySchema = new mongoose.Schema<jwt.JwtPayload>({
+    kid: { type: String, required: true, unique: true },
+    uid: { type: String, required: true },
+    cid: { type: String, required: true, length: 25, unique: true },
+    iss: { type: String, required: true },
+    nbf: { type: String, required: true },
+    exp: { type: String, required: true },
+});
 
-// export const ApiKeySchema = new mongoose.Schema<IApiKey>({
-//     keyId: { type: String, required: true },
-//     userId: { type: String, required: true },
-//     name: { type: String, required: true, length: 25 }
-// });
-
-// export const ApiKey: mongoose.Model<IApiKey> = mongoose.model('ApiKey', ApiKeySchema);
-
-export const a = "";
+export const ApiKey: mongoose.Model<jwt.JwtPayload> = mongoose.model("ApiKey", ApiKeySchema);

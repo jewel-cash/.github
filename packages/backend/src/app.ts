@@ -11,9 +11,9 @@ dotenv.config();
 const options: mongoose.ConnectOptions = {
     // useNewUrlParser: true,
     // useUnifiedTopology: true
-}
+};
 
-await mongoose.connect('mongodb://127.0.0.1:27017/test', options);
+await mongoose.connect("mongodb://127.0.0.1:27017/test", options);
 
 const app: Application = express();
 
