@@ -1,7 +1,7 @@
-import { PingController } from "../../src/controllers/v1/ping";
+import { PingController } from "../../../src/controllers/v1/ping";
 
 it("Ping should return pong",  async () => {
     const controller = new PingController();
     const response = await controller.getMessage();
-    expect(response).toBe("pong");
+    expect(response).toStrictEqual({ message: "pong" });
 });
