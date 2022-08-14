@@ -4,6 +4,7 @@
     "controllerPathGlobs": [ "src/controllers/**/*.ts" ],
     "spec": {
         "outputDirectory": "public",
+        "specFileBaseName": "swagger.gen",
         "specVersion": 3,
         "securityDefinitions": {
             "key": {

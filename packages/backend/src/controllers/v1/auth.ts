@@ -1,10 +1,11 @@
 import { Body, Delete, Get, Path, Post, Route, Security, Response, SuccessResponse, Request } from "tsoa";
 import { v4 as uuid } from "uuid";
-import { createApiKey, IKeyPayload } from "../../modules/auth.js";
+import { ApiKey } from "../../entities/apikey.js";
+import { createApiKey } from "../../modules/auth.js";
 import { HttpError } from "../../modules/error.js";
 
 interface INewKeyResponse {
-    payload: IKeyPayload
+    payload: IKeyResponse
     key: string
 }
 
@@ -36,17 +37,25 @@ export class AuthController {
     @Post("/key")
     @SuccessResponse("201")
     public async createKey(@Request() req: any, @Body() name: string): Promise<INewKeyResponse> {
-        const payload: IKeyPayload = {
+
+        const payload = new ApiKey({
             keyId: uuid(),
             userId: req.user.userId,
             name: name
-        };
+        });
 
         const key = createApiKey(payload);
 
-        //TODO: store in DB
+        console.log(payload);
+
+        await payload.save();
+
         return {
-            payload: payload,
+            payload: {
+                id: "acb",
+                name: "acb",
+                expires: 101
+            },
             key: key
         };
     }
