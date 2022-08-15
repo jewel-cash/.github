@@ -7,7 +7,7 @@ export const ApiKeySchema = new mongoose.Schema<jwt.JwtPayload>({
     cid: { type: String, required: true, length: 25, unique: true },
     iss: { type: String, required: true },
     nbf: { type: String, required: true },
-    exp: { type: String, required: true },
+    exp: { type: String, required: true }
 });
 
 export const ApiKey: mongoose.Model<jwt.JwtPayload> = mongoose.model("ApiKey", ApiKeySchema);

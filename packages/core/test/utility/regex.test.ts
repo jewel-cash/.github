@@ -1,4 +1,4 @@
-import { isValidEmail, isValidPassword } from "../../src/utility/regex";
+import { isValidEmail, isValidPassword } from "../../src/utility/regex.js";
 
 it("Valid emails should be marked as valid", () => {
     const array = [

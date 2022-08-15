@@ -1,4 +1,4 @@
-import { PingController } from "../../../src/controllers/v1/ping";
+import { PingController } from "../../../src/controllers/v1/ping.js";
 
 it("Ping should return pong",  async () => {
     const controller = new PingController();

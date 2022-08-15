@@ -30,6 +30,10 @@
     },
     "jest": {
         "preset": "ts-jest",
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "moduleNameMapper": { 
+            "^(\\.{1,2}/.*)\\.js$": "$1",
+            "^core$": "<rootDir>/../core/src/index"
+        }
     }
 }
