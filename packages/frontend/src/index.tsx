@@ -1,10 +1,10 @@
 import React, { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import Home from "./components/home.js";
-import App from "./components/app.js";
-import Header from "./components/header.js";
-import Footer from "./components/footer.js";
-import { auth } from "./firebase.js";
+import Home from "./components/home";
+import App from "./components/app";
+import Header from "./components/header";
+import Footer from "./components/footer";
+import { auth } from "./modules/firebase";
 import "./styles/index.css";
 import { onAuthStateChanged } from "firebase/auth";
 

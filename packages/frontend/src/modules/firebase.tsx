@@ -8,8 +8,6 @@ import { EnvKeyTransform, extractFromEnv } from "core";
 const firebaseKey = extractFromEnv("REACT_APP_FIREBASE", EnvKeyTransform.CamelCase);
 const app = initializeApp(firebaseKey);
 
-
-
 export const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaEnterpriseProvider(firebaseKey.captchaKey),
     isTokenAutoRefreshEnabled: true

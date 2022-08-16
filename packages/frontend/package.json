@@ -1,6 +1,7 @@
 {
     "name": "frontend",
     "private": true,
+    "type": "module",
     "scripts": {
         "build": "react-scripts build",
         "start": "react-scripts start > /dev/null 2>&1",

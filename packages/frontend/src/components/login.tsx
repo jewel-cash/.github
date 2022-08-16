@@ -1,6 +1,6 @@
 import "../styles/login.css";
 import React, { Component, RefObject } from "react";
-import { auth } from "../firebase";
+import { auth } from "../modules/firebase";
 import { AuthProvider, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { isValidEmail, isValidPassword } from "core";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";

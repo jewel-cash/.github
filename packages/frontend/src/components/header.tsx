@@ -1,8 +1,8 @@
 import "../styles/header.css";
 import React, { Component } from "react";
-import Login from "./login";
-import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import Login from "./login";
+import { auth } from "../modules/firebase";
 
 interface IProps {
     isLoggedIn: boolean
