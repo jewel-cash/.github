@@ -32,17 +32,17 @@ export const verifyChallenge = (challenge: string, response: string) => {
         const claim = <jwt.JwtPayload>jwt.verify(challenge, secretKey);
         const difficulty = BigInt(claim.dif);
     
-        const hash = createHash('sha256')
-            .update(response, 'hex')
+        const hash = createHash("sha256")
+            .update(response, "hex")
             .digest("hex");
     
         const result = BigInt(hash);
 
-        if (result >= difficulty) { throw new Error("InvalidChallengeResponse") }
+        if (result >= difficulty) { throw new Error("InvalidChallengeResponse"); }
     } catch {
         if (process.env.DEBUG === "true") {
             return;
         }
-        throw new HttpError(403, "The challenge response could not be verified.")
+        throw new HttpError(403, "The challenge response could not be verified.");
     }
-}
+};

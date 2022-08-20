@@ -10,7 +10,7 @@ export const createAddress = async (account: string, id: string) => {
 };
 
 export const getAllAccounts = async () => {
-    let accounts: Array<any> = []
+    let accounts: Array<any> = [];
     let next = "/v2/accounts";
     while (next != null) {
         const json = await request({
@@ -62,7 +62,7 @@ const request = async (req: IRequest) => {
     const originalHeaders = req.headers ?? { };
     const headers: HeadersInit = {
         ...originalHeaders,
-        'Content-Type': "application/json",
+        "Content-Type": "application/json",
         "CB-ACCESS-SIGN": signature,
         "CB-ACCESS-TIMESTAMP": timestamp.toString(),
         "CB-ACCESS-KEY": process.env.COINBASE_KEY ?? "",

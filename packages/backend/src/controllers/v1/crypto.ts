@@ -45,11 +45,11 @@ export class CryptoController {
                 currency: x.currency,
                 color: x.color,
                 icon: x.icon
-            }
+            };
         });
         return {
             tokens
-        }
+        };
     }
 
     @Get("/challenge")
@@ -66,7 +66,7 @@ export class CryptoController {
         try {
             verifyChallenge(body.challenge, body.challengeResponse);
         } catch {
-            throw new HttpError(403, "The response to the challenge is invalid.")
+            throw new HttpError(403, "The response to the challenge is invalid.");
         }
         
         const id = uuid();
@@ -115,13 +115,13 @@ export class CryptoController {
                 timestamp,
                 exchangeRate: exchangeRate,
                 usdEquivalent: amount * exchangeRate,
-            })
+            });
 
             await payment.save();
 
             //TODO: send webhook
         }
 
-        throw new HttpError(400, `The notification type ${body.type} is currently unhandled.`)
+        throw new HttpError(400, `The notification type ${body.type} is currently unhandled.`);
     }
 }
