@@ -4,6 +4,8 @@ import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { RegisterRoutes } from "./modules/routes.gen.js";
+import { RegisterCronsJobs } from "./modules/cron.js";
+import { HttpError } from "./modules/error.js";
 
 dotenv.config();
 
@@ -21,17 +23,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 
+RegisterCronsJobs(app);
 RegisterRoutes(app);
 
 const specs = { swaggerOptions: { url: "/swagger.gen.json" } };
 app.get("/", swaggerUi.serve, swaggerUi.setup(undefined, specs));
 
-app.use((_0: Request, _1: Response, next: NextFunction) => {
-    next({ status: 404, message: "Not Found"});
+app.use((req: Request, _1: Response) => {
+    throw new HttpError(404, `"${req.url}" is not found.`);
 });
 
-app.use((err: any, _0: Request, res: Response) => {
-    res.status(err.status || 500).send(err.message);
+app.use((err: any, _: Request, res: Response) => {
+    res.status(err.status || 500).send(err.message.toString());
 });
 
 app.listen(process.env.PORT);

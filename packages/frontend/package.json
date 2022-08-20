@@ -7,7 +7,8 @@
         "start": "react-scripts start > /dev/null 2>&1",
         "test": "jest -u",
         "lint": "eslint --ext .ts --ext .tsx .",
-        "lint:fix": "eslint --fix --ext .ts --ext .tsx ."
+        "lint:fix": "eslint --fix --ext .ts --ext .tsx .",
+        "deploy": "npm run build && gh-pages -d build"
     },
     "eslintConfig": {
         "extends": "../../.eslintrc.json"

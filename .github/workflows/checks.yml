@@ -56,6 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, analyze, test]
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
     steps:
     - name: Checkout Git
       uses: actions/checkout@v2
@@ -66,7 +68,13 @@ jobs:
         cache: 'npm'
     - name: Deploy Node
       run: |
-        echo "DEPLOY FRONTEND"
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        npm ci
+        npm run deploy:frontend
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-backend:
     runs-on: ubuntu-latest

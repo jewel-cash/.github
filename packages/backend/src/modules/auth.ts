@@ -29,7 +29,7 @@ const getAppId: Handler = {
             if (process.env.DEBUG === "true") {
                 return "TestAppId";
             }
-            throw new HttpError(403, "Forbidden");
+            throw new HttpError(403, "Signature header is invalid or missing.");
         }
     },
     key: async (req: Request) => {
@@ -43,7 +43,7 @@ const getAppId: Handler = {
             if (process.env.DEBUG === "true") {
                 return "TestAppId";
             }
-            throw new HttpError(403, "Forbidden");
+            throw new HttpError(403, "Signature header is invalid or missing.");
         }
     }
 };
@@ -59,7 +59,7 @@ const getUserId: Handler = {
             if (process.env.DEBUG === "true") {
                 return "TestUserId";
             }
-            throw new HttpError(401, "Unauthorized");
+            throw new HttpError(401, "Authorization header is invalid or missing.");
         }
     },
     key: async (req: Request) => {
@@ -72,7 +72,7 @@ const getUserId: Handler = {
             if (process.env.DEBUG === "true") {
                 return "TestUserId";
             }
-            throw new HttpError(401, "Unauthorized");
+            throw new HttpError(401, "Authorization header is invalid or missing.");
         }
     }
 };
