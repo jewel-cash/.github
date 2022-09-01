@@ -1,3 +1,4 @@
+import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
 
 export const createAddress = async (account: string, id: string) => {
@@ -24,13 +25,16 @@ export const getAllAccounts = async () => {
 };
 
 export const getExchangeRate = async (currency: string, timestamp: number) => {
-    const date = new Date(timestamp);
+    const date = new Date(timestamp * 1000);
     const json = await request({
         endpoint: `/v2/prices/${currency}-USD/spot?date=${date.toISOString()}`
     });
-    
-    //TODO get base and if it is not USD then do 1/rate
-    return json.data.amount as number;
+
+    let rate = new BigNumber(json.data.amount as string);
+    if (json.data.base !== currency) {
+        rate = new BigNumber(1).dividedBy(rate);
+    }
+    return rate
 };
 
 export const getExchangeRates = async () => {

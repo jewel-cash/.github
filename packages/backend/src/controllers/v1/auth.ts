@@ -1,5 +1,4 @@
 import { Body, Delete, Get, Path, Post, Route, Security, Response, SuccessResponse, Request } from "tsoa";
-
 import { ApiKey } from "../../entities/apikey.js";
 import { createApiKey } from "../../modules/auth.js";
 import { HttpError } from "../../modules/error.js";

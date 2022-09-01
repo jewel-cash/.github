@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { v4 as uuid } from "uuid";
 import { createHash } from "crypto";
 import { HttpError } from "./error.js";
+import { BigNumber } from "bignumber.js";
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ const secretKey = process.env.JWT_KEY ?? "";
 
 export const createChallenge = () => {
     //TODO: cascading difficulty for the same IP?
-    const difficulty = BigInt(2) ** BigInt(255);
+    const difficulty = new BigNumber(2).pow(255);
 
     const payload: jwt.JwtPayload = {
         kid: uuid(),
@@ -30,15 +31,15 @@ export const createChallenge = () => {
 export const verifyChallenge = (challenge: string, response: string) => {
     try {
         const claim = <jwt.JwtPayload>jwt.verify(challenge, secretKey);
-        const difficulty = BigInt(claim.dif);
+        const difficulty = new BigNumber(claim.dif);
     
         const hash = createHash("sha256")
             .update(response, "hex")
             .digest("hex");
     
-        const result = BigInt(hash);
+        const result = new BigNumber(hash, 16);
 
-        if (result >= difficulty) { throw new Error("InvalidChallengeResponse"); }
+        if (result.gte(difficulty)) { throw new Error("InvalidChallengeResponse"); }
     } catch {
         if (process.env.DEBUG === "true") {
             return;

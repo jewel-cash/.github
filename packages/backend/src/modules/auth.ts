@@ -5,12 +5,29 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { v4 as uuid } from "uuid";
 import { ApiKey } from "../entities/apikey.js";
+import { createVerify } from "crypto";
 
 dotenv.config();
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
-    const appId = await getAppId[securityName](req);
-    const userId = await getUserId[securityName](req);
+    if (process.env.DEBUG === "true") {
+        return { appId: "TestAppId", userId: "TestUserId", scopes: [] };
+    }
+
+    let appId: string = ""
+    try {
+        appId = await getAppId[securityName](req);
+    } catch {
+        throw new HttpError(403, "Signature header is invalid or missing.");
+    }
+    
+    let userId: string = ""
+    try {
+        userId = await getUserId[securityName](req);
+    } catch {
+        throw new HttpError(401, "Authorization header is invalid or missing.");
+    }
+   
     return { appId, userId, scopes };
 };
 
@@ -20,61 +37,60 @@ interface Handler {
 
 const getAppId: Handler = {
     token: async (req: Request) => {
-        try {
-            const signatureToken = req.header("Signature");
-            if (!signatureToken) { throw new Error("NoSignatureHeader"); }
-            const signatureClaim = await appCheck.verifyToken(signatureToken);
-            return signatureClaim.appId;
-        } catch (err) {
-            if (process.env.DEBUG === "true") {
-                return "TestAppId";
-            }
-            throw new HttpError(403, "Signature header is invalid or missing.");
-        }
+        const signatureToken = req.header("Signature");
+        if (!signatureToken) { throw new Error("NoSignatureHeader"); }
+        const signatureClaim = await appCheck.verifyToken(signatureToken);
+        return signatureClaim.appId;
     },
     key: async (req: Request) => {
-        try {
-            const authorizationToken = req.header("Signature");
-            if (!authorizationToken) { throw new Error("NoSignatureHeader"); }
-            const authorizationClaim = <jwt.JwtPayload>jwt.verify(authorizationToken, secretKey);
-            if (await ApiKey.findOne({ kid: authorizationClaim.kid }).exec() == null) { throw new Error("ApiKeyRevoked"); }
-            return authorizationClaim.kid;
-        } catch (err) {
-            if (process.env.DEBUG === "true") {
-                return "TestAppId";
-            }
-            throw new HttpError(403, "Signature header is invalid or missing.");
-        }
-    }
+        const signatureToken = req.header("Signature");
+        if (!signatureToken) { throw new Error("NoSignatureHeader"); }
+        const signatureClaim = <jwt.JwtPayload>jwt.verify(signatureToken, secretKey);
+        if (await ApiKey.findOne({ kid: signatureClaim.kid }).exec() == null) { throw new Error("ApiKeyRevoked"); }
+        return signatureClaim.kid;
+    },
+    admin: async (req: Request) => {
+        const signatureToken = req.header("Signature");
+        if (!signatureToken) { throw new Error("NoSignatureHeader"); }
+        if (signatureToken !== process.env.ADMIN_SIGNATURE) { throw new Error("InvalidSignatureToken"); }
+        return "Admin";
+    },
+    coinbase: async (req: Request) => {
+        const signature = req.header("CB-SIGNATURE") ?? "";
+        const rawBody = req.body ?? "";
+        const pubKey = process.env.COINBASE_PUB_KEY ?? "";
+        const verify = createVerify("RSA-SHA256")
+            .update(rawBody)
+            .verify(pubKey, signature, "base64");
+
+        if (!verify) { throw new Error("SignatureDoesNotVerify") }
+        return "Coinbase";
+    },
 };
 
 const getUserId: Handler = {
     token: async (req: Request) => {
-        try {
-            const authorizationToken = req.header("Authorization");
-            if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-            const authorizationClaim = await auth.verifyIdToken(authorizationToken, true);
-            return authorizationClaim.uid;
-        } catch (err) {
-            if (process.env.DEBUG === "true") {
-                return "TestUserId";
-            }
-            throw new HttpError(401, "Authorization header is invalid or missing.");
-        }
+        const authorizationToken = req.header("Authorization");
+        if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
+        const authorizationClaim = await auth.verifyIdToken(authorizationToken, true);
+        return authorizationClaim.uid;
     },
     key: async (req: Request) => {
-        try {
-            const authorizationToken = req.header("Authorization");
-            if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-            const authorizationClaim = <jwt.JwtPayload>jwt.verify(authorizationToken, secretKey);
-            return authorizationClaim.uid;
-        } catch (err) {
-            if (process.env.DEBUG === "true") {
-                return "TestUserId";
-            }
-            throw new HttpError(401, "Authorization header is invalid or missing.");
-        }
-    }
+        const authorizationToken = req.header("Authorization");
+        if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
+        const authorizationClaim = <jwt.JwtPayload>jwt.verify(authorizationToken, secretKey);
+        return authorizationClaim.uid;
+    },
+    admin: async (req: Request) => {
+        const authorizationToken = req.header("Authorization");
+        if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
+        if (authorizationToken !== process.env.ADMIN_KEY) { throw new Error("InvalidAuthorizationToken"); }
+        return "Admin";
+    },
+    coinbase: async (req: Request) => {
+        if (req.ip !== "54.175.255.192/27") {  throw new Error("WrongSourceIp"); }
+        return "Coinbase";
+    },
 };
 
 const secretKey = process.env.JWT_KEY ?? "";

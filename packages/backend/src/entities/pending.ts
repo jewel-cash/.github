@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
 export interface IPendingPayment extends mongoose.Document {
-    id: string,
+    name: string,
     message: string,
     recipientId: string
 }
 
 export const PendingPaymentSchema = new mongoose.Schema<IPendingPayment>({
-    id: { type: String, required: true, unique: true },
+    name: { type: String, required: true, length: 25 },
     message: { type: String, required: true, length: 150 },
     recipientId: { type: String, required: true }
 });
