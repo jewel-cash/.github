@@ -8,7 +8,7 @@ export interface ICoinbaseAccount extends Document {
 }
 
 export const CoinbaseAccountScheme = new mongoose.Schema<ICoinbaseAccount>({
-    coinbaseId: { type: String, required: true },
+    coinbaseId: { type: String, required: true, unique: true },
     currency: { type: String, required: true },
     color: { type: String, required: true },
     icon: { type: String, required: true },
