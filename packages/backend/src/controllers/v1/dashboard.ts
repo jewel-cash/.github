@@ -54,8 +54,8 @@ export class DashboardController {
         return links.map(x => {
             return {
                 link: x.link
-            }
-        })
+            };
+        });
     }
 
     @Post("/link")
@@ -69,12 +69,12 @@ export class DashboardController {
     @Delete("/link")
     @SuccessResponse(204)
     public async DeleteLink(@Request() req: any, @Body() body: ILinkResponse): Promise<void> {
-        await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.link })
+        await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.link });
     }
 
     @Get("/list")
     public async getList(@Request() req: any): Promise<Array<IListResponse>> {
-        const payments = await Payment.find({ recipientId: req.user.userId })
+        const payments = await Payment.find({ recipientId: req.user.userId });
         return payments.map(x => {
             return {
                 from: x.name,
@@ -83,7 +83,7 @@ export class DashboardController {
                 exchangeRate: `${x.exchangeRate.toFixed(2)} USD/${x.currency}`,
                 proceeds: `${x.proceeds.toFixed(2)} USD`,
                 fee: `${x.fee.toFixed(2)} USD`,
-            }
+            };
         });
     }
 }

@@ -1,9 +1,9 @@
-import { BigNumber } from "bignumber.js"
-import mongoose from "mongoose"
+import { BigNumber } from "bignumber.js";
+import mongoose from "mongoose";
 
 export class BigNumberSchema extends mongoose.SchemaType<BigNumber> {
     constructor(key: string, options: mongoose.AnyObject) {
-        super(key, options, 'BigNumber');
+        super(key, options, "BigNumber");
     }
     
     cast(val: any) {

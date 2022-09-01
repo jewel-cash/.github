@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
@@ -29,7 +29,7 @@ RegisterRoutes(app);
 const specs = { swaggerOptions: { url: "/swagger.gen.json" } };
 app.get("/", swaggerUi.serve, swaggerUi.setup(undefined, specs));
 
-app.use((req: Request, _1: Response) => {
+app.use((req: Request) => {
     throw new HttpError(404, `"${req.url}" is not found.`);
 });
 

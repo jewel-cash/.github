@@ -7,7 +7,7 @@ declare global {
 Date.prototype.toUnix = () => {
     const date = this ?? new Date();
     return Math.floor(date.getTime() / 1000);
-}
+};
 
 export const nextMonday = () => {
     const date = new Date();
@@ -15,4 +15,4 @@ export const nextMonday = () => {
     const time = date.getTime() % 8.64e+7;
     const day = miliseconds - time;
     return Math.floor(day / 1000);
-}
+};

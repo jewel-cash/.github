@@ -67,7 +67,7 @@ export class CryptoController {
         verifyChallenge(body.challenge, body.challengeResponse);
 
         const recipientId = await UserLink.findOne({ link: body.link });
-        if (recipientId == null) { throw new HttpError(404, `Link ${body.link} not found.`)}
+        if (recipientId == null) { throw new HttpError(404, `Link ${body.link} not found.`);}
 
         const pendingPayment = new PendingPayment({ name: body.name, message: body.message, recipientId: recipientId });
         await pendingPayment.save();
@@ -96,7 +96,7 @@ export class CryptoController {
             const amount = new BigNumber(body.additional_data.amount.amount as string);
 
             const pending = await PendingPayment.findById(id);
-            if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`)}
+            if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`);}
             const exchangeRate = await getExchangeRate(currency, timestamp);
             const usdEquivalent = amount.multipliedBy(exchangeRate);
             const fee = usdEquivalent.multipliedBy(0.1); //TODO: Cascading fee?

@@ -29,7 +29,9 @@
         "semi": [ "error", "always" ],
         "space-before-function-paren": [ "error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
         "@typescript-eslint/no-explicit-any": "off",
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "@typescript-eslint/no-unused-vars": [ "error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_"  } ],
+        "@typescript-eslint/no-namespace": "off"
     },
     "settings": {
         "react": {

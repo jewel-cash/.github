@@ -1,4 +1,4 @@
-import { schedule, ScheduledTask } from "node-cron";
+import { schedule } from "node-cron";
 import { Application } from "express";
 import { getAllAccounts } from "./coinbase.js";
 import { CoinbaseAccount } from "../entities/account.js";

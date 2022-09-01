@@ -1,5 +1,5 @@
 import { BigNumber } from "bignumber.js";
-import { Get, Route, Security, Request, Hidden } from "tsoa";
+import { Get, Route, Security, Hidden } from "tsoa";
 import { Payment } from "../../entities/payment.js";
 import { nextMonday } from "../../modules/date.js";
 
@@ -63,7 +63,7 @@ export class AdminController {
     }
 
     @Get("/list")
-    public async getList(@Request() req: any): Promise<Array<IListResponse>> {
+    public async getList(): Promise<Array<IListResponse>> {
         const payments = await Payment.find();
         return payments.map(x => {
             return {
@@ -72,7 +72,7 @@ export class AdminController {
                 exchangeRate: `${x.exchangeRate.toFixed(2)} USD/${x.currency}`,
                 proceeds: `${x.proceeds.toFixed(2)} USD`,
                 fee: `${x.fee.toFixed(2)} USD`,
-            }
+            };
         });
     }
 

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { BigNumber } from 'bignumber.js';
+import { BigNumber } from "bignumber.js";
 import { BigNumberSchema } from "./types.js";
 import { isValidName } from "core";
 

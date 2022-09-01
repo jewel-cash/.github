@@ -14,14 +14,14 @@ export const expressAuthentication = async (req: Request, securityName: string, 
         return { appId: "TestAppId", userId: "TestUserId", scopes: [] };
     }
 
-    let appId: string = ""
+    let appId = "";
     try {
         appId = await getAppId[securityName](req);
     } catch {
         throw new HttpError(403, "Signature header is invalid or missing.");
     }
     
-    let userId: string = ""
+    let userId = "";
     try {
         userId = await getUserId[securityName](req);
     } catch {
@@ -63,7 +63,7 @@ const getAppId: Handler = {
             .update(rawBody)
             .verify(pubKey, signature, "base64");
 
-        if (!verify) { throw new Error("SignatureDoesNotVerify") }
+        if (!verify) { throw new Error("SignatureDoesNotVerify"); }
         return "Coinbase";
     },
 };

@@ -34,7 +34,7 @@ export const getExchangeRate = async (currency: string, timestamp: number) => {
     if (json.data.base !== currency) {
         rate = new BigNumber(1).dividedBy(rate);
     }
-    return rate
+    return rate;
 };
 
 export const getExchangeRates = async () => {
