@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 export interface ICoinbaseAccount extends Document {
-    coinbaseId: string,
-    currency: string,
-    color: string,
-    icon: string
+    coinbaseId: string;
+    currency: string;
+    color: string;
+    icon: string;
 }
 
 export const CoinbaseAccountScheme = new mongoose.Schema<ICoinbaseAccount>({
