@@ -1,17 +1,12 @@
 import { BigNumber } from "bignumber.js";
-import { Get, Route, Security, Request, Body, Post, SuccessResponse, Delete } from "tsoa";
+import { Get, Route, Security, Request } from "tsoa";
 import { Payment } from "../../entities/payment.js";
-import { UserLink } from "../../entities/link.js";
 import { nextMonday } from "../../modules/date.js";
 
 interface IOverviewResponse {
     cumlative: string;
     pending: string;
     nextPaymentDate: number;
-}
-
-interface ILinkResponse {
-    link: string;
 }
 
 interface IListResponse {
@@ -46,30 +41,6 @@ export class DashboardController {
             pending: `${pending.toFixed(2)} USD`,
             nextPaymentDate: nextMonday()
         };
-    }
-
-    @Get("/link")
-    public async getLink(@Request() req: any): Promise<Array<ILinkResponse>> {
-        const links = await UserLink.find({ userId: req.user.userId });
-        return links.map(x => {
-            return {
-                link: x.link
-            };
-        });
-    }
-
-    @Post("/link")
-    @SuccessResponse(201)
-    public async createLink(@Request() req: any, @Body() body: ILinkResponse): Promise<ILinkResponse> {
-        const link = new UserLink({ userId: req.user.userId, link: body.link });
-        await link.save();
-        return body;
-    }
-
-    @Delete("/link")
-    @SuccessResponse(204)
-    public async DeleteLink(@Request() req: any, @Body() body: ILinkResponse): Promise<void> {
-        await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.link });
     }
 
     @Get("/list")

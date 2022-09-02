@@ -4,7 +4,7 @@ import { createChallenge, verifyChallenge } from "../../modules/pow.js";
 import { HttpError } from "../../modules/error.js";
 import { PendingPayment } from "../../entities/pending.js";
 import { Payment } from "../../entities/payment.js";
-import { CoinbaseAccount } from "../../entities/account.js";
+import { CoinbaseAccount } from "../../entities/coinbaseaccount.js";
 import { BigNumber } from "bignumber.js";
 import { UserLink } from "../../entities/link.js";
 
@@ -77,51 +77,5 @@ export class CryptoController {
         return {
             address
         };
-    }
-
-    @Post("/notification")
-    @Security("coinbase")
-    @Hidden()
-    @SuccessResponse("204")
-    public async receivedNotification(@Body() body: any): Promise<void> {
-        if (body.type === "ping") {
-            return;
-        }
-
-        if (body.type === "wallet:addresses:new-payment") {
-            const id: string = body.data.name ?? "";
-            const createdDate: string = body.data.created_at ?? "";
-            const timestamp = new Date(createdDate).toUnix();
-            const currency: string = body.additional_data.amount.currency ?? "";
-            const amount = new BigNumber(body.additional_data.amount.amount as string);
-
-            const pending = await PendingPayment.findById(id);
-            if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`);}
-            const exchangeRate = await getExchangeRate(currency, timestamp);
-            const usdEquivalent = amount.multipliedBy(exchangeRate);
-            const fee = usdEquivalent.multipliedBy(0.1); //TODO: Cascading fee?
-            const proceeds = usdEquivalent.minus(fee);
-
-            const payment = new Payment({
-                pendingId: pending.id,
-                name: pending.name,
-                message: pending.message,
-                recipientId: pending.recipientId,
-                currency,
-                amount,
-                timestamp,
-                exchangeRate,
-                proceeds,
-                fee
-            });
-
-            await payment.save();
-
-            //TODO: send webhook
-
-            return;
-        }
-
-        throw new HttpError(400, `The notification type ${body.type} is unsupported.`);
     }
 }
