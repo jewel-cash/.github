@@ -52,8 +52,8 @@ const getAppId: Handler = {
     admin: async (req: Request) => {
         const signatureToken = req.header("Signature");
         if (!signatureToken) { throw new Error("NoSignatureHeader"); }
-        const signatureBuffer = Buffer.from(signatureToken, 'utf8')
-        const checkBuffer = Buffer.from(process.env.ADMIN_SIGNATURE ?? "", 'utf8')
+        const signatureBuffer = Buffer.from(signatureToken, "utf8");
+        const checkBuffer = Buffer.from(process.env.ADMIN_SIGNATURE ?? "", "utf8");
         if (!timingSafeEqual(signatureBuffer, checkBuffer)) { throw new Error("InvalidSignatureToken"); }
         return "Admin";
     },
@@ -71,9 +71,9 @@ const getAppId: Handler = {
         if (!verify) { throw new Error("SignatureDoesNotVerify"); }
         return "Coinbase";
     },
-    stripe: async (req: Request) => {
+    stripe: async (_req: Request) => {
         //TODO: 
-        return "Stripe"
+        return "Stripe";
     }
 };
 
@@ -93,8 +93,8 @@ const getUserId: Handler = {
     admin: async (req: Request) => {
         const authorizationToken = req.header("Authorization");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const authorizationBuffer = Buffer.from(authorizationToken, 'utf8')
-        const checkBuffer = Buffer.from(process.env.ADMIN_KEY ?? "", 'utf8')
+        const authorizationBuffer = Buffer.from(authorizationToken, "utf8");
+        const checkBuffer = Buffer.from(process.env.ADMIN_KEY ?? "", "utf8");
         if (!timingSafeEqual(authorizationBuffer, checkBuffer)) { throw new Error("InvalidAuthorizationToken"); }
         return "Admin";
     },
@@ -102,6 +102,10 @@ const getUserId: Handler = {
         if (req.ip !== "54.175.255.192/27") {  throw new Error("WrongSourceIp"); }
         return "Coinbase";
     },
+    stripe: async (_req: Request) => {
+        //TODO: 
+        return "Stripe";
+    }
 };
 
 const secretKey = process.env.JWT_KEY ?? "";

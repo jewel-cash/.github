@@ -12,8 +12,8 @@ interface IStripeStatusResponse {
 }
 
 interface IStripeLinkRequest {
-    refresh: string,
-    redirect: string
+    refresh: string;
+    redirect: string;
 }
 
 interface IStripeLinkResponse {

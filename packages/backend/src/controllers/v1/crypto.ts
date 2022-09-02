@@ -1,11 +1,9 @@
-import { Get, Post, Route, Body, SuccessResponse, Security, Hidden } from "tsoa";
-import { createAddress, getExchangeRate } from "../../modules/coinbase.js";
+import { Get, Post, Route, Body, SuccessResponse } from "tsoa";
+import { createAddress } from "../../modules/coinbase.js";
 import { createChallenge, verifyChallenge } from "../../modules/pow.js";
 import { HttpError } from "../../modules/error.js";
 import { PendingPayment } from "../../entities/pending.js";
-import { Payment } from "../../entities/payment.js";
 import { CoinbaseAccount } from "../../entities/coinbaseaccount.js";
-import { BigNumber } from "bignumber.js";
 import { UserLink } from "../../entities/link.js";
 
 interface ITokensResponse {

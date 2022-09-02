@@ -1,5 +1,4 @@
 import { BigNumber } from "bignumber.js";
-import { Stripe } from "stripe";
 import { Body, Hidden, Post, Route, Security, SuccessResponse } from "tsoa";
 import { Payment } from "../../entities/payment.js";
 import { PendingPayment } from "../../entities/pending.js";
