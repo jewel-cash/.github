@@ -4,17 +4,17 @@ import { BigNumberSchema } from "./types.js";
 import { isValidName } from "core";
 
 export interface IPayment extends mongoose.Document {
-    pendingId: string,
-    name: string,
-    message: string,
-    recipientId: string,
-    currency: string,
-    amount: BigNumber,
-    exchangeRate: BigNumber,
-    proceeds: BigNumber,
-    fee: BigNumber,
-    timestamp: number,
-    payedOut: boolean
+    pendingId: string;
+    name: string;
+    message: string;
+    recipientId: string;
+    currency: string;
+    amount: BigNumber;
+    exchangeRate: BigNumber;
+    proceeds: BigNumber;
+    fee: BigNumber;
+    timestamp: number;
+    payedOut: boolean;
 }
 
 export const PaymentSchema = new mongoose.Schema<IPayment>({

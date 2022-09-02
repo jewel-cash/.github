@@ -46,10 +46,10 @@ export const getExchangeRates = async () => {
 };
 
 interface IRequest {
-    method?: string,
-    endpoint: string,
-    body?: string,
-    headers?: Record<string, string>
+    method?: string;
+    endpoint: string;
+    body?: string;
+    headers?: Record<string, string>;
 }
 
 const request = async (req: IRequest) => {

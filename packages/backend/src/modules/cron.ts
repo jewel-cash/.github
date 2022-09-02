@@ -4,7 +4,7 @@ import { getAllAccounts } from "./coinbase.js";
 import { CoinbaseAccount } from "../entities/account.js";
 
 interface CronJobs { 
-    [key: string]: () => Promise<void>
+    [key: string]: () => Promise<void>;
 }
 
 export const RegisterCronsJobs = (_: Application) => {

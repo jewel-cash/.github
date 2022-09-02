@@ -32,7 +32,7 @@ export const expressAuthentication = async (req: Request, securityName: string, 
 };
 
 interface Handler { 
-    [key: string]: (req: Request) => Promise<string>
+    [key: string]: (req: Request) => Promise<string>;
 }
 
 const getAppId: Handler = {

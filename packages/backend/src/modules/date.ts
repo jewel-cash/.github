@@ -1,6 +1,6 @@
 declare global {
     interface Date {
-        toUnix(): number
+        toUnix(): number;
     }
 }
 

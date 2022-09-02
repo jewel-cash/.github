@@ -5,11 +5,11 @@ import Login from "./login";
 import { auth } from "../modules/firebase";
 
 interface IProps {
-    isLoggedIn: boolean
+    isLoggedIn: boolean;
 }
 
 interface IState {
-    showLoginPopup: boolean
+    showLoginPopup: boolean;
 }
 
 export default class Header extends Component<IProps, IState> {

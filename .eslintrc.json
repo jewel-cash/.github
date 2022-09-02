@@ -31,7 +31,8 @@
         "@typescript-eslint/no-explicit-any": "off",
         "no-case-declarations": "off",
         "@typescript-eslint/no-unused-vars": [ "error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_"  } ],
-        "@typescript-eslint/no-namespace": "off"
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/member-delimiter-style": [ "error", { "multiline": { "delimiter": "semi", "requireLast": true }, "singleline": { "delimiter": "comma", "requireLast": false } } ]
     },
     "settings": {
         "react": {

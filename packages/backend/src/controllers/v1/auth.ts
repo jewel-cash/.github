@@ -4,18 +4,18 @@ import { createApiKey } from "../../modules/auth.js";
 import { HttpError } from "../../modules/error.js";
 
 interface ICreateKeyResponse {
-    payload: IKeyResponse
-    key: string
+    payload: IKeyResponse;
+    key: string;
 }
 
 interface IKeyResponse {
-    id: string,
-    name: string,
-    expires: number
+    id: string;
+    name: string;
+    expires: number;
 }
 
 interface ICreateKeyRequest {
-    name: string
+    name: string;
 }
 
 @Route("/v1/auth")
@@ -49,6 +49,7 @@ export class AuthController {
     @Post("/key")
     @SuccessResponse("201")
     public async createKey(@Request() req: any, @Body() body: ICreateKeyRequest): Promise<ICreateKeyResponse> {
+        //TODO: max 5
         const { payload, key } = createApiKey(req.user.userId, body.name);
 
         const apiKey = new ApiKey(payload);

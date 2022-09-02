@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 export interface IPendingPayment extends mongoose.Document {
-    name: string,
-    message: string,
-    recipientId: string
+    name: string;
+    message: string;
+    recipientId: string;
 }
 
 export const PendingPaymentSchema = new mongoose.Schema<IPendingPayment>({
