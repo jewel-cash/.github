@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { isValidName } from "core";
 
-export interface IApiKey extends mongoose.Document, jwt.JwtPayload {
-
-}
+export interface IApiKey extends mongoose.Document, jwt.JwtPayload { }
 
 export const ApiKeySchema = new mongoose.Schema<IApiKey>({
     kid: { type: String, required: true, unique: true },

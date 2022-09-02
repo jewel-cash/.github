@@ -8,12 +8,12 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IState {
-    isCreateAccount: boolean
+    isCreateAccount: boolean;
 }
 
 interface ILoginIntegration {
-    provider: AuthProvider,
-    icon: IconDefinition
+    provider: AuthProvider;
+    icon: IconDefinition;
 }
 
 const loginIntegrations: Array<ILoginIntegration> = [

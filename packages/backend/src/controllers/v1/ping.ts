@@ -1,7 +1,7 @@
 import { Get, Route } from "tsoa";
 
 interface IPingResponse {
-    message: string
+    message: string;
 }
 
 @Route("/v1/ping")

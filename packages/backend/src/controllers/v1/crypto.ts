@@ -19,7 +19,7 @@ interface ITokensResponseElement {
 }
 
 interface IChallengeResponse {
-    challenge: string
+    challenge: string;
 }
 
 interface IAddressRequest {
@@ -32,7 +32,7 @@ interface IAddressRequest {
 }
 
 interface IAddressResponse {
-    address: string
+    address: string;
 }
 
 @Route("/v1/crypto")

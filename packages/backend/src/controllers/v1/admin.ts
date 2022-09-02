@@ -9,7 +9,7 @@ interface IOverviewResponse {
     pendingPayments: string;
     feesCollected: string;
     unearnedFees: string;
-    nextPaymentDate: number
+    nextPaymentDate: number;
 }
 
 interface IListResponse {
