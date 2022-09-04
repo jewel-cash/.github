@@ -64,7 +64,7 @@ export class AccountController {
         const link = await createStripeLink(account.stripeId, body.refresh, body.redirect);
         return {
             redirect: link.url,
-            expires: link.expires_at
+            expires: link.expires
         };
     }
 
