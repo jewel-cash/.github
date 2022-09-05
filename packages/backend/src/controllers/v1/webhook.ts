@@ -2,8 +2,11 @@ import { BigNumber } from "bignumber.js";
 import { Body, Hidden, Post, Route, Security, SuccessResponse } from "tsoa";
 import { Payment } from "../../entities/payment.js";
 import { PendingPayment } from "../../entities/pending.js";
+import { StripeAccount } from "../../entities/stripeaccount.js";
 import { getExchangeRate } from "../../modules/coinbase.js";
 import { HttpError } from "../../modules/error.js";
+
+//TODO: error handling
 
 @Route("/v1/webhook")
 export class WebhookController {
@@ -54,7 +57,8 @@ export class WebhookController {
     public async receivedStripeWebhook(@Body() body: any): Promise<void> {
         if (body.type === "account.updated") {
             const account = body.data.object;
-            console.log(account);
+            const onboarded = account.payouts_enabled as boolean ?? false;
+            await StripeAccount.findOneAndUpdate({ stripeId: account.id }, { $set: { onboarded: onboarded } });
         }
     }
 }

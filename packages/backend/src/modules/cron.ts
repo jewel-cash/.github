@@ -1,14 +1,16 @@
 import { schedule } from "node-cron";
 import { Application } from "express";
 import { getAllAccounts } from "./coinbase.js";
-import { CoinbaseAccount } from "../entities/account.js";
+import { CoinbaseAccount } from "../entities/coinbaseaccount.js";
 
 interface CronJobs { 
     [key: string]: () => Promise<void>;
 }
 
+const hourly = "0 * * * *";
+
 export const RegisterCronsJobs = (_: Application) => {
-    scheduleJobs("0 * * * *", {
+    scheduleJobs(hourly, {
         getCoinbaseAccounts
     });
 };

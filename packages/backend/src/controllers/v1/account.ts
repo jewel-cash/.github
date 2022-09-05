@@ -61,6 +61,7 @@ export class AccountController {
     @Post("/stripe")
     public async getStripeLink(@Request() req: any, @Body() body: IStripeLinkRequest): Promise<IStripeLinkResponse> {
         const account = await this.getOrCreateStripeAccount(req.user.userId);
+        console.log(account);
         const link = await createStripeLink(account.stripeId, body.refresh, body.redirect);
         return {
             redirect: link.url,

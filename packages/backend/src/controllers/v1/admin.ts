@@ -1,7 +1,7 @@
 import { BigNumber } from "bignumber.js";
 import { Get, Route, Security, Hidden } from "tsoa";
 import { Payment } from "../../entities/payment.js";
-import { nextMonday } from "../../modules/date.js";
+import { nextMonday } from "core";
 
 interface IOverviewResponse {
     users: string;

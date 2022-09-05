@@ -1,6 +1,8 @@
 import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
 
+//TODO: error handling
+
 export const createAddress = async (account: string, id: string) => {
     const json = await request({
         method: "POST",

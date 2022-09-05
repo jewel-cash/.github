@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { v4 as uuid } from "uuid";
 import { ApiKey } from "../entities/apikey.js";
 import { createVerify, timingSafeEqual } from "crypto";
+import { queryToObject } from "core";
 
 dotenv.config();
 
@@ -65,14 +66,24 @@ const getAppId: Handler = {
             .update(rawBody)
             .verify(pubKey, signature, "base64");
 
-        //TODO: replay attack?
-        //TODO: check timestamp
-
         if (!verify) { throw new Error("SignatureDoesNotVerify"); }
         return "Coinbase";
     },
-    stripe: async (_req: Request) => {
-        //TODO: 
+    stripe: async (req: Request) => {
+        const signatureHeader = req.header("Stripe-Signature") ?? "";
+        const signatureClaim = queryToObject(signatureHeader);
+        const timestamp = parseInt(signatureClaim.t);
+        const signature = signatureClaim.v1;
+        const rawBody = req.body ?? "";
+        const preimage = `${timestamp}.${rawBody}`;
+        const secret = process.env.STRIPE_SECRET ?? "";
+
+        const verify = createVerify("SHA256")
+            .update(preimage)
+            .verify(secret, signature, "hex");
+
+        if (!verify) { throw new Error("SignatureDoesNotVerify"); }
+
         return "Stripe";
     }
 };
@@ -100,12 +111,23 @@ const getUserId: Handler = {
     },
     coinbase: async (req: Request) => {
         if (req.ip !== "54.175.255.192/27") {  throw new Error("WrongSourceIp"); }
+        //TOOD: replay attack?
         return "Coinbase";
     },
-    stripe: async (_req: Request) => {
-        //TODO: 
+    stripe: async (req: Request) => {
+        const signatureHeader = req.header("Stripe-Signature") ?? "";
+        const signatureClaim = queryToObject(signatureHeader);
+        const timestamp = parseInt(signatureClaim.t);
+        if (!timestampIsNow(timestamp)) { throw new Error("RequestToOldOrNew"); }
         return "Stripe";
     }
+};
+
+const timestampIsNow = (timestamp: number, tolerance = 300) => {
+    const now = new Date().toUnix();
+    if (timestamp < now - tolerance) { return false; }
+    if (timestamp > now + tolerance) { return false; }
+    return true;
 };
 
 const secretKey = process.env.JWT_KEY ?? "";
