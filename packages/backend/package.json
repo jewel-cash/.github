@@ -21,8 +21,7 @@
         "morgan": "^1.10.0",
         "node-cron": "^3.0.2",
         "swagger-ui-express": "^4.5.0",
-        "tsoa": "^4.1.1",
-        "uuid": "^8.3.2"
+        "tsoa": "^4.1.1"
     },
     "eslintConfig": {
         "extends": "../../.eslintrc.json"
