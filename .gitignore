@@ -18,7 +18,6 @@ coverage.json
 typechain
 cache
 artifacts
-assets
 lerna-debug.log
 __snapshots__
 *.gen.*
