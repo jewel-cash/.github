@@ -3,7 +3,7 @@ import { HttpError } from "../modules/error.js";
 import { appCheck, auth } from "./firebase.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { v4 as uuid } from "uuid";
+import { nanoid } from "nanoid";
 import { ApiKey } from "../entities/apikey.js";
 import { createVerify, timingSafeEqual } from "crypto";
 import { queryToObject } from "core";
@@ -134,7 +134,7 @@ const secretKey = process.env.JWT_KEY ?? "";
 
 export const createApiKey = (userId: string, name: string) => {
     const payload: jwt.JwtPayload = {
-        kid: uuid(),
+        kid: nanoid(),
         uid: userId,
         cid: name
     };

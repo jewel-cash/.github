@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { v4 as uuid } from "uuid";
+import { nanoid } from "nanoid";
 import { createHash } from "crypto";
 import { HttpError } from "./error.js";
 import { BigNumber } from "bignumber.js";
@@ -14,7 +14,7 @@ export const createChallenge = () => {
     const difficulty = new BigNumber(2).pow(255);
 
     const payload: jwt.JwtPayload = {
-        kid: uuid(),
+        kid: nanoid(),
         dif: difficulty.toString()
     };
 

@@ -6,9 +6,9 @@
         "build": "lerna run build",
         "prestart": "npm run build",
         "start": "lerna run start --parallel --no-sort",
-        "test": "lerna run test --no-sort",
-        "lint": "lerna run lint",
-        "lint:fix": "lerna run lint:fix",
+        "test": "lerna run test --parallel --no-sort",
+        "lint": "lerna run lint --parallel --no-sort",
+        "lint:fix": "lerna run lint:fix --parallel --no-sort",
         "deploy:frontend": "lerna run deploy --scope frontend"
     },
     "devDependencies": {
