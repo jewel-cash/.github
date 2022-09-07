@@ -3,7 +3,7 @@ import { HttpError } from "../modules/error.js";
 import { appCheck, auth } from "./firebase.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { nanoid } from 'nanoid'
+import { nanoid } from "nanoid";
 import { ApiKey } from "../entities/apikey.js";
 import { createVerify, timingSafeEqual } from "crypto";
 import { queryToObject } from "core";

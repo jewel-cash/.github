@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { nanoid } from 'nanoid'
+import { nanoid } from "nanoid";
 import { createHash } from "crypto";
 import { HttpError } from "./error.js";
 import { BigNumber } from "bignumber.js";
