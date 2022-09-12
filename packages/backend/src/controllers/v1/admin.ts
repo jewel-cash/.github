@@ -20,13 +20,13 @@ interface IListResponse {
     fee: string;
 }
 
-// interface IUsersResponse {
-//     userId: string;
-//     payedOut: string;
-//     pending: string;
-//     fees: string;
-//     unearnedFees: string;
-// }
+interface IUsersResponse {
+    userId: string;
+    payedOut: string;
+    pending: string;
+    fees: string;
+    unearnedFees: string;
+}
 
 @Route("/v1/admin")
 @Security("admin")
@@ -76,37 +76,9 @@ export class AdminController {
         });
     }
 
-    // @Get("/users")
-    // public async getUsers(): Promise<Array<IUsersResponse>> {
-    //     const payments = await Payment.find();
-
-    //     let payedOut = new Map<string, BigNumber>();
-    //     let pendingPayments = new Map<string, BigNumber>();
-    //     let feesCollected = new Map<string, BigNumber>(); 
-    //     let unearnedFees = new Map<string, BigNumber>();
-
-    //     for (const key in payments) {
-    //         const payment = payments[key];
-    //         if (payment.payedOut) {
-    //             payedOut
-    //             payedOut = payedOut.plus(payment.proceeds);
-    //             feesCollected = feesCollected.plus(payment.fee);
-    //         } else {
-    //             pendingPayments = pendingPayments.plus(payment.proceeds);
-    //             unearnedFees = unearnedFees.plus(payment.fee);
-    //         }
-    //     }
-
-
-    //     return payments.map(x => {
-    //         return {
-    //             from: x.name,
-    //             message: x.message,
-    //             amount: `${x.amount} ${x.currency}`,
-    //             exchangeRate: `${x.exchangeRate.toFixed(2)} USD/${x.currency}`,
-    //             proceeds: `${x.proceeds.toFixed(2)} USD`,
-    //             fee: `${x.fee.toFixed(2)} USD`,
-    //         }
-    //     });
-    // }
+    @Get("/users")
+    public async getUsers(): Promise<Array<IUsersResponse>> {
+        return [];
+        //TODO: /\
+    }
 }

@@ -12,7 +12,7 @@
         "lint:fix": "eslint --fix --ext .ts ."
     },
     "dependencies": {
-        
+        "ajv": "^8.11.0"
     },
     "eslintConfig": {
         "extends": "../../.eslintrc.json"
@@ -20,6 +20,8 @@
     "jest": {
         "preset": "ts-jest",
         "testEnvironment": "node",
-        "moduleNameMapper": { "^(\\.{1,2}/.*)\\.js$": "$1" }
+        "moduleNameMapper": {
+            "^(\\.{1,2}/.*)\\.js$": "$1"
+        }
     }
 }

@@ -1,60 +1,56 @@
 import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
+import { Client, IRequest } from "core";
+import { CoinbaseAddressSchema } from "../model/coinbaseaddress.js";
+import { CoinbaseAccountSchema, ICoinbaseAccountElement } from "../model/coinbaseaccount.js";
+import { CoinbaseExchangeRateSchema } from "../model/coinbaseexchangerate.js";
 
-//TODO: error handling
+const client = new Client("https://api.coinbase.com");
+
 
 export const createAddress = async (account: string, id: string) => {
-    const json = await request({
+    const request = addHeadersToRequest({
         method: "POST",
         endpoint: `/v2/accounts/${account}/addresses`,
         body: JSON.stringify({ name: id })
     });
-    return json.data.address as string;
+    const response = await client.request(request, CoinbaseAddressSchema);
+    return response.data.address;
 };
 
+
 export const getAllAccounts = async () => {
-    let accounts: Array<any> = [];
-    let next = "/v2/accounts";
+    let accounts: Array<ICoinbaseAccountElement> = [];
+    let next: string | null = "/v2/accounts";
     while (next != null) {
-        const json = await request({
+        const request = addHeadersToRequest({
             endpoint: next
         });
-        next = json.pagination.next_uri;
+        const response = await client.request(request, CoinbaseAccountSchema);
+        next = response.pagination.next_uri;
 
-        accounts = accounts.concat(<any[]> json.data);
+        accounts = accounts.concat(response.data);
     }
     return accounts;
 };
 
+
 export const getExchangeRate = async (currency: string, timestamp: number) => {
     const date = new Date(timestamp * 1000);
-    const json = await request({
+    const request = addHeadersToRequest({
         endpoint: `/v2/prices/${currency}-USD/spot?date=${date.toISOString()}`
     });
 
-    let rate = new BigNumber(json.data.amount as string);
-    if (json.data.base !== currency) {
+    const response = await client.request(request, CoinbaseExchangeRateSchema);
+
+    let rate = new BigNumber(response.data.amount);
+    if (response.data.base !== currency) {
         rate = new BigNumber(1).dividedBy(rate);
     }
     return rate;
 };
 
-export const getExchangeRates = async () => {
-    const json = await request({
-        endpoint: "/v2/exchange-rates"
-    });
-    const dict = Object.entries(json.data.rates) as [string, number][];
-    return new Map(dict);
-};
-
-interface IRequest {
-    method?: string;
-    endpoint: string;
-    body?: string;
-    headers?: Record<string, string>;
-}
-
-const request = async (req: IRequest) => {
+const addHeadersToRequest = (req: IRequest) => {
     const timestamp = Math.floor(Date.now() / 1000);
     const method = req.method ?? "GET";
     const body = req.body ?? "";
@@ -66,7 +62,7 @@ const request = async (req: IRequest) => {
         .digest("hex");
 
     const originalHeaders = req.headers ?? { };
-    const headers: HeadersInit = {
+    req.headers = {
         ...originalHeaders,
         "Content-Type": "application/json",
         "CB-ACCESS-SIGN": signature,
@@ -74,13 +70,5 @@ const request = async (req: IRequest) => {
         "CB-ACCESS-KEY": process.env.COINBASE_KEY ?? "",
         "CB-VERSION": "2022-03-03"
     };
-
-    const url: RequestInfo = "https://api.coinbase.com" + req.endpoint;
-    const request: RequestInit = {
-        headers,
-        method,
-        body: req.body
-    };
-    const res = await fetch(url, request);
-    return await res.json();
+    return req;
 };

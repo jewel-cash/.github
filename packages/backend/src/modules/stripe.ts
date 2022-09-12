@@ -1,22 +1,23 @@
 import dotenv from "dotenv";
+import { Client, IRequest } from "core";
+import { StripeAccountSchema } from "../model/stripeaccount.js";
+import { StripeAccountLinkSchema } from "../model/stripeaccountlink.js";
 
 dotenv.config();
 
-//TODO: error handling
+const client = new Client("https://api.stripe.com");
 
 export const createStripeAccount = async () => {
     const data = new URLSearchParams({
         type: "custom",
         "capabilities[transfers][requested]": "true"
     });
-    const response = await request({
+    const request = addHeadersToRequest({
         endpoint: "/v1/accounts",
         method: "POST",
-        body: data
+        body: data.toString()
     });
-    return {
-        id: response.id as string
-    };
+    return await client.request(request, StripeAccountSchema);
 };
 
 export const createStripeLink = async (id: string, refreshUrl: string, returnUrl: string) => {
@@ -26,42 +27,26 @@ export const createStripeLink = async (id: string, refreshUrl: string, returnUrl
         return_url: returnUrl,
         type: "account_onboarding",
     });
-    const response = await request({
+    const request = addHeadersToRequest({
         endpoint: "/v1/account_links",
         method: "POST",
-        body: data
+        body: data.toString()
     });
-    console.log(response);
-    return {
-        url: response.url as string,
-        expires: response.expires_at as number
+    const response = await client.request(request, StripeAccountLinkSchema);
+    return { 
+        url: response.url,
+        expires: response.expires_at
     };
 };
 
-interface IRequest {
-    method?: string;
-    endpoint: string;
-    body?: URLSearchParams;
-    headers?: Record<string, string>;
-}
-
 const stripeKey = process.env.STRIPE_KEY ?? "";
-
-const request = async (req: IRequest) => {
+const addHeadersToRequest =  (req: IRequest) => {
     const originalHeaders = req.headers ?? { };
-    const headers: HeadersInit = {
+    req.headers = {
         ...originalHeaders,
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": `Bearer ${stripeKey}`,
         "Stripe-Version": "2022-08-01"
     };
-
-    const url: RequestInfo = "https://api.stripe.com" + req.endpoint;
-    const request: RequestInit = {
-        headers,
-        method: req.method,
-        body: req.body
-    };
-    const res = await fetch(url, request);
-    return await res.json();
+    return req;
 };
