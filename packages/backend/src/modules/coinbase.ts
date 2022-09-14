@@ -1,9 +1,7 @@
 import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
 import { Client, IRequest } from "core";
-import { CoinbaseAddressSchema } from "../model/coinbaseaddress.js";
-import { CoinbaseAccountSchema, ICoinbaseAccountElement } from "../model/coinbaseaccount.js";
-import { CoinbaseExchangeRateSchema } from "../model/coinbaseexchangerate.js";
+import { CoinbaseAddressSchema, CoinbaseAccountSchema, ICoinbaseAccountElement, CoinbaseExchangeRateSchema } from "../model/coinbase.js";
 
 const client = new Client("https://api.coinbase.com");
 

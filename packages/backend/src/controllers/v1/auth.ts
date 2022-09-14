@@ -2,40 +2,29 @@ import { Body, Delete, Get, Path, Post, Route, Security, Response, SuccessRespon
 import { ApiKey } from "../../entities/apikey.js";
 import { createApiKey } from "../../modules/auth.js";
 import { HttpError } from "../../modules/error.js";
-
-interface ICreateKeyResponse {
-    payload: IKeyResponse;
-    key: string;
-}
-
-interface IKeyResponse {
-    id: string;
-    name: string;
-    expires: number;
-}
-
-interface ICreateKeyRequest {
-    name: string;
-}
+import type { IAuthKeysResponse, IAuthKeyResponse, IAuthCreateKeyRequest, IAuthCreateKeyResponse } from "core";
 
 @Route("/v1/auth")
 @Security("token")
 export class AuthController {
     @Get("/key")
-    public async getKeys(@Request() req: any): Promise<Array<IKeyResponse>> {
+    public async getKeys(@Request() req: any): Promise<IAuthKeysResponse> {
         const keys = await ApiKey.find({ uid: req.user.userId }).exec();
-        return keys.map(x => {
+        const mapped = keys.map(x => {
             return {
-                id: x.kid ?? "",
-                name: x.cid ?? "",
+                id: x.kid as string,
+                name: x.cid as string,
                 expires: x.exp ?? 0
             };
         });
+        return {
+            keys: mapped
+        };
     }
 
     @Get("/key/:id")
     @Response("404")
-    public async getKey(@Request() req: any, @Path() id: string): Promise<IKeyResponse> {
+    public async getKey(@Request() req: any, @Path() id: string): Promise<IAuthKeyResponse> {
         const userId = req.user.userId;
         const key = await ApiKey.findOne({ uid: userId }).exec();
         if (key == null) { throw new HttpError(404, `Key with id ${id} for user ${userId} does not exist.`); }
@@ -48,7 +37,7 @@ export class AuthController {
 
     @Post("/key")
     @SuccessResponse("201")
-    public async createKey(@Request() req: any, @Body() body: ICreateKeyRequest): Promise<ICreateKeyResponse> {
+    public async createKey(@Request() req: any, @Body() body: IAuthCreateKeyRequest): Promise<IAuthCreateKeyResponse> {
         //TODO: max 5
         const { payload, key } = createApiKey(req.user.userId, body.name);
 

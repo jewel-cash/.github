@@ -5,41 +5,15 @@ import { HttpError } from "../../modules/error.js";
 import { PendingPayment } from "../../entities/pending.js";
 import { CoinbaseAccount } from "../../entities/coinbaseaccount.js";
 import { UserLink } from "../../entities/link.js";
-
-interface ITokensResponse {
-    tokens: Array<ITokensResponseElement>;
-}
-
-interface ITokensResponseElement {
-    currency: string;
-    color: string;
-    icon: string;
-}
-
-interface IChallengeResponse {
-    challenge: string;
-}
-
-interface IAddressRequest {
-    currency: string;
-    link: string;
-    name: string;
-    message: string;
-    challenge: string;
-    challengeResponse: string;
-}
-
-interface IAddressResponse {
-    address: string;
-}
+import type { ICryptoTokensResponse, ICryptoTokenResponse, ICryptoChallengeResponse, ICryptoAddressRequest, ICryptoAddressResponse } from "core";
 
 @Route("/v1/crypto")
 export class CryptoController {
 
     @Get("/tokens")
-    public async getAllTokens(): Promise<ITokensResponse> {
+    public async getAllTokens(): Promise<ICryptoTokensResponse> {
         const accounts = await CoinbaseAccount.find();
-        const tokens: Array<ITokensResponseElement> = accounts.map(x => {
+        const tokens: Array<ICryptoTokenResponse> = accounts.map(x => {
             return {
                 currency: x.currency,
                 color: x.color,
@@ -52,7 +26,7 @@ export class CryptoController {
     }
 
     @Get("/challenge")
-    public async getChallenge(): Promise<IChallengeResponse> {
+    public async getChallenge(): Promise<ICryptoChallengeResponse> {
         const challenge = createChallenge();
         return {
             challenge
@@ -61,7 +35,7 @@ export class CryptoController {
 
     @Post("/address")
     @SuccessResponse("201")
-    public async createNewAddress(@Body() body: IAddressRequest): Promise<IAddressResponse> {
+    public async createNewAddress(@Body() body: ICryptoAddressRequest): Promise<ICryptoAddressResponse> {
         verifyChallenge(body.challenge, body.challengeResponse);
 
         const recipientId = await UserLink.findOne({ link: body.link });

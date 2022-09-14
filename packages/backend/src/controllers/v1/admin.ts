@@ -2,38 +2,14 @@ import { BigNumber } from "bignumber.js";
 import { Get, Route, Security, Hidden } from "tsoa";
 import { Payment } from "../../entities/payment.js";
 import { nextMonday } from "core";
-
-interface IOverviewResponse {
-    users: string;
-    payedOut: string;
-    pendingPayments: string;
-    feesCollected: string;
-    unearnedFees: string;
-    nextPaymentDate: number;
-}
-
-interface IListResponse {
-    recipient: string;
-    amount: string;
-    exchangeRate: string;
-    proceeds: string;
-    fee: string;
-}
-
-interface IUsersResponse {
-    userId: string;
-    payedOut: string;
-    pending: string;
-    fees: string;
-    unearnedFees: string;
-}
+import type { IAdminOverviewResponse, IAdminTransactionsResponse, IAdminUsersResponse } from "core";
 
 @Route("/v1/admin")
 @Security("admin")
 @Hidden()
 export class AdminController {
     @Get("/overview")
-    public async getOverview(): Promise<IOverviewResponse> {
+    public async getOverview(): Promise<IAdminOverviewResponse> {
         const payments = await Payment.find();
 
         let payedOut = new BigNumber(0);
@@ -62,10 +38,10 @@ export class AdminController {
         };
     }
 
-    @Get("/list")
-    public async getList(): Promise<Array<IListResponse>> {
+    @Get("/transactions")
+    public async getTransactions(): Promise<IAdminTransactionsResponse> {
         const payments = await Payment.find();
-        return payments.map(x => {
+        const transactions = payments.map(x => {
             return {
                 recipient: x.recipientId,
                 amount: `${x.amount} ${x.currency}`,
@@ -74,11 +50,16 @@ export class AdminController {
                 fee: `${x.fee.toFixed(2)} USD`,
             };
         });
+        return {
+            transactions
+        };
     }
 
     @Get("/users")
-    public async getUsers(): Promise<Array<IUsersResponse>> {
-        return [];
+    public async getUsers(): Promise<IAdminUsersResponse> {
+        return { 
+            users: []
+        };
         //TODO: /\
     }
 }
