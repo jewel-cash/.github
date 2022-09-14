@@ -1,6 +1,6 @@
 import { JTDSchemaType } from "core"; 
 
-export interface ICoinbaseAccountElement {
+export interface ICoinbaseAccount {
     id: string; 
     currency: { 
         code: string; 
@@ -8,35 +8,37 @@ export interface ICoinbaseAccountElement {
     };
 }
 
-export interface ICoinbaseAccount { 
+export const CoinbaseAccountSchema: JTDSchemaType<ICoinbaseAccount> = {
+    properties: {
+        id: { type: "string" },
+        currency: {
+            properties: {
+                code: { type: "string" },
+                color: { type: "string" }
+            },
+            additionalProperties: true
+        }
+    },
+    additionalProperties: true
+};
+
+export interface ICoinbaseAccounts { 
     pagination: {
         next_uri: string | null;
     };
-    data: Array<ICoinbaseAccountElement>;
+    data: Array<ICoinbaseAccount>;
 }
 
-export const CoinbaseAccountSchema: JTDSchemaType<ICoinbaseAccount> = {
+export const CoinbaseAccountsSchema: JTDSchemaType<ICoinbaseAccounts> = {
     properties: {
         pagination: {
             properties: {
-                next_uri: { type: "string", nullable: true },
+                next_uri: { type: "string", nullable: true }
             },
             additionalProperties: true
         },
         data: { 
-            elements: {
-                properties: {
-                    id: { type: "string" },
-                    currency: {
-                        properties: {
-                            code: { type: "string" },
-                            color: { type: "string" },
-                        },
-                        additionalProperties: true
-                    }
-                },
-                additionalProperties: true
-            }
+            elements: CoinbaseAccountSchema
         }
     },
     additionalProperties: true
@@ -52,10 +54,10 @@ export const CoinbaseAddressSchema: JTDSchemaType<ICoinbaseAddress> = {
     properties: {
         data: { 
             properties: {
-                address: { type: "string" },
+                address: { type: "string" }
             },
             additionalProperties: true
-        }, 
+        } 
     },
     additionalProperties: true
 };

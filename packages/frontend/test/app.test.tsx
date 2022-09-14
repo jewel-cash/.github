@@ -4,7 +4,7 @@ import App from "../src/components/app";
 
 it("App should be displayed", () => {
     const component = renderer.create(
-        <App/>,
+        <App/>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

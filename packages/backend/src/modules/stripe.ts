@@ -24,7 +24,7 @@ export const createStripeLink = async (id: string, refreshUrl: string, returnUrl
         account: id,
         refresh_url: refreshUrl,
         return_url: returnUrl,
-        type: "account_onboarding",
+        type: "account_onboarding"
     });
     const request = addHeadersToRequest({
         endpoint: "/v1/account_links",

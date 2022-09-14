@@ -34,7 +34,7 @@ it("Valid passwords should be marked as valid", () => {
         "owEwa%oia1",
         "aope^1Ab",
         "ow&Oawef13",
-        "90AWEwoie*",
+        "90AWEwoie*"
     ].map(isValidPassword);
     expect(array).not.toContain(false);
 });

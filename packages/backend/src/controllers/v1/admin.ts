@@ -47,7 +47,7 @@ export class AdminController {
                 amount: `${x.amount} ${x.currency}`,
                 exchangeRate: `${x.exchangeRate.toFixed(2)} USD/${x.currency}`,
                 proceeds: `${x.proceeds.toFixed(2)} USD`,
-                fee: `${x.fee.toFixed(2)} USD`,
+                fee: `${x.fee.toFixed(2)} USD`
             };
         });
         return {
