@@ -11,6 +11,6 @@ export const isValidEmail = (str: string) => {
 };
 
 export const isValidName = (str: string) => {
-    const re = new RegExp(/^[a-zA-Z0-9_]{3,25}$/);
+    const re = new RegExp(/^[a-zA-Z0-9_\-.]{3,25}$/);
     return re.test(str);
 };

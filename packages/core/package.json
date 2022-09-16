@@ -6,7 +6,7 @@
     "types": "build/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "start": "nodemon -q -w src -e ts -x \"npm run build",
+        "start": "nodemon -q -w src -e ts -x \"npm run build\"",
         "test": "jest",
         "lint": "eslint --ext .ts .",
         "lint:fix": "eslint --fix --ext .ts ."
