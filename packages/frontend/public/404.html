@@ -6,8 +6,7 @@
         <script type="text/javascript">
             const l = window.location;
             const port = l.port ? `:${l.port}` : "";
-            const search = l.search ? `&${l.search}` : ""
-            l.replace(`${l.protocol}//${l.hostname}${port}${search}${l.hash}`);
+            l.replace(`${l.protocol}//${l.hostname}${port}/?${l.pathname}`);
         </script>
     </head>
     <body>
