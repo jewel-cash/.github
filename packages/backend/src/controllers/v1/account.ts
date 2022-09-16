@@ -3,6 +3,7 @@ import { UserLink } from "../../entities/link.js";
 import { IStripeAccount, StripeAccount } from "../../entities/stripeaccount.js";
 import { createStripeAccount, createStripeLink } from "../../modules/stripe.js";
 import type { IAccountLinksResponse, IAccountLinkResponse, IAccountStatus, IAccountStripeLinkRequest, IAccountStripeLinkResponse } from "core";
+import { HttpError } from "../../modules/error.js";
 
 @Route("/v1/account")
 @Security("token")
@@ -24,7 +25,11 @@ export class AccountController {
     @Post("/link")
     @SuccessResponse(201)
     public async createLink(@Request() req: any, @Body() body: IAccountLinkResponse): Promise<IAccountLinkResponse> {
-        //TODO: max 5
+        if (body.link.length < 3) { throw new HttpError(400, "Link needs to be at least 3 characters."); }
+        const existingLink = await UserLink.findOne({ link: body.link });
+        if (existingLink != null) { throw new HttpError(400, `Link "${body.link}" is already taken.`); }
+        const userLinks = await UserLink.find({ userId: req.user.userId });
+        if (userLinks.length >= 5) { throw new HttpError(400, "Maximum ammount of links already assinged."); }
         const link = new UserLink({ userId: req.user.userId, link: body.link });
         await link.save();
         return body;

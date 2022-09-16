@@ -5,13 +5,16 @@ import { HttpError } from "../../modules/error.js";
 import { PendingPayment } from "../../entities/pending.js";
 import { CoinbaseAccount } from "../../entities/coinbaseaccount.js";
 import { UserLink } from "../../entities/link.js";
-import type { ICryptoTokensResponse, ICryptoTokenResponse, ICryptoChallengeResponse, ICryptoAddressRequest, ICryptoAddressResponse } from "core";
+import type { ICryptoTokensRequest, ICryptoTokensResponse, ICryptoTokenResponse, ICryptoChallengeResponse, ICryptoAddressRequest, ICryptoAddressResponse } from "core";
 
 @Route("/v1/crypto")
 export class CryptoController {
 
-    @Get("/tokens")
-    public async getAllTokens(): Promise<ICryptoTokensResponse> {
+    @Post("/tokens")
+    public async getAllTokens(@Body() body: ICryptoTokensRequest): Promise<ICryptoTokensResponse> {
+        const link = await UserLink.findOne({ link: body.link });
+        if (link == null) { throw new HttpError(404, `Link "${body.link}" not found.`); }
+        
         const accounts = await CoinbaseAccount.find();
         const tokens: Array<ICryptoTokenResponse> = accounts.map(x => {
             return {
@@ -38,10 +41,10 @@ export class CryptoController {
     public async createNewAddress(@Body() body: ICryptoAddressRequest): Promise<ICryptoAddressResponse> {
         verifyChallenge(body.challenge, body.challengeResponse);
 
-        const recipientId = await UserLink.findOne({ link: body.link });
-        if (recipientId == null) { throw new HttpError(404, `Link ${body.link} not found.`);}
+        const userLink = await UserLink.findOne({ link: body.link });
+        if (userLink == null) { throw new HttpError(404, `Link "${body.link}" not found.`);}
 
-        const pendingPayment = new PendingPayment({ name: body.name, message: body.message, recipientId: recipientId });
+        const pendingPayment = new PendingPayment({ name: body.name, message: body.message, recipientId: userLink.userId });
         await pendingPayment.save();
 
         const address = await createAddress(body.currency, pendingPayment.id);
