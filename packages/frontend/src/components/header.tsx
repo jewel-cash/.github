@@ -5,7 +5,7 @@ import Login from "./login";
 import { auth } from "../modules/firebase";
 
 interface IProps {
-    isLoggedIn: boolean;
+    isLoggedIn?: boolean;
 }
 
 interface IState {
@@ -43,7 +43,7 @@ export default class Header extends Component<IProps, IState> {
             <div className="header">
                 <div className="header-content">
                     Header
-                    <button onClick={this.loginPressed} className="header-login">
+                    <button onClick={this.loginPressed} className="header-login" hidden={this.props.isLoggedIn == null}>
                         {this.props.isLoggedIn ? "Logout" : "Login"}
                     </button>
                 </div>
