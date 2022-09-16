@@ -42,6 +42,6 @@ export const DashboardOverviewResponseSchema: JTDSchemaType<IDashboardOverviewRe
     properties: {
         cumlative: { type: "string" },
         pending: { type: "string" },
-        nextPaymentDate: { type: "int32" },
+        nextPaymentDate: { type: "int32" }
     }
 };
