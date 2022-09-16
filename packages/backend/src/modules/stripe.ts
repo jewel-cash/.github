@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
-import { Client } from "core";
-import { StripeAccountSchema, StripeAccountLinkSchema } from "../model/stripe.js";
+import { Client, StripeAccountSchema, StripeAccountLinkSchema } from "core";
 
 dotenv.config();
 

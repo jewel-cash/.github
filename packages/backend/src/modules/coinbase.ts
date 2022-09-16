@@ -1,8 +1,7 @@
 import { BigNumber } from "bignumber.js";
 import dotenv from "dotenv";
 import { createHmac } from "crypto";
-import { Client, IRequest } from "core";
-import { CoinbaseAddressSchema, CoinbaseAccountsSchema, ICoinbaseAccount, CoinbaseExchangeRateSchema } from "../model/coinbase.js";
+import { Client, IRequest, CoinbaseAddressSchema, CoinbaseAccountsSchema, ICoinbaseAccount, CoinbaseExchangeRateSchema } from "core";
 
 dotenv.config();
 

@@ -1,5 +1,4 @@
 
-
 export const isValidPassword = (str: string) => {
     const re = new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/);
     return re.test(str);

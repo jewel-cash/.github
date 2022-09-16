@@ -1,4 +1,4 @@
-import { JTDSchemaType } from "core"; 
+import { JTDSchemaType } from "ajv/dist/jtd.js";
 
 export interface IStripeAccount { 
     id: string;
