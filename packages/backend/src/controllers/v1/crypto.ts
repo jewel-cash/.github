@@ -14,7 +14,6 @@ export class CryptoController {
     public async getAllTokens(@Body() body: ICryptoTokensRequest): Promise<ICryptoTokensResponse> {
         const link = await UserLink.findOne({ link: body.link });
         if (link == null) { throw new HttpError(404, `Link "${body.link}" not found.`); }
-        
         const accounts = await CoinbaseAccount.find();
         const tokens: Array<ICryptoTokenResponse> = accounts.map(x => {
             return {
