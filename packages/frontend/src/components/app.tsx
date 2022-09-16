@@ -16,10 +16,10 @@ export default class App extends Component<any, IState> {
     private link: string;
 
     constructor(props: any) {
-        super(props)
+        super(props);
         const query = new URLSearchParams(window.location.search);
         this.link = query.keys().next().value;
-        this.state = { isLoggedIn: false}
+        this.state = { isLoggedIn: false};
     }
 
     componentDidMount() {

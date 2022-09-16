@@ -20,7 +20,7 @@ export default class Link extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        console.log("a")
+        console.log("a");
         getTokens(this.props.link)
             .then(tokens => this.setState({ tokens }))
             .catch(_ => this.setState({ error: "Not Found" }));

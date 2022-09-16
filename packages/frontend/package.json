@@ -43,6 +43,7 @@
         "testEnvironment": "node",
         "moduleNameMapper": {
             "^(\\.{1,2}/.*)\\.js$": "$1",
+            "^.*\\.(css|less|sass|scss)$": "identity-obj-proxy",
             "^core$": "<rootDir>/../core/src/index"
         }
     }
