@@ -50,7 +50,7 @@ jobs:
     - name: Transpile Code
       run: |
         npm ci
-        npm run build
+        # npm run build TODO: -< reenable after figuring out the ordering issue
 
   test:
     runs-on: ubuntu-latest

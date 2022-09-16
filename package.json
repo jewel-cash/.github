@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "postinstall": "lerna bootstrap",
-        "build": "lerna run build",
+        "build": "lerna run build --parallel",
         "prestart": "npm run build",
         "start": "lerna run start --parallel --no-sort",
         "test": "lerna run test --parallel --no-sort",
