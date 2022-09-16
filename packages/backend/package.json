@@ -3,8 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "prebuild": "tsoa spec-and-routes",
-        "build": "tsc",
+        "build": "tsoa spec-and-routes && tsc",
         "start": "nodemon -q -w src -e ts -x \"npm run build && node build/app.js\"",
         "test": "jest",
         "lint": "eslint --ext .ts .",
