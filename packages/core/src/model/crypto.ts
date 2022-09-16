@@ -40,6 +40,16 @@ export const CryptoChallengeResponseSchema: JTDSchemaType<ICryptoChallengeRespon
     }
 };
 
+export interface ICryptoTokensRequest {
+    link: string;
+}
+
+export const CryptoTokensRequestSchema: JTDSchemaType<ICryptoTokensRequest> = {
+    properties: {
+        link: { type: "string" }
+    }
+};
+
 export interface ICryptoTokenResponse {
     currency: string;
     color: string;
@@ -58,7 +68,7 @@ export interface ICryptoTokensResponse {
     tokens: Array<ICryptoTokenResponse>;
 }
 
-export const IryptoTokensResponseSchema: JTDSchemaType<ICryptoTokensResponse> = {
+export const CryptoTokensResponseSchema: JTDSchemaType<ICryptoTokensResponse> = {
     properties: {
         tokens: {
             elements: CryptoTokenResponseSchema
