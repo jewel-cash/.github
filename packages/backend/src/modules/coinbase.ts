@@ -1,10 +1,17 @@
 import { BigNumber } from "bignumber.js";
+import dotenv from "dotenv";
 import { createHmac } from "crypto";
 import { Client, IRequest } from "core";
-import { CoinbaseAddressSchema, CoinbaseAccountSchema, ICoinbaseAccountElement, CoinbaseExchangeRateSchema } from "../model/coinbase.js";
+import { CoinbaseAddressSchema, CoinbaseAccountsSchema, ICoinbaseAccount, CoinbaseExchangeRateSchema } from "../model/coinbase.js";
 
-const client = new Client("https://api.coinbase.com");
+dotenv.config();
 
+const staticHeaders: Record<string, string> = {
+    "Content-Type": "application/json",
+    "CB-ACCESS-KEY": process.env.COINBASE_KEY ?? "",
+    "CB-VERSION": "2022-03-03"
+};
+const client = new Client("https://api.coinbase.com", staticHeaders);
 
 export const createAddress = async (account: string, id: string) => {
     const request = addHeadersToRequest({
@@ -18,13 +25,13 @@ export const createAddress = async (account: string, id: string) => {
 
 
 export const getAllAccounts = async () => {
-    let accounts: Array<ICoinbaseAccountElement> = [];
+    let accounts: Array<ICoinbaseAccount> = [];
     let next: string | null = "/v2/accounts";
     while (next != null) {
         const request = addHeadersToRequest({
             endpoint: next
         });
-        const response = await client.request(request, CoinbaseAccountSchema);
+        const response = await client.request(request, CoinbaseAccountsSchema);
         next = response.pagination.next_uri;
 
         accounts = accounts.concat(response.data);
@@ -62,11 +69,8 @@ const addHeadersToRequest = (req: IRequest) => {
     const originalHeaders = req.headers ?? { };
     req.headers = {
         ...originalHeaders,
-        "Content-Type": "application/json",
         "CB-ACCESS-SIGN": signature,
-        "CB-ACCESS-TIMESTAMP": timestamp.toString(),
-        "CB-ACCESS-KEY": process.env.COINBASE_KEY ?? "",
-        "CB-VERSION": "2022-03-03"
+        "CB-ACCESS-TIMESTAMP": timestamp.toString()
     };
     return req;
 };
