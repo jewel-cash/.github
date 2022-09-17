@@ -3,9 +3,9 @@
     "private": true,
     "scripts": {
         "postinstall": "lerna bootstrap",
-        "build": "lerna run build --parallel",
+        "build": "lerna run build",
         "prestart": "npm run build",
-        "start": "lerna run start --parallel --no-sort",
+        "start": "lerna run start --no-sort",
         "test": "jest -u",
         "lint": "eslint --ext .ts --ext .tsx .",
         "lint:fix": "eslint --fix --ext .ts --ext .tsx .",

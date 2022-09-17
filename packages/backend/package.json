@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "sleep 2 && tsoa spec-and-routes && tsc",
+        "build": "sleep 5 && tsoa spec-and-routes && tsc",
         "start": "nodemon -q -w src -e ts -x \"npm run build && node build/app.js\""
     },
     "dependencies": {
