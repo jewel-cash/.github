@@ -1,5 +1,5 @@
 import Ajv, { JTDSchemaType } from "ajv/dist/jtd.js";
-const ajv = new Ajv.default();
+const ajv = new Ajv();
 
 export interface IRequest {
     method?: string;

@@ -1,7 +1,4 @@
-import dotenv from "dotenv";
 import { Client, StripeAccountSchema, StripeAccountLinkSchema } from "core";
-
-dotenv.config();
 
 const staticHeaders = {
     "Content-Type": "application/x-www-form-urlencoded",

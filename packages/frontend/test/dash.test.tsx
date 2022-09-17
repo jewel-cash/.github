@@ -1,10 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "../src/components/app";
+import Dash from "../src/components/dash";
 
-it("App should be displayed", () => {
+it("Dash should be displayed", () => {
     const component = renderer.create(
-        <App/>
+        <Dash/>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

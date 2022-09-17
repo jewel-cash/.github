@@ -3,8 +3,6 @@
    "compilerOptions": {
       "rootDir": "./src",
       "outDir": "./build",
-      "moduleResolution": "node",
-      "jsx": "react-jsx",
       "noEmit": true
    },
    "include": [ "src" ]

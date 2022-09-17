@@ -1,14 +1,15 @@
 {
     "compilerOptions": {
-        "target": "esnext",
+        "target": "ESNext",
         "lib": [
             "dom",
             "dom.iterable",
             "esnext"
         ],
         "outDir": "./build",
-        "module": "esnext",
-        "moduleResolution": "nodeNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "jsx": "react-jsx",
         "strict": true,
         "removeComments": true,
         "esModuleInterop": true,
@@ -17,6 +18,7 @@
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "resolveJsonModule": true,
-        "isolatedModules": true
+        "isolatedModules": true,
+        "experimentalDecorators": true,
     }
 }
