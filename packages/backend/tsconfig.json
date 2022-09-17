@@ -3,6 +3,7 @@
    "compilerOptions": {
       "rootDir": "./src",
       "outDir": "./build",
+      "experimentalDecorators": true,
       "emitDecoratorMetadata": true
    },
    "include": [ "src" ]
