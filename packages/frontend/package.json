@@ -6,7 +6,8 @@
     "scripts": {
         "build": "react-scripts build",
         "start": "node -r dotenv/config ./serve.js",
-        "deploy": "npm run build && gh-pages -d build"
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.1.2",
