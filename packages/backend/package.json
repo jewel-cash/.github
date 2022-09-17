@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "sleep 5 && tsoa spec-and-routes && tsc",
-        "start": "nodemon -q -w src -e ts -x \"npm run build && node build/app.js\""
+        "start": "node -r dotenv/config ./build/app.js"
     },
     "dependencies": {
         "bignumber.js": "^9.1.0",

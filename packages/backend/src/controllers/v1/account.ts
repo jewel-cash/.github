@@ -20,7 +20,7 @@ export class AccountController {
         return {
             links: mapped
         };
-    }
+    } 
 
     @Post("/link")
     @SuccessResponse(201)

@@ -1,11 +1,8 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import { nanoid } from "nanoid";
 import { createHash } from "crypto";
 import { HttpError } from "./error.js";
 import { BigNumber } from "bignumber.js";
-
-dotenv.config();
 
 const secretKey = process.env.JWT_KEY ?? "";
 

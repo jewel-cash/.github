@@ -1,9 +1,6 @@
 import { BigNumber } from "bignumber.js";
-import dotenv from "dotenv";
 import { createHmac } from "crypto";
 import { Client, IRequest, CoinbaseAddressSchema, CoinbaseAccountsSchema, ICoinbaseAccount, CoinbaseExchangeRateSchema } from "core";
-
-dotenv.config();
 
 const staticHeaders: Record<string, string> = {
     "Content-Type": "application/json",

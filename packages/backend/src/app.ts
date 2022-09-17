@@ -2,13 +2,10 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
-import dotenv from "dotenv";
 import cors from "cors";
 import { RegisterRoutes } from "./modules/routes.gen.js";
 import { RegisterCronsJobs } from "./modules/cron.js";
 import { HttpError } from "./modules/error.js";
-
-dotenv.config();
 
 const options: mongoose.ConnectOptions = {
     // useNewUrlParser: true,

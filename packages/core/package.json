@@ -5,8 +5,7 @@
     "main": "./build/index.js",
     "types": "./build/index.d.ts",
     "scripts": {
-        "build": "tsc",
-        "start": "nodemon -q -w src -e ts -x \"npm run build\""
+        "build": "tsc"
     },
     "dependencies": {
         "ajv": "^8.11.0"

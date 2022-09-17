@@ -2,9 +2,10 @@
     "name": "frontend",
     "private": true,
     "type": "module",
+    "homepage": "https://jewel.cash",
     "scripts": {
         "build": "react-scripts build",
-        "start": "react-scripts start > /dev/null 2>&1",
+        "start": "node -r dotenv/config ./serve.js",
         "deploy": "npm run build && gh-pages -d build"
     },
     "dependencies": {

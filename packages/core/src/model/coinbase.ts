@@ -6,7 +6,7 @@ export interface ICoinbaseAccount {
         code: string; 
         color: string; 
     };
-}
+} 
 
 export const CoinbaseAccountSchema: JTDSchemaType<ICoinbaseAccount> = {
     properties: {
