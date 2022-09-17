@@ -6,7 +6,6 @@
     "scripts": {
         "build": "react-scripts build",
         "start": "node -r dotenv/config ./serve.js",
-        "predeploy": "npm run build",
         "deploy": "gh-pages -d build"
     },
     "dependencies": {

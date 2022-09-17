@@ -9,8 +9,8 @@
         "watch": "nodemon -q",
         "test": "jest -u",
         "lint": "eslint .",
-        "lint:fix": "eslint --fix .",
-        "deploy:frontend": "lerna run deploy --scope frontend"
+        "predeploy": "npm run build",
+        "deploy": "lerna run deploy"
     },
     "devDependencies": {
         "@types/cookie-parser": "^1.4.3",
