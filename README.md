@@ -1,5 +1,5 @@
 # jewel.cash
-*Receive payments and donations through Crypto. Get payed out in Fiat!*
+*Receive payments and donations through Crypto - get payed out in Fiat.*
 
 ## The app
 
