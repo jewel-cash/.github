@@ -3,8 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "sleep 5 && tsoa spec-and-routes && tsc",
-        "start": "node -r dotenv/config ./build/app.js"
+        "build": "tsoa spec-and-routes && tsc",
+        "start": "node -r dotenv/config ./build/app.js",
+        "deploy": "echo DEPLOY"
     },
     "dependencies": {
         "bignumber.js": "^9.1.0",

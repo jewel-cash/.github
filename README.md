@@ -8,7 +8,7 @@ This repository consists of several components:
 * `Frontend` - contains the [React](https://reactjs.org) frontend code.
 * `Backend` - contains the [Express](https://expressjs.com) backend code.
 
-All components are tied together using [Lerna](https://lerna.js.org).
+All components are tied together using [Nx](https://nx.dev).
 
 ## Commands
 

@@ -87,7 +87,7 @@ jobs:
         git config --global user.email github-actions@github.com
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         npm ci
-        npm run deploy -- --scope frontend
+        npm run deploy -- --projects frontend
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -106,4 +106,4 @@ jobs:
     - name: Deploy Node
       run: |
         npm ci
-        npm run deploy -- --scope backend
+        npm run deploy -- --projects backend
