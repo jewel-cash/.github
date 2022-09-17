@@ -1,4 +1,4 @@
-import { JTDSchemaType } from "ajv/dist/jtd.js";
+import { JTDSchemaType } from "ajv/dist/jtd";
 
 export interface IAccountStatus {
     onboarded: boolean;
