@@ -4,6 +4,7 @@
     "scripts": {
         "postinstall": "lerna bootstrap",
         "build": "lerna run build",
+        "prestart": "npm run build",
         "start": "lerna run start --no-sort",
         "watch": "nodemon -q",
         "test": "jest -u",
@@ -49,7 +50,7 @@
             "packages/frontend/src"
         ],
         "ext": "*",
-        "exec": "npm run build && npm run start"
+        "exec": "npm run start"
     },
     "jest": {
         "preset": "ts-jest",
