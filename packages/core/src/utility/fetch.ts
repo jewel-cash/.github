@@ -17,6 +17,12 @@ export class Client {
         this.headers = headers ?? { };
     }
 
+    public updateHeaders(update: Record<string, string>) {
+        for (const key in update) {
+            this.headers[key] = update[key];
+        }
+    }
+
     public async request<T>(req: IRequest, schema: JTDSchemaType<T>): Promise<T> {
         const infix = (this.baseUrl.endsWith("/") || req.endpoint.startsWith("/")) ? "" : "/";
         const url: RequestInfo = this.baseUrl + infix + req.endpoint;
