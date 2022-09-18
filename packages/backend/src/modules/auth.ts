@@ -13,8 +13,7 @@ export const expressAuthentication = async (req: Request, securityName: string, 
     try {
         const userId = await getUserId[securityName](req);
         return { userId, scopes };
-    } catch (error) {
-        console.log(error);
+    } catch {
         throw new HttpError(401, "Invalid or missing authorization.");
     }
 };
@@ -43,7 +42,6 @@ const getUserId: Handler = {
             issuer: auth0Domain
         };
         jwt.verify(authorizationToken, pubKey, options);
-        console.log(authorizationClaim);
         return (<jwt.JwtPayload>authorizationClaim.payload).azp;
     },
     admin: async (req: Request) => {
