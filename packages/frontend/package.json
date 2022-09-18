@@ -5,8 +5,7 @@
     "homepage": "https://jewel.cash",
     "scripts": {
         "build": "react-scripts build",
-        "start": "node -r dotenv/config ./serve.js",
-        "deploy": "gh-pages -d build"
+        "start": "node -r dotenv/config ./serve.js"
     },
     "dependencies": {
         "@auth0/auth0-react": "^1.11.0",

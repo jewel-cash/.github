@@ -4,8 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "tsoa spec-and-routes && tsc",
-        "start": "node -r dotenv/config ./build/app.js",
-        "deploy": "echo DEPLOY"
+        "start": "node -r dotenv/config ./build/app.js"
     },
     "dependencies": {
         "bignumber.js": "^9.1.0",
