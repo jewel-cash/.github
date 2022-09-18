@@ -20,12 +20,17 @@ class Header extends Component<IProps> {
         }
     }
 
+    isLoginButtonHidden() {
+        if (this.props.auth0.isLoading) { return false; }
+        return !this.props.showLoginButton;
+    }
+
     render() {
         return (
             <div className="header">
                 <div className="header-content">
                     Header
-                    <button onClick={this.loginPressed} className="header-login" hidden={!this.props.showLoginButton ?? false}>
+                    <button onClick={this.loginPressed} className="header-login" hidden={this.isLoginButtonHidden()}>
                         {this.props.auth0.isAuthenticated ? "Logout" : "Login"}
                     </button>
                 </div>

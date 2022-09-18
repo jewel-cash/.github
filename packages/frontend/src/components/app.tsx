@@ -16,11 +16,27 @@ class App extends Component<WithAuth0Props> {
         this.link = hash.length === 0 ? null : hash;
     }
 
+    content() {
+        if (this.link != null) {
+            return (<Link link={this.link} />);
+        }
+
+        if (this.props.auth0.isLoading) {
+            return (<div>Loading...</div>);
+        }
+
+        if (this.props.auth0.isAuthenticated) {
+            return (<Dash />);
+        }
+
+        return (<Front />);
+    }
+
     render() {
         return (
             <div className="app">
                 <Header showLoginButton={this.link == null} />
-                {this.link == null ? this.props.auth0.isAuthenticated ? <Dash /> : <Front /> : <Link link={this.link} /> }
+                {this.content()}
                 <Footer />
             </div>
         );

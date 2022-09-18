@@ -1,10 +1,9 @@
 import { Request } from "express";
 import { HttpError } from "../modules/error.js";
-import jwt from "jsonwebtoken";
-import { nanoid } from "nanoid";
-import { ApiKey } from "../entities/apikey.js";
-import { createVerify, timingSafeEqual } from "crypto";
+import jwt, { Jwt } from "jsonwebtoken";
+import { createVerify } from "crypto";
 import { queryToObject } from "core";
+import JwksRsa from "jwks-rsa";
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
     if (process.env.DEBUG === "true") {
@@ -14,10 +13,18 @@ export const expressAuthentication = async (req: Request, securityName: string, 
     try {
         const userId = await getUserId[securityName](req);
         return { userId, scopes };
-    } catch {
+    } catch (error) {
+        console.log(error);
         throw new HttpError(401, "Invalid or missing authorization.");
     }
 };
+
+const auth0Domain = process.env.AUTH0_DOMAIN ?? "";
+const auth0Audience = process.env.AUTH0_AUDIENCE ?? "";
+const jwks = JwksRsa({
+    jwksUri: `${auth0Domain}.well-known/jwks.json`,
+    rateLimit: true
+});
 
 interface Handler { 
     [key: string]: (req: Request) => Promise<string>;
@@ -25,26 +32,28 @@ interface Handler {
 
 const getUserId: Handler = {
     token: async (req: Request) => {
-        const authorizationToken = req.header("Authorization");
+        const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const tokenSecret = process.env.AUTH0_SECRET ?? "";
-        const authorizationClaim = jwt.verify(authorizationToken, tokenSecret) as jwt.JwtPayload;
-        return authorizationClaim.uid;
-    },
-    key: async (req: Request) => {
-        const authorizationToken = req.header("Authorization");
-        if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const authorizationClaim = jwt.verify(authorizationToken, jwtSecret) as jwt.JwtPayload;
-        if (await ApiKey.findOne({ kid: authorizationClaim.kid }).exec() == null) { throw new Error("ApiKeyRevoked"); }
-        return authorizationClaim.uid;
+        const authorizationClaim = jwt.decode(authorizationToken, { complete: true }) as Jwt;
+        if (!authorizationClaim) { throw new Error("NoAuthorizationClaim"); }
+        const authorizationKey = await jwks.getSigningKey(authorizationClaim.header.kid);
+        const pubKey = authorizationKey.getPublicKey();
+        const options: jwt.VerifyOptions = {
+            audience: auth0Audience,
+            issuer: auth0Domain
+        };
+        jwt.verify(authorizationToken, pubKey, options);
+        console.log(authorizationClaim);
+        return (<jwt.JwtPayload>authorizationClaim.payload).azp;
     },
     admin: async (req: Request) => {
-        const authorizationToken = req.header("Authorization");
+        const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const authorizationBuffer = Buffer.from(authorizationToken, "utf8");
-        const checkBuffer = Buffer.from(process.env.ADMIN_KEY ?? "", "utf8");
-        if (!timingSafeEqual(authorizationBuffer, checkBuffer)) { throw new Error("InvalidAuthorizationToken"); }
-        return "Admin";
+        const authorizationClaim = jwt.decode(authorizationToken) as jwt.JwtPayload;
+        const roles = authorizationClaim.permissions as Array<string>;
+        const hasAdminRole = roles.includes("admin");
+        if (!hasAdminRole) { throw new Error("InsufficientPermissions"); }
+        return await getUserId["token"](req);
     },
     coinbase: async (req: Request) => {
         if (req.ip !== "54.175.255.192/27") {  throw new Error("WrongSourceIp"); }
@@ -85,26 +94,4 @@ const timestampIsNow = (timestamp: number, tolerance = 300) => {
     if (timestamp < now - tolerance) { return false; }
     if (timestamp > now + tolerance) { return false; }
     return true;
-};
-
-const jwtSecret = process.env.JWT_SECRET ?? "";
-
-export const createApiKey = (userId: string, name: string) => {
-    const payload: jwt.JwtPayload = {
-        kid: nanoid(),
-        uid: userId,
-        cid: name
-    };
-
-    const options: jwt.SignOptions = { 
-        algorithm: "HS512",
-        expiresIn: "1 year",
-        notBefore: "1s",
-        issuer: "jewel.cash",
-        mutatePayload: true
-    };
-
-    const key = jwt.sign(payload, jwtSecret, options);
-
-    return { payload, key };
 };

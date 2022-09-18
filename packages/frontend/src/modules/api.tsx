@@ -1,9 +1,11 @@
 import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema } from "core";
 
+const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
+
 const staticHeaders = {
     "Content-Type": "application/json"
 };
-const client = new Client("http://localhost:4000", staticHeaders);
+const client = new Client(baseUrl, staticHeaders);
 
 export const getTokens = async (link: string) => {
     const body: ICryptoTokensRequest = {
@@ -21,7 +23,7 @@ export const getTokens = async (link: string) => {
 export const getDashboardOverview = async (auth: string) => {
     const request: IRequest = {
         endpoint: "/v1/dashboard/overview",
-        headers: { "Authorization": auth }
+        headers: { "Authorization": `Bearer ${auth}` }
     };
     const response = await client.request(request, DashboardOverviewResponseSchema);
     return response;
