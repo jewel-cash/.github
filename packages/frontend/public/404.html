@@ -6,7 +6,7 @@
         <script type="text/javascript">
             const l = window.location;
             const port = l.port ? `:${l.port}` : "";
-            l.replace(`${l.protocol}//${l.hostname}${port}/?${l.pathname}`);
+            l.replace(`${l.protocol}//${l.hostname}${port}/#${l.pathname}`);
         </script>
     </head>
     <body>

@@ -17,12 +17,3 @@
     right: 0;
     top: 0;
 }
-
-.header-login-background {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    background-color: #0007;
-    left: 0;
-    top: 0;
-}

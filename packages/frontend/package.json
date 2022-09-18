@@ -9,14 +9,12 @@
         "deploy": "gh-pages -d build"
     },
     "dependencies": {
+        "@auth0/auth0-react": "^1.11.0",
         "@fortawesome/fontawesome-svg-core": "^6.1.2",
         "@fortawesome/free-brands-svg-icons": "^6.1.2",
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
         "core": "*",
-        "dotenv": "^16.0.1",
-        "firebase": "^9.9.2",
-        "node-fetch": "^3.2.10",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-scripts": "^5.0.1"

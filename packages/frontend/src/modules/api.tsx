@@ -1,25 +1,9 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest } from "core";
-import { onTokenChanged } from "firebase/app-check";
-import { onIdTokenChanged } from "firebase/auth";
-import { appCheck, auth } from "./firebase";
+import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema } from "core";
 
 const staticHeaders = {
     "Content-Type": "application/json"
 };
 const client = new Client("http://localhost:4000", staticHeaders);
-
-onTokenChanged(appCheck, (result) => {
-    client.updateHeaders({ 
-        "Signature": result.token 
-    });
-});
-
-onIdTokenChanged(auth, async (user) => {
-    const token = await user?.getIdToken() ?? "";
-    client.updateHeaders({ 
-        "Authorization": token
-    });
-});
 
 export const getTokens = async (link: string) => {
     const body: ICryptoTokensRequest = {
@@ -32,4 +16,13 @@ export const getTokens = async (link: string) => {
     };
     const response = await client.request(request, CryptoTokensResponseSchema);
     return response.tokens;
+};
+
+export const getDashboardOverview = async (auth: string) => {
+    const request: IRequest = {
+        endpoint: "/v1/dashboard/overview",
+        headers: { "Authorization": auth }
+    };
+    const response = await client.request(request, DashboardOverviewResponseSchema);
+    return response;
 };

@@ -1,41 +1,23 @@
 import "../styles/header.css";
 import React, { Component } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import Login from "./login";
-import { auth } from "../modules/firebase";
+import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 
-interface IProps {
-    isLoggedIn?: boolean;
+interface IProps extends WithAuth0Props {
+    showLoginButton?: boolean;
 }
 
-interface IState {
-    showLoginPopup: boolean;
-}
-
-export default class Header extends Component<IProps, IState> {
+class Header extends Component<IProps> {
     constructor(props: IProps) {
         super(props);
-        this.state = { showLoginPopup: false };
         this.loginPressed = this.loginPressed.bind(this);
-        this.backgroundPressed = this.backgroundPressed.bind(this);
-    }
-
-    componentDidMount() {
-        onAuthStateChanged(auth, () => {
-            this.setState({ showLoginPopup: false });
-        });
     }
 
     loginPressed() {
-        if (this.props.isLoggedIn) {
-            auth.signOut();
+        if (this.props.auth0.isAuthenticated) {
+            this.props.auth0.logout();
         } else {
-            this.setState({ showLoginPopup: true });
+            this.props.auth0.loginWithRedirect();
         }
-    }
-
-    backgroundPressed() {
-        this.setState({ showLoginPopup: false });
     }
 
     render() {
@@ -43,13 +25,13 @@ export default class Header extends Component<IProps, IState> {
             <div className="header">
                 <div className="header-content">
                     Header
-                    <button onClick={this.loginPressed} className="header-login" hidden={this.props.isLoggedIn == null}>
-                        {this.props.isLoggedIn ? "Logout" : "Login"}
+                    <button onClick={this.loginPressed} className="header-login" hidden={!this.props.showLoginButton ?? false}>
+                        {this.props.auth0.isAuthenticated ? "Logout" : "Login"}
                     </button>
                 </div>
-                { this.state.showLoginPopup && <button onClick={this.backgroundPressed} className="header-login-background" /> }
-                { this.state.showLoginPopup && <Login /> }
             </div>
         );
     }
 }
+
+export default withAuth0(Header);
