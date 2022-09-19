@@ -7,7 +7,6 @@ import { BigNumber } from "bignumber.js";
 const secretKey = process.env.JWT_KEY ?? "";
 
 export const createChallenge = () => {
-    //TODO: cascading difficulty for the same IP?
     const difficulty = new BigNumber(2).pow(255);
 
     const payload: jwt.JwtPayload = {

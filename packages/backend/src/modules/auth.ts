@@ -55,7 +55,6 @@ const getUserId: Handler = {
     },
     coinbase: async (req: Request) => {
         if (req.ip !== "54.175.255.192/27") {  throw new Error("WrongSourceIp"); }
-        //TODO: replay attack?
         const signature = req.header("CB-SIGNATURE") ?? "";
         const rawBody = req.body ?? "";
         const pubKey = process.env.COINBASE_PUB_KEY ?? "";

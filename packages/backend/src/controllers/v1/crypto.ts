@@ -48,7 +48,6 @@ export class CryptoController {
         await pendingPayment.save();
 
         const address = await createAddress(body.currency, pendingPayment.id);
-        //TODO: warning messages
         return {
             address
         };
