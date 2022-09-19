@@ -14,10 +14,10 @@ export class Client {
     private headers: Record<string, string>;
     private fetch: (url: string, req: any) => any;
 
-    constructor(baseUrl: string, fetch: (url: any, req: any) => any, headers?: Record<string, string>, ) {
+    constructor(baseUrl: string, fetch: (url: any, req: any) => any, headers?: Record<string, string> ) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         this.headers = headers ?? { };
-        this.fetch = fetch
+        this.fetch = fetch;
     }
 
     public updateHeaders(update: Record<string, string>) {
