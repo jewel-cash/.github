@@ -1,10 +1,9 @@
 ---
 name: Feature Request
 about: When you have an idea for an improvement or new feature.
-title: "[FEATURE]"
+title: "[Feature]"
 labels: ''
 assignees: ''
-
 ---
 
 **Describe the feature you'd like**

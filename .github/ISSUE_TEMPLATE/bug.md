@@ -1,10 +1,9 @@
 ---
 name: Bug Report
 about: When you want to report something not working as expected.
-title: "[BUG]"
+title: "[Bug]"
 labels: bug
 assignees: ''
-
 ---
 
 **Describe the bug**

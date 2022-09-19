@@ -1,10 +1,9 @@
 ---
 name: Technical Debt
 about: When you want to suggest a technical improvement.
-title: "[DEBT]"
+title: "[Technical]"
 labels: technical-debt
 assignees: ''
-
 ---
 
 **Describe the improvement**
