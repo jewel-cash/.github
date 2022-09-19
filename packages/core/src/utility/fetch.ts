@@ -1,4 +1,5 @@
 import Ajv, { JTDSchemaType } from "ajv/dist/jtd.js";
+
 const ajv = new Ajv();
 
 export interface IRequest {
@@ -11,10 +12,12 @@ export interface IRequest {
 export class Client {
     private baseUrl: string;
     private headers: Record<string, string>;
+    private fetch: (url: string, req: any) => any;
 
-    constructor(baseUrl: string, headers?: Record<string, string>) {
+    constructor(baseUrl: string, fetch: (url: string, req: any) => any, headers?: Record<string, string>, ) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         this.headers = headers ?? { };
+        this.fetch = fetch
     }
 
     public updateHeaders(update: Record<string, string>) {
@@ -25,17 +28,17 @@ export class Client {
 
     public async request<T>(req: IRequest, schema: JTDSchemaType<T>): Promise<T> {
         const infix = req.endpoint.startsWith("/") ? "" : "/";
-        const url: RequestInfo = this.baseUrl + infix + req.endpoint;
-        const headers: HeadersInit = {
+        const url = this.baseUrl + infix + req.endpoint;
+        const headers = {
             ...this.headers,
             ...req.headers ?? { }
         };
-        const request: RequestInit = {
+        const request = {
             headers: headers,
             method: req.method,
             body: req.body
         };
-        const res = await fetch(url, request);
+        const res = await this.fetch(url, request);
         if (res.status < 200 && res.status >= 300) { throw new Error(`BadStatusCode${res.status}`); }
         const json = await res.json();
 

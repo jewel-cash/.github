@@ -1,13 +1,14 @@
 import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
 import { Client, IRequest, CoinbaseAddressSchema, CoinbaseAccountsSchema, ICoinbaseAccount, CoinbaseExchangeRateSchema } from "core";
+import fetch from "node-fetch";
 
 const staticHeaders: Record<string, string> = {
     "Content-Type": "application/json",
     "CB-ACCESS-KEY": process.env.COINBASE_KEY ?? "",
     "CB-VERSION": "2022-03-03"
 };
-const client = new Client("https://api.coinbase.com", staticHeaders);
+const client = new Client("https://api.coinbase.com", fetch, staticHeaders);
 
 export const createAddress = async (account: string, id: string) => {
     const request = addHeadersToRequest({
