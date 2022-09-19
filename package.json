@@ -37,8 +37,7 @@
         "nx": "14.7.5"
     },
     "engines": {
-        "node": "^18.9.0",
-        "npm": "^8.19.0"
+        "node": "18.x"
     },
     "workspaces": [
         "packages/*"
