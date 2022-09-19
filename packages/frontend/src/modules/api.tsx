@@ -5,7 +5,8 @@ const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 const staticHeaders = {
     "Content-Type": "application/json"
 };
-const client = new Client(baseUrl, staticHeaders);
+const fetch = window.fetch.bind(window);
+const client = new Client(baseUrl, fetch, staticHeaders);
 
 export const getTokens = async (link: string) => {
     const body: ICryptoTokensRequest = {
