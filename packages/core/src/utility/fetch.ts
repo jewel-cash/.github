@@ -14,7 +14,7 @@ export class Client {
     private headers: Record<string, string>;
     private fetch: (url: string, req: any) => any;
 
-    constructor(baseUrl: string, fetch: (url: string, req: any) => any, headers?: Record<string, string>, ) {
+    constructor(baseUrl: string, fetch: (url: any, req: any) => any, headers?: Record<string, string>, ) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         this.headers = headers ?? { };
         this.fetch = fetch
@@ -28,12 +28,12 @@ export class Client {
 
     public async request<T>(req: IRequest, schema: JTDSchemaType<T>): Promise<T> {
         const infix = req.endpoint.startsWith("/") ? "" : "/";
-        const url = this.baseUrl + infix + req.endpoint;
-        const headers = {
+        const url: RequestInfo = this.baseUrl + infix + req.endpoint;
+        const headers: HeadersInit = {
             ...this.headers,
             ...req.headers ?? { }
         };
-        const request = {
+        const request: RequestInit = {
             headers: headers,
             method: req.method,
             body: req.body
