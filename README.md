@@ -8,7 +8,17 @@ This repository consists of several components:
 * `Frontend` - contains the [React](https://reactjs.org) frontend code.
 * `Backend` - contains the [Express](https://expressjs.com) backend code.
 
-All components are tied together using [Nx](https://nx.dev).
+All components are tied together using [Nx](https://nx.dev) and uses a [MongoDB](https://www.mongodb.com) NoSQL database.
+
+## Getting Started
+
+Getting set up with this repository is very easy.
+* Install node and MongoDB - `brew install node mongodb-community` (should work with node 16 or node 18).
+* Start MongoDB server - `brew services start mongodb-community`.
+* Clone this repository `git clone https://github.com/jewel-cash/.github`.
+* Fill out the two `.env` files (one for frontend package and one for backend package).
+* Install dependencies using npm - `npm install`.
+* Run one of the commands below - `npm run start`.
 
 ## Commands
 
