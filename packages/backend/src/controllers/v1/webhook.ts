@@ -6,8 +6,6 @@ import { StripeAccount } from "../../entities/stripeaccount.js";
 import { getExchangeRate } from "../../modules/coinbase.js";
 import { HttpError } from "../../modules/error.js";
 
-//TODO: error handling
-
 @Route("/v1/webhook")
 export class WebhookController {
 
@@ -27,7 +25,7 @@ export class WebhookController {
             if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`);}
             const exchangeRate = await getExchangeRate(currency, timestamp);
             const usdEquivalent = amount.multipliedBy(exchangeRate);
-            const fee = usdEquivalent.multipliedBy(0.1); //TODO: Cascading fee?
+            const fee = usdEquivalent.multipliedBy(0.1);
             const proceeds = usdEquivalent.minus(fee);
 
             const payment = new Payment({
@@ -44,8 +42,6 @@ export class WebhookController {
             });
 
             await payment.save();
-
-            //TODO: send webhook
         }
     }
 

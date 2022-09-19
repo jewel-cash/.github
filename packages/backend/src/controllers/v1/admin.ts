@@ -60,6 +60,5 @@ export class AdminController {
         return { 
             users: []
         };
-        //TODO: /\
     }
 }
