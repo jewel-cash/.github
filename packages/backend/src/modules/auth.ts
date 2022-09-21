@@ -20,7 +20,7 @@ export const expressAuthentication = async (req: Request, securityName: string, 
 const auth0Domain = process.env.AUTH0_DOMAIN ?? "";
 const auth0Audience = process.env.AUTH0_AUDIENCE ?? "";
 const jwksUrl = new URL(`${auth0Domain}.well-known/jwks.json`);
-const jwks = createRemoteJWKSet(jwksUrl, { })
+const jwks = createRemoteJWKSet(jwksUrl);
 
 interface Handler { 
     [key: string]: (req: Request) => Promise<string>;
@@ -33,7 +33,7 @@ const getUserId: Handler = {
         const options: JWTVerifyOptions = {
             audience: auth0Audience,
             issuer: auth0Domain
-        }
+        };
         const authorizationClaim = await jwtVerify(authorizationToken, jwks, options);
         return authorizationClaim.payload.azp as string;
     },

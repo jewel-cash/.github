@@ -1,23 +1,33 @@
-import { SignJWT, JWTVerifyOptions, jwtVerify } from "jose";
+import { SignJWT, JWTVerifyOptions, jwtVerify, JWTPayload, JWTHeaderParameters } from "jose";
 import { nanoid } from "nanoid";
 import { createHash } from "crypto";
 import { HttpError } from "./error.js";
 import { BigNumber } from "bignumber.js";
 
 const secretKey = Buffer.from(process.env.JWT_KEY ?? "");
-const issuer = "jewel.cash"
+const issuer = "jewel.cash";
 
 export const createChallenge = async (userId: string) => {
     const difficulty = new BigNumber(2).pow(255);
 
-    return await new SignJWT({ kid: nanoid(), dif: difficulty.toString() })
-        .setProtectedHeader({ alg: "HS512", typ: "JWT" })
+    const payload: JWTPayload = {
+        kid: nanoid(), 
+        dif: difficulty.toString()
+    };
+
+    const header: JWTHeaderParameters = {
+        alg: "HS512",
+        typ: "JWT"
+    };
+
+    return await new SignJWT(payload)
+        .setProtectedHeader(header)
         .setIssuedAt()
         .setIssuer(issuer)
         .setAudience(userId)
-        .setExpirationTime('30s')
+        .setExpirationTime("30s")
         .setNotBefore("1s")
-        .sign(secretKey)
+        .sign(secretKey);
 };
 
 export const verifyChallenge = async (challenge: string, response: string, userId: string) => {
@@ -25,8 +35,8 @@ export const verifyChallenge = async (challenge: string, response: string, userI
         const options: JWTVerifyOptions = {
             audience: userId,
             issuer: issuer
-        }
-        const claim = await jwtVerify(challenge, secretKey, options)
+        };
+        const claim = await jwtVerify(challenge, secretKey, options);
         const difficulty = new BigNumber(claim.payload.dif as string);
     
         const hash = createHash("sha256")
