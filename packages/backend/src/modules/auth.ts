@@ -1,9 +1,8 @@
 import { Request } from "express";
 import { HttpError } from "../modules/error.js";
-import jwt, { Jwt } from "jsonwebtoken";
 import { createVerify } from "crypto";
 import { queryToObject } from "core";
-import JwksRsa from "jwks-rsa";
+import jose from "jose";
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
     if (process.env.DEBUG === "true") {
@@ -20,10 +19,8 @@ export const expressAuthentication = async (req: Request, securityName: string, 
 
 const auth0Domain = process.env.AUTH0_DOMAIN ?? "";
 const auth0Audience = process.env.AUTH0_AUDIENCE ?? "";
-const jwks = JwksRsa({
-    jwksUri: `${auth0Domain}.well-known/jwks.json`,
-    rateLimit: true
-});
+const jwksUrl = new URL(`${auth0Domain}.well-known/jwks.json`);
+const jwks = jose.createRemoteJWKSet(jwksUrl, { })
 
 interface Handler { 
     [key: string]: (req: Request) => Promise<string>;
@@ -33,21 +30,17 @@ const getUserId: Handler = {
     token: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const authorizationClaim = jwt.decode(authorizationToken, { complete: true }) as Jwt;
-        if (!authorizationClaim) { throw new Error("NoAuthorizationClaim"); }
-        const authorizationKey = await jwks.getSigningKey(authorizationClaim.header.kid);
-        const pubKey = authorizationKey.getPublicKey();
-        const options: jwt.VerifyOptions = {
+        const options: jose.JWTVerifyOptions = {
             audience: auth0Audience,
             issuer: auth0Domain
-        };
-        jwt.verify(authorizationToken, pubKey, options);
-        return (<jwt.JwtPayload>authorizationClaim.payload).azp;
+        }
+        const authorizationClaim = await jose.jwtVerify(authorizationToken, jwks, options);
+        return authorizationClaim.payload.azp as string;
     },
     admin: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const authorizationClaim = jwt.decode(authorizationToken) as jwt.JwtPayload;
+        const authorizationClaim = jose.decodeJwt(authorizationToken);
         const roles = authorizationClaim.permissions as Array<string>;
         const hasAdminRole = roles.includes("admin");
         if (!hasAdminRole) { throw new Error("InsufficientPermissions"); }
