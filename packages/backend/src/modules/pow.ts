@@ -1,33 +1,33 @@
-import jwt from "jsonwebtoken";
+import { SignJWT, JWTVerifyOptions, jwtVerify } from "jose";
 import { nanoid } from "nanoid";
 import { createHash } from "crypto";
 import { HttpError } from "./error.js";
 import { BigNumber } from "bignumber.js";
 
-const secretKey = process.env.JWT_KEY ?? "";
+const secretKey = Buffer.from(process.env.JWT_KEY ?? "");
+const issuer = "jewel.cash"
 
-export const createChallenge = () => {
+export const createChallenge = async (userId: string) => {
     const difficulty = new BigNumber(2).pow(255);
 
-    const payload: jwt.JwtPayload = {
-        kid: nanoid(),
-        dif: difficulty.toString()
-    };
-
-    const options: jwt.SignOptions = { 
-        algorithm: "HS512",
-        expiresIn: "30s",
-        notBefore: "1s",
-        issuer: "jewel.cash"
-    };
-
-    return jwt.sign(payload, secretKey, options);
+    return await new SignJWT({ kid: nanoid(), dif: difficulty.toString() })
+        .setProtectedHeader({ alg: "HS512", typ: "JWT" })
+        .setIssuedAt()
+        .setIssuer(issuer)
+        .setAudience(userId)
+        .setExpirationTime('30s')
+        .setNotBefore("1s")
+        .sign(secretKey)
 };
 
-export const verifyChallenge = (challenge: string, response: string) => {
+export const verifyChallenge = async (challenge: string, response: string, userId: string) => {
     try {
-        const claim = <jwt.JwtPayload>jwt.verify(challenge, secretKey);
-        const difficulty = new BigNumber(claim.dif);
+        const options: JWTVerifyOptions = {
+            audience: userId,
+            issuer: issuer
+        }
+        const claim = await jwtVerify(challenge, secretKey, options)
+        const difficulty = new BigNumber(claim.payload.dif as string);
     
         const hash = createHash("sha256")
             .update(response, "hex")

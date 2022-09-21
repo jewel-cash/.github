@@ -2,7 +2,7 @@ import { Request } from "express";
 import { HttpError } from "../modules/error.js";
 import { createVerify } from "crypto";
 import { queryToObject } from "core";
-import jose from "jose";
+import { createRemoteJWKSet, JWTVerifyOptions, jwtVerify, decodeJwt } from "jose";
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
     if (process.env.DEBUG === "true") {
@@ -20,7 +20,7 @@ export const expressAuthentication = async (req: Request, securityName: string, 
 const auth0Domain = process.env.AUTH0_DOMAIN ?? "";
 const auth0Audience = process.env.AUTH0_AUDIENCE ?? "";
 const jwksUrl = new URL(`${auth0Domain}.well-known/jwks.json`);
-const jwks = jose.createRemoteJWKSet(jwksUrl, { })
+const jwks = createRemoteJWKSet(jwksUrl, { })
 
 interface Handler { 
     [key: string]: (req: Request) => Promise<string>;
@@ -30,17 +30,17 @@ const getUserId: Handler = {
     token: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const options: jose.JWTVerifyOptions = {
+        const options: JWTVerifyOptions = {
             audience: auth0Audience,
             issuer: auth0Domain
         }
-        const authorizationClaim = await jose.jwtVerify(authorizationToken, jwks, options);
+        const authorizationClaim = await jwtVerify(authorizationToken, jwks, options);
         return authorizationClaim.payload.azp as string;
     },
     admin: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
         if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
-        const authorizationClaim = jose.decodeJwt(authorizationToken);
+        const authorizationClaim = decodeJwt(authorizationToken);
         const roles = authorizationClaim.permissions as Array<string>;
         const hasAdminRole = roles.includes("admin");
         if (!hasAdminRole) { throw new Error("InsufficientPermissions"); }

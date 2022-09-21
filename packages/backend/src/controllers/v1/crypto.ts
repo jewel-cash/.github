@@ -1,4 +1,4 @@
-import { Get, Post, Route, Body, SuccessResponse } from "tsoa";
+import { Get, Post, Route, Body, Request, SuccessResponse } from "tsoa";
 import { createAddress } from "../../modules/coinbase.js";
 import { createChallenge, verifyChallenge } from "../../modules/pow.js";
 import { HttpError } from "../../modules/error.js";
@@ -29,8 +29,8 @@ export class CryptoController {
     }
 
     @Get("/challenge")
-    public async getChallenge(): Promise<ICryptoChallengeResponse> {
-        const challenge = createChallenge();
+    public async getChallenge(@Request() req: any): Promise<ICryptoChallengeResponse> {
+        const challenge = await createChallenge(req.ip);
         return {
             challenge
         };
@@ -38,8 +38,8 @@ export class CryptoController {
 
     @Post("/address")
     @SuccessResponse("201")
-    public async createNewAddress(@Body() body: ICryptoAddressRequest): Promise<ICryptoAddressResponse> {
-        verifyChallenge(body.challenge, body.challengeResponse);
+    public async createNewAddress(@Request() req: any, @Body() body: ICryptoAddressRequest): Promise<ICryptoAddressResponse> {
+        await verifyChallenge(body.challenge, body.challengeResponse, req.ip);
 
         const userLink = await UserLink.findOne({ link: body.link });
         if (userLink == null) { throw new HttpError(404, `Link "${body.link}" not found.`);}
