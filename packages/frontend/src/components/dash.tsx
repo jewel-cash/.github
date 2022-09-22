@@ -8,7 +8,10 @@ interface IState {
 }
 
 const defaultTiles: Array<ReactNode> = [
-    <div></div>
+    <div>1</div>,
+    <div>2</div>,
+    <div>3</div>,
+    <div>4</div>
 ];
 const adminTiles: Array<ReactNode> = [];
 
@@ -33,7 +36,7 @@ class Dash extends Component<WithAuth0Props, IState> {
     render() {
         return (
             <div className="dash">
-                {this.state.tiles.map(x => <div className="tile">{x}</div>)}
+                {this.state.tiles.map((x, i) => <div key={i} className="tile">{x}</div>)}
             </div>
         );
     }
