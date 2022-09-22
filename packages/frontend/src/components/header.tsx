@@ -29,7 +29,10 @@ class Header extends Component<IProps> {
         return (
             <div className="header">
                 <div className="header-content">
-                    Header
+                    <a href="/" className="header-link">
+                        <img src="/apple-touch-icon.png" className="header-logo" />
+                        <span className="header-title">jewel.cash</span>
+                    </a>
                     <button onClick={this.loginPressed} className="header-login" hidden={this.isLoginButtonHidden()}>
                         {this.props.auth0.isAuthenticated ? "Logout" : "Login"}
                     </button>
