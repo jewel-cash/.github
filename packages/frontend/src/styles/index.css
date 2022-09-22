@@ -6,13 +6,20 @@ html {
 
 body {
     margin: 0;
-    background: linear-gradient(-45deg, #191919, #792516, #0a7d4b, #31217b);
+    background: linear-gradient(-45deg, #e6e6e6, #fff7f0, #f2fff9, #fff0ff);
     background-size: 400% 400%;
     background-attachment: fixed;
-    animation: gradient 15s ease infinite;
-    color: white;
+    animation: gradient 15s ease-in-out infinite;
     text-align: center;
+    color: #000000;
     font-family: 'Oxygen', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(-45deg, #303030, #34302b, #29322f, #392d38);
+        color: #ffffff;
+    }
 }
 
 @keyframes gradient {
