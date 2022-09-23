@@ -51,6 +51,8 @@ jobs:
       run: |
         npm ci
         npm run build
+      env:
+        DISABLE_ESLINT_PLUGIN: true
 
   test:
     runs-on: ubuntu-latest
