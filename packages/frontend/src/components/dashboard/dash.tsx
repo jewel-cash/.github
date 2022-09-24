@@ -1,4 +1,4 @@
-import "../styles/dash.css";
+import "../../styles/dashboard/dash.css";
 import React, { Component, ReactNode } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";

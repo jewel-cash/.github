@@ -1,4 +1,4 @@
-import "../styles/link.css";
+import "../../styles/payment/link.css";
 import React, { Component } from "react";
 import { ICryptoTokenResponse } from "core";
 import { getTokens } from "../../modules/api";

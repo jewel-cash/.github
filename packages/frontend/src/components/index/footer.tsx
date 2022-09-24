@@ -1,4 +1,4 @@
-import "../styles/footer.css";
+import "../../styles/index/footer.css";
 import React, { Component } from "react";
 
 export default class Footer extends Component<any, any> {

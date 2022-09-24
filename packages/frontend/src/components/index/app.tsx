@@ -1,4 +1,4 @@
-import "../styles/app.css";
+import "../../styles/index/app.css";
 import React, { Component } from "react";
 import Dash from "../dashboard/dash";
 import Front from "../frontpage/front";

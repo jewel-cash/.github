@@ -1,10 +1,10 @@
-import "../styles/front.css";
+import "../../styles/dashboard/link.css";
 import React, { Component } from "react";
 
-export default class Front extends Component {
+export default class Link extends Component {
     render() {
         return (
-            <div className="front">
+            <div className="link">
                 Home
             </div>
         );
