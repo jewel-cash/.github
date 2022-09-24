@@ -1,7 +1,6 @@
-import "./styles/index.css";
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./components/app";
+import App from "./components/index/app";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 const authDomain = process.env.REACT_APP_AUTH0_DOMAIN ?? "";

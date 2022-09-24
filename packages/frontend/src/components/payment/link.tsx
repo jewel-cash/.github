@@ -1,7 +1,7 @@
 import "../styles/link.css";
 import React, { Component } from "react";
 import { ICryptoTokenResponse } from "core";
-import { getTokens } from "../modules/api";
+import { getTokens } from "../../modules/api";
 
 interface IProps {
     link: string;
