@@ -26,7 +26,7 @@ RegisterCronsJobs(app);
 RegisterRoutes(app);
 
 const specs = { swaggerOptions: { url: "/swagger.gen.json" } };
-app.get("/", swaggerUi.serve, swaggerUi.setup(undefined, specs));
+app.use("/", swaggerUi.serve, swaggerUi.setup(undefined, specs));
 
 app.use((req: Request) => {
     throw new HttpError(404, `"${req.url}" is not found.`);
