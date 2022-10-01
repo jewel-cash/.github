@@ -4,19 +4,19 @@ import { getDashboardOverview } from "../../modules/api";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 
 interface IState {
-    cumlative: string,
-    pending: string,
-    nextDate: string
+    cumlative: string;
+    pending: string;
+    nextDate: string;
 }
 
 class Overview extends Component<WithAuth0Props, IState> {
     constructor(props: WithAuth0Props) {
-        super(props)
+        super(props);
         this.state = { 
             cumlative: "? USD",
             pending: "? USD",
             nextDate: "?"
-        }
+        };
     }
     
     componentDidMount() {
@@ -27,8 +27,8 @@ class Overview extends Component<WithAuth0Props, IState> {
                     cumlative: res.cumlative,
                     pending: res.pending,
                     nextDate: `${res.nextPaymentDate}`
-                })
-            }).catch(console.log)
+                });
+            }).catch(console.log);
     }
 
     render() {
