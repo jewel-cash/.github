@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: 16
         cache: 'npm'
     - name: Run Lint
       run: |
@@ -45,7 +45,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: 16
         cache: 'npm'
     - name: Transpile Code
       run: |
@@ -62,7 +62,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: 16
         cache: 'npm'
     - name: Run Tests
       run: |
