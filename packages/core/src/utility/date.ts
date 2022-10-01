@@ -25,7 +25,7 @@ Date.prototype.daysSince = function(other = new Date) {
     const prefix = days > 0 ? "in " : "";
     const suffix = days < 0 ? " ago" : "";
     return `${prefix}${Math.abs(days)}${denotion}${suffix}`;
-}
+};
 
 export const nextMonday = () => {
     const date = new Date();
