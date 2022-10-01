@@ -2,23 +2,24 @@ import "../../styles/dashboard/dash.css";
 import React, { Component, ReactNode } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";
+import Link from "./link";
+import Overview from "./overview";
+import Stripe from "./stripe";
 
 interface IState {
     tiles: Array<ReactNode>;
 }
 
 const defaultTiles: Array<ReactNode> = [
-    <div key="abc" className="tile">1</div>,
-    <div key="def" className="tile">2</div>,
-    <div key="ghi" className="tile">3</div>,
-    <div key="jkl" className="tile">4</div>
+    <div key="overview" className="tile"><Overview /></div>,
+    <div key="link" className="tile"><Link /></div>,
+    <div key="stripe" className="tile"><Stripe /></div>
 ];
 
 const adminTiles: Array<ReactNode> = [
-    <div key="mno" className="tile">1</div>,
-    <div key="pqr" className="tile">2</div>,
-    <div key="stu" className="tile">3</div>,
-    <div key="vwx" className="tile">4</div>
+    <div key="7" className="tile">1</div>,
+    <div key="8" className="tile">2</div>,
+    <div key="9" className="tile">3</div>
 ];
 
 class Dash extends Component<WithAuth0Props, IState> {
