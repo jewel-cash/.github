@@ -3,20 +3,22 @@ import { JTDSchemaType } from "ajv/dist/jtd.js";
 export interface IDashboardTransactionResponse {
     from: string;
     message: string;
-    amount: string;
-    exchangeRate: string;
-    proceeds: string;
-    fee: string;
+    amount: number;
+    currency: string;
+    exchangeRate: number;
+    proceeds: number;
+    fee: number;
 }
 
 export const DashboardTransactionResponseSchema: JTDSchemaType<IDashboardTransactionResponse> = {
     properties: {
         from: { type: "string" },
         message: { type: "string" },
-        amount: { type: "string" },
-        exchangeRate: { type: "string" },
-        proceeds: { type: "string" },
-        fee: { type: "string" }
+        amount: { type: "float32" },
+        currency: { type: "string" },
+        exchangeRate: { type: "float32" },
+        proceeds: { type: "float32" },
+        fee: { type: "float32" }
     }
 };
 
@@ -33,15 +35,15 @@ export const DashboardTransactionsResponseSchema: JTDSchemaType<IDashboardTransa
 };
 
 export interface IDashboardOverviewResponse {
-    cumlative: string;
-    pending: string;
+    cumlative: number;
+    pending: number;
     nextPaymentDate: number;
 }
 
 export const DashboardOverviewResponseSchema: JTDSchemaType<IDashboardOverviewResponse> = {
     properties: {
-        cumlative: { type: "string" },
-        pending: { type: "string" },
+        cumlative: { type: "float32" },
+        pending: { type: "float32" },
         nextPaymentDate: { type: "int32" }
     }
 };

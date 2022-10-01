@@ -23,8 +23,8 @@ export class DashboardController {
         }
 
         return { 
-            cumlative: `${cumlative.toFixed(2)} USD`,
-            pending: `${pending.toFixed(2)} USD`,
+            cumlative: cumlative.toNumber(),
+            pending: pending.toNumber(),
             nextPaymentDate: nextMonday()
         };
     }
@@ -36,10 +36,11 @@ export class DashboardController {
             return {
                 from: x.name,
                 message: x.message,
-                amount: `${x.amount} ${x.currency}`,
-                exchangeRate: `${x.exchangeRate.toFixed(2)} USD/${x.currency}`,
-                proceeds: `${x.proceeds.toFixed(2)} USD`,
-                fee: `${x.fee.toFixed(2)} USD`
+                amount: x.amount.toNumber(),
+                currency: x.currency,
+                exchangeRate: x.exchangeRate.toNumber(),
+                proceeds: x.proceeds.toNumber(),
+                fee: x.fee.toNumber()
             };
         });
         return {
