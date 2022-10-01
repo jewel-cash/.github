@@ -34,4 +34,4 @@ export const getAccountStatus = async (auth: string) => {
         headers: { "Authorization": `Bearer ${auth}` }
     };
     return await client.request(request, AccountStatusScheme);
-}
+};

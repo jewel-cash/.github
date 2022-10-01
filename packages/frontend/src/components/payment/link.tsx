@@ -21,7 +21,7 @@ export default class Link extends Component<IProps, IState> {
     componentDidMount() {
         getTokens(this.props.link)
             .then(res => { 
-                this.setState({ tokens: res.tokens })
+                this.setState({ tokens: res.tokens });
             })
             .catch(console.log);
     }

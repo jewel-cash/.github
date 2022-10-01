@@ -18,7 +18,7 @@ class Stripe extends Component<WithAuth0Props, IState> {
         this.props.auth0.getAccessTokenSilently()
             .then(getAccountStatus)
             .then(res => {
-                this.setState({ setupCompleted: res.onboarded })
+                this.setState({ setupCompleted: res.onboarded });
             })
             .catch(console.log);
     }
