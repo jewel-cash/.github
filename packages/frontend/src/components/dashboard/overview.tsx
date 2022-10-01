@@ -24,9 +24,9 @@ class Overview extends Component<WithAuth0Props, IState> {
             .then(getDashboardOverview)
             .then(res => {
                 this.setState({
-                    cumlative: res.cumlative,
-                    pending: res.pending,
-                    nextDate: `${res.nextPaymentDate}`
+                    cumlative: `${res.cumlative.toFixed(2)} USD`,
+                    pending: `${res.cumlative.toFixed(2)} USD`,
+                    nextDate: res.nextPaymentDate.relativeTo()
                 });
             }).catch(console.log);
     }
@@ -34,9 +34,10 @@ class Overview extends Component<WithAuth0Props, IState> {
     render() {
         return (
             <div className="overview">
-                Cumlative: {this.state.cumlative}
-                Pending: {this.state.pending}
-                NextPayment: {this.state.nextDate}
+                Dashboard
+                <p>Cumlative: {this.state.cumlative}</p>
+                <p>Pending: {this.state.pending}</p>
+                <p>NextPayment: {this.state.nextDate}</p>
             </div>
         );
     }

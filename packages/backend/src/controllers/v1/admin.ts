@@ -34,7 +34,7 @@ export class AdminController {
             pendingPayments: pendingPayments.toNumber(),
             feesCollected: feesCollected.toNumber(),
             unearnedFees: unearnedFees.toNumber(),
-            nextPaymentDate: nextMonday().toUnix()
+            nextPaymentDate: nextMonday()
         };
     }
 

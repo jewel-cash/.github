@@ -1,4 +1,4 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema } from "core";
+import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, AccountStatusScheme } from "core";
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 
@@ -17,8 +17,7 @@ export const getTokens = async (link: string) => {
         method: "POST",
         body: JSON.stringify(body)
     };
-    const response = await client.request(request, CryptoTokensResponseSchema);
-    return response.tokens;
+    return await client.request(request, CryptoTokensResponseSchema);
 };
 
 export const getDashboardOverview = async (auth: string) => {
@@ -26,6 +25,13 @@ export const getDashboardOverview = async (auth: string) => {
         endpoint: "/v1/dashboard/overview",
         headers: { "Authorization": `Bearer ${auth}` }
     };
-    const response = await client.request(request, DashboardOverviewResponseSchema);
-    return response;
+    return await client.request(request, DashboardOverviewResponseSchema);
 };
+
+export const getAccountStatus = async (auth: string) => {
+    const request: IRequest = {
+        endpoint: "/v1/account/status",
+        headers: { "Authorization": `Bearer ${auth}` }
+    };
+    return await client.request(request, AccountStatusScheme);
+}

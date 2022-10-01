@@ -1,8 +1,10 @@
 declare global {
+    interface Number {
+        isNow(tolerance?: number): boolean;
+        relativeTo(other?: number): string;
+    }
     interface Date {
         toUnix(): number;
-        isNow(tolerance: number): boolean;
-        daysSince(other: Date): string;
     }
 }
 
@@ -10,21 +12,29 @@ Date.prototype.toUnix = function() {
     return Math.floor(this.getTime() / 1000);
 };
 
-Date.prototype.isNow = function(tolerance = 300) {
-    const timestamp = this.toUnix();
-    const now = new Date().toUnix();
-    if (timestamp < now - tolerance) { return false; }
-    if (timestamp > now + tolerance) { return false; }
+Number.prototype.isNow = function(tolerance = 300) {
+    const nowTimestamp = now();
+    if (this < nowTimestamp - tolerance) { return false; }
+    if (this > nowTimestamp + tolerance) { return false; }
     return true;
 };
 
-Date.prototype.daysSince = function(other = new Date) {
-    const days = Math.round((this.getTime() - other.getTime()) / 8.64e7);
+Number.prototype.relativeTo = function(other = now()) {
+    const thisBegin = +this - (+this % 8.64e4);
+    const otherBegin = other - (other % 8.64e4);
+    const isAfter = thisBegin > otherBegin;
+    const diff = Math.abs(thisBegin - otherBegin);
+    const days = Math.floor(diff / 8.64e4);
     if (days == 0) { return "today"; }
-    const denotion = Math.abs(days) == 1 ? " day" : " days";
-    const prefix = days > 0 ? "in " : "";
-    const suffix = days < 0 ? " ago" : "";
+    const denotion = days == 1 ? " day" : " days";
+    const prefix = isAfter ? "in " : "";
+    const suffix = isAfter ? "" : " ago";
     return `${prefix}${Math.abs(days)}${denotion}${suffix}`;
+};
+
+export const now = () => {
+    const date = new Date();
+    return Math.floor(date.getTime() / 1000);
 };
 
 export const nextMonday = () => {
@@ -32,5 +42,5 @@ export const nextMonday = () => {
     const miliseconds = date.setDate(date.getDate() + (7 - date.getDay()) % 7 + 1);
     const time = date.getTime() % 8.64e7;
     const day = miliseconds - time;
-    return new Date(day);
+    return Math.floor(day / 1000);
 };

@@ -9,7 +9,6 @@ interface IProps {
 
 interface IState {
     tokens: Array<ICryptoTokenResponse>;
-    error?: string;
 }
 
 export default class Link extends Component<IProps, IState> {
@@ -20,16 +19,20 @@ export default class Link extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        console.log("a");
         getTokens(this.props.link)
-            .then(tokens => this.setState({ tokens }))
-            .catch(_ => this.setState({ error: "Not Found" }));
+            .then(res => { 
+                this.setState({ tokens: res.tokens })
+            })
+            .catch(console.log);
     }
 
     render() {
         return (
             <div className="link">
-                {`Link\n${this.state.error}\n${this.state.tokens.map(x => x.currency)}`}
+                Link
+                <p>
+                    Tokens: {this.state.tokens.map(x => x.currency)}
+                </p>
             </div>
         );
     }
