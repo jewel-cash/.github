@@ -34,7 +34,7 @@ export class AdminController {
             pendingPayments: `${pendingPayments.toFixed(2)} USD`,
             feesCollected: `${feesCollected.toFixed(2)} USD`,
             unearnedFees: `${unearnedFees.toFixed(2)} USD`,
-            nextPaymentDate: nextMonday()
+            nextPaymentDate: nextMonday().toUnix()
         };
     }
 

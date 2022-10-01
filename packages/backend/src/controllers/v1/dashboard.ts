@@ -25,7 +25,7 @@ export class DashboardController {
         return { 
             cumlative: `${cumlative.toFixed(2)} USD`,
             pending: `${pending.toFixed(2)} USD`,
-            nextPaymentDate: nextMonday()
+            nextPaymentDate: nextMonday().toUnix()
         };
     }
 
