@@ -2,12 +2,12 @@
     "name": "jewel.cash",
     "private": true,
     "scripts": {
-        "build": "nx run-many --target=build",
-        "start": "nx run-many --target=start",
+        "build": "nx run-many --target build",
+        "start": "nx run-many --target start",
         "watch": "nodemon -q",
         "test": "jest -u",
         "lint": "eslint .",
-        "deploy": "nx run-many --target=deploy"
+        "deploy": "nx run-many --target deploy"
     },
     "devDependencies": {
         "@types/cookie-parser": "^1.4.3",
