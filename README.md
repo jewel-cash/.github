@@ -1,5 +1,6 @@
 # jewel.cash
-*Receive payments and donations through Crypto - get payed out in Fiat.*
+[![Frontend](https://img.shields.io/website?down_color=red&down_message=down&label=frontend&logo=react&logoColor=white&up_color=green&up_message=up&url=https%3A%2F%2Fjewel.cash)](https://jewel.cash/)
+[![Backend](https://img.shields.io/website?down_color=red&down_message=down&label=backend&logo=express&logoColor=white&up_color=green&up_message=up&url=https%3A%2F%2Fjewel.cash%2Fapi)](https://jewel.cash/api/)
 
 ## The app
 
