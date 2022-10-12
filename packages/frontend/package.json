@@ -8,7 +8,7 @@
         "start": "node -r dotenv/config ./serve.js"
     },
     "dependencies": {
-        "@auth0/auth0-react": "^1.11.0",
+        "@auth0/auth0-react": "^1.12.0",
         "@fortawesome/fontawesome-svg-core": "^6.1.2",
         "@fortawesome/free-brands-svg-icons": "^6.1.2",
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
