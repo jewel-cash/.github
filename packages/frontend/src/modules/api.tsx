@@ -32,6 +32,6 @@ export const getTrolleyWidget = async (auth: string) => {
     const request: IRequest = {
         endpoint: "/v1/account/trolley",
         headers: { "Authorization": `Bearer ${auth}` }
-    }
+    };
     return await client.request(request, AccountTrolleyWidgetResponseSchema);
-}
+};

@@ -19,16 +19,8 @@
     }
 }
 
-
-
 .tile {
     background-color: #ffffff;
     border-radius: 24px;
     filter: drop-shadow(4px 4px 20px #00000020);
-}
-
-@media (prefers-color-scheme: dark) {
-    .tile {
-        background-color: #000000;
-    }
 }

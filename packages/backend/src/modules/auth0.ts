@@ -1,8 +1,8 @@
 import { Client, IRequest, Auth0TokenResponseSchema, Auth0UserResponseSchema } from "core";
 
 const auth0Domain = process.env.AUTH0_DOMAIN ?? "";
-const apiUrl = "https://jewel-cash.eu.auth0.com/api/v2/"
-const authClient = new Client(auth0Domain, fetch, { 'content-type': 'application/json' });
+const apiUrl = "https://jewel-cash.eu.auth0.com/api/v2/";
+const authClient = new Client(auth0Domain, fetch, { "content-type": "application/json" });
 const authClientId = process.env.AUTH0_CLIENT_ID ?? "";
 const authSecret = process.env.AUTH0_CLIENT_SECRET ?? "";
 const apiClient = new Client(apiUrl, fetch);
@@ -22,13 +22,13 @@ const getAuthToken = async (...scopes: string[]) => {
     };
     const response = await authClient.request(request, Auth0TokenResponseSchema);
     return response.access_token;
-}
+};
 
 export const getAuthUser = async (userId: string) => {
     const token = await getAuthToken("read:users");
     const request: IRequest = {
         endpoint: `/users/${userId}`,
         headers: { Authorization: `Bearer ${token}` }
-    }
+    };
     return await apiClient.request(request, Auth0UserResponseSchema);
-}
+};

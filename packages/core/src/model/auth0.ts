@@ -6,13 +6,13 @@ export interface IAuth0TokenResponse {
 
 export const Auth0TokenResponseSchema: JTDSchemaType<IAuth0TokenResponse> = {
     properties: {
-        access_token: { type: "string" },
+        access_token: { type: "string" }
     },
     additionalProperties: true
 };
 
 export interface IAuth0UserResponse {
-    email: string
+    email: string;
 }
 
 export const Auth0UserResponseSchema: JTDSchemaType<IAuth0UserResponse> = {
