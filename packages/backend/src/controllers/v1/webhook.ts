@@ -15,7 +15,7 @@ export class WebhookController {
     public async receivedCoinbaseWebhook(@Body() body: any): Promise<void> {
         if (body.type === "wallet:addresses:new-payment") {
             const id: string = body.data.name ?? "";
-            const createdDate: string = body.data.created_at ?? "";
+            const createdDate: string = body.created_at ?? "";
             const timestamp = new Date(createdDate).toUnix();
             const currency: string = body.additional_data.amount.currency ?? "";
             const amount = new BigNumber(body.additional_data.amount.amount as string);
