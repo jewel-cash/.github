@@ -35,7 +35,7 @@ const getUserId: Handler = {
             issuer: auth0Domain
         };
         const authorizationClaim = await jwtVerify(authorizationToken, jwks, options);
-        return authorizationClaim.payload.azp as string;
+        return authorizationClaim.payload.sub as string;
     },
     admin: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
