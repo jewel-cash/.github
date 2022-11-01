@@ -1,7 +1,7 @@
 import { JTDSchemaType } from "ajv/dist/jtd.js";
 
 export interface IAccountTrolleyWidgetRequest {
-    email: string
+    email: string;
 }
 
 export const AccountTrolleyWidgetRequestSchema: JTDSchemaType<IAccountTrolleyWidgetRequest> = {
