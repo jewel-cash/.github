@@ -1,4 +1,5 @@
 import { Client, IRequest, Auth0TokenResponseSchema, Auth0UserResponseSchema } from "core";
+import fetch from "node-fetch";
 
 const auth0Domain = process.env.AUTH0_DOMAIN ?? "";
 const apiUrl = "https://jewel-cash.eu.auth0.com/api/v2/";
