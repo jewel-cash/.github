@@ -11,8 +11,7 @@ export const createWidgetLink = (userId: string, email: string) => {
         key: trolleyKey,
         email: email,
         refid: userId,
-        hideEmail: "false",
-        roEmail: "false"
+        hideEmail: "true"
     }).toString().replace(/\+/g, "%20");
 
     const signature = createHmac("sha256", trolleySecret)
