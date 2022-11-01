@@ -1,9 +1,9 @@
 import { Body, Delete, Get, Post, Route, SuccessResponse, Request, Security } from "tsoa";
 import { UserLink } from "../../entities/link.js";
-import { IStripeAccount, StripeAccount } from "../../entities/stripeaccount.js";
-import { createStripeAccount, createStripeLink } from "../../modules/stripe.js";
-import type { IAccountLinksResponse, IAccountLinkResponse, IAccountStatus, IAccountStripeLinkRequest, IAccountStripeLinkResponse } from "core";
+import type { IAccountLinksResponse, IAccountLinkResponse, IAccountTrolleyWidgetResponse } from "core";
 import { HttpError } from "../../modules/error.js";
+import { createWidgetLink } from "../../modules/trolley.js";
+import { getAuthUser } from "../../modules/auth0.js";
 
 @Route("/v1/account")
 @Security("token")
@@ -41,36 +41,14 @@ export class AccountController {
         await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.link });
     }
 
-    @Get("/status")
-    public async getAccountStatus(@Request() req: any): Promise<IAccountStatus> {
-        const account = await this.getOrCreateStripeAccount(req.user.userId);
+    @Get("/trolley")
+    public async getTrolleyWidget(@Request() req: any): Promise<IAccountTrolleyWidgetResponse> {
+        const userId = req.user.userId;
+        const user = await getAuthUser(userId);
+        const widgetLink = createWidgetLink(userId, user.email);
+
         return {
-            onboarded: account.onboarded
+            widgetLink
         };
-    }
-
-    @Post("/stripe")
-    public async getStripeLink(@Request() req: any, @Body() body: IAccountStripeLinkRequest): Promise<IAccountStripeLinkResponse> {
-        const account = await this.getOrCreateStripeAccount(req.user.userId);
-        console.log(account);
-        const link = await createStripeLink(account.stripeId, body.refresh, body.redirect);
-        return {
-            redirect: link.url,
-            expires: link.expires
-        };
-    }
-
-
-    private async getOrCreateStripeAccount(userId: string): Promise<IStripeAccount> {
-        let account = await StripeAccount.findOne({ userId: userId });
-        if (account == null) {
-            const response = await createStripeAccount();
-            account = new StripeAccount({ 
-                userId: userId,
-                stripeId: response.id
-            });
-            await account.save();
-        }
-        return account;
     }
 }

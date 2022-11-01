@@ -2,7 +2,6 @@ import { BigNumber } from "bignumber.js";
 import { Body, Hidden, Post, Route, Security, SuccessResponse } from "tsoa";
 import { Payment } from "../../entities/payment.js";
 import { PendingPayment } from "../../entities/pending.js";
-import { StripeAccount } from "../../entities/stripeaccount.js";
 import { getExchangeRate } from "../../modules/coinbase.js";
 import { HttpError } from "../../modules/error.js";
 
@@ -25,7 +24,7 @@ export class WebhookController {
             if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`);}
             const exchangeRate = await getExchangeRate(currency, timestamp);
             const usdEquivalent = amount.multipliedBy(exchangeRate);
-            const fee = usdEquivalent.multipliedBy(0.1);
+            const fee = usdEquivalent.multipliedBy(0.15);
             const proceeds = usdEquivalent.minus(fee);
 
             const payment = new Payment({
@@ -42,19 +41,6 @@ export class WebhookController {
             });
 
             await payment.save();
-        }
-    }
-
-
-    @Post("/stripe")
-    @Security("stripe")
-    @Hidden()
-    @SuccessResponse("204")
-    public async receivedStripeWebhook(@Body() body: any): Promise<void> {
-        if (body.type === "account.updated") {
-            const account = body.data.object;
-            const onboarded = account.payouts_enabled as boolean ?? false;
-            await StripeAccount.findOneAndUpdate({ stripeId: account.id }, { $set: { onboarded: onboarded } });
         }
     }
 }

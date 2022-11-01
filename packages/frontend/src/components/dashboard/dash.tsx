@@ -4,7 +4,7 @@ import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";
 import Link from "./link";
 import Overview from "./overview";
-import Stripe from "./stripe";
+import Stripe from "./trolley";
 
 interface IState {
     tiles: Array<ReactNode>;

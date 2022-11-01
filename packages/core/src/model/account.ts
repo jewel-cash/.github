@@ -1,15 +1,5 @@
 import { JTDSchemaType } from "ajv/dist/jtd";
 
-export interface IAccountStatus {
-    onboarded: boolean;
-}
-
-export const AccountStatusScheme: JTDSchemaType<IAccountStatus> = {
-    properties: {
-        onboarded: { type: "boolean" }
-    }
-};
-
 export interface IAccountLinkResponse {
     link: string;
 }

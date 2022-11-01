@@ -1,4 +1,4 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, AccountStatusScheme } from "core";
+import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, AccountTrolleyWidgetResponseSchema } from "core";
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 
@@ -28,10 +28,10 @@ export const getDashboardOverview = async (auth: string) => {
     return await client.request(request, DashboardOverviewResponseSchema);
 };
 
-export const getAccountStatus = async (auth: string) => {
+export const getTrolleyWidget = async (auth: string) => {
     const request: IRequest = {
-        endpoint: "/v1/account/status",
+        endpoint: "/v1/account/trolley",
         headers: { "Authorization": `Bearer ${auth}` }
-    };
-    return await client.request(request, AccountStatusScheme);
-};
+    }
+    return await client.request(request, AccountTrolleyWidgetResponseSchema);
+}
