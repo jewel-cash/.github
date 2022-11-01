@@ -14,8 +14,9 @@ class Trolley extends Component<WithAuth0Props, IState> {
     }
     
     componentDidMount() {
+        const email = this.props.auth0.user?.email ?? "";
         this.props.auth0.getAccessTokenSilently()
-            .then(getTrolleyWidget)
+            .then(token => getTrolleyWidget(token, email))
             .then(res => {
                 this.setState({ widgetLink: res.widgetLink });
             }).catch(console.log);

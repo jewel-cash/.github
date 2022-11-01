@@ -1,4 +1,4 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, AccountTrolleyWidgetResponseSchema } from "core";
+import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, IAccountTrolleyWidgetRequest, AccountTrolleyWidgetResponseSchema } from "core";
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 
@@ -28,10 +28,15 @@ export const getDashboardOverview = async (auth: string) => {
     return await client.request(request, DashboardOverviewResponseSchema);
 };
 
-export const getTrolleyWidget = async (auth: string) => {
+export const getTrolleyWidget = async (auth: string, email: string) => {
+    const body: IAccountTrolleyWidgetRequest = {
+        email
+    };
     const request: IRequest = {
         endpoint: "/v1/account/trolley",
-        headers: { "Authorization": `Bearer ${auth}` }
+        headers: { "Authorization": `Bearer ${auth}` },
+        method: "POST",
+        body: JSON.stringify(body)
     };
     return await client.request(request, AccountTrolleyWidgetResponseSchema);
 };

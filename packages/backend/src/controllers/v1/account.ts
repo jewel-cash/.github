@@ -1,9 +1,8 @@
 import { Body, Delete, Get, Post, Route, SuccessResponse, Request, Security } from "tsoa";
 import { UserLink } from "../../entities/link.js";
-import type { IAccountLinksResponse, IAccountLinkResponse, IAccountTrolleyWidgetResponse } from "core";
+import type { IAccountLinksResponse, IAccountLinkResponse, IAccountTrolleyWidgetRequest, IAccountTrolleyWidgetResponse } from "core";
 import { HttpError } from "../../modules/error.js";
 import { createWidgetLink } from "../../modules/trolley.js";
-import { getAuthUser } from "../../modules/auth0.js";
 
 @Route("/v1/account")
 @Security("token")
@@ -41,14 +40,10 @@ export class AccountController {
         await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.link });
     }
 
-    @Get("/trolley")
-    public async getTrolleyWidget(@Request() req: any): Promise<IAccountTrolleyWidgetResponse> {
-        const userId = req.user.userId;
-        const user = await getAuthUser(userId);
-        const widgetLink = createWidgetLink(userId, user.email);
-
+    @Post("/trolley")
+    public async getTrolleyWidget(@Request() req: any, @Body() body: IAccountTrolleyWidgetRequest): Promise<IAccountTrolleyWidgetResponse> {
         return {
-            widgetLink
+            widgetLink: createWidgetLink(req.user.userId, body.email)
         };
     }
 }
