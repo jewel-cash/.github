@@ -58,10 +58,3 @@ const getUserId: Handler = {
         return "Coinbase";
     }
 };
-
-const timestampIsNow = (timestamp: number, tolerance = 30) => {
-    const now = new Date().toUnix();
-    if (timestamp < now - tolerance) { return false; }
-    if (timestamp > now + tolerance) { return false; }
-    return true;
-};
