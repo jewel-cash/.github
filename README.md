@@ -9,7 +9,15 @@ This repository consists of several components:
 * `Frontend` - contains the [React](https://reactjs.org) frontend code.
 * `Backend` - contains the [Express](https://expressjs.com) backend code.
 
-All components are tied together using [Nx](https://nx.dev) and uses a [MongoDB](https://www.mongodb.com) NoSQL database.
+All components are tied together using [Nx](https://nx.dev). Jewel uses a [MongoDB](https://www.mongodb.com) NoSQL database.
+
+## Third Party tools
+
+This repository uses a couple of third party services:
+* The deployments are hosted on [DigitalOcean](https://digitalocean.com).
+* Authentication and authorization are managed by [Auth0](https://auth0.com).
+* Secure financial payments are managed through [Trolley](https://trolley.com).
+* Crypto wallets are created on demand and managed by [Coinbase](https://coinbase.com).
 
 ## Getting Started
 
