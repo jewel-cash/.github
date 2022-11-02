@@ -17,7 +17,7 @@ This repository uses a couple of third party services:
 * The deployments are hosted on [DigitalOcean](https://digitalocean.com).
 * Authentication and authorization are managed by [Auth0](https://auth0.com).
 * Secure financial payments are managed through [Trolley](https://trolley.com).
-* Crypto wallets are created on demand and managed by [Coinbase](https://coinbase.com).
+* On-demand crypto wallets are created and managed through [Coinbase](https://coinbase.com).
 
 ## Getting Started
 
