@@ -19,7 +19,7 @@ export const PendingPayment: mongoose.Model<IPendingPayment> = mongoose.model("P
 
 export interface IPayment extends mongoose.Document {
     pendingId: string;
-    transactionHash: string;
+    hash: string;
     name: string;
     message: string;
     recipientId: string;
@@ -34,7 +34,7 @@ export interface IPayment extends mongoose.Document {
 
 export const PaymentSchema = new mongoose.Schema<IPayment>({
     pendingId: { type: String, required: true },
-    transactionHash: {type: String, required: true, unique: true },
+    hash: {type: String, required: true, unique: true },
     name: { type: String, required: true, validate: isValidName },
     message: { type: String, required: true, length: 150 },
     recipientId: { type: String, required: true },

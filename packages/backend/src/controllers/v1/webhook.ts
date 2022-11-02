@@ -28,7 +28,7 @@ export class WebhookController {
 
             const payment = new Payment({
                 pendingId: pending.id,
-                transactionHash, 
+                hash: `${currency}|${transactionHash}`, 
                 name: pending.name,
                 message: pending.message,
                 recipientId: pending.recipientId,
