@@ -1,7 +1,7 @@
 import { schedule } from "node-cron";
 import { Application } from "express";
 import { getAllAccounts } from "./coinbase.js";
-import { CoinbaseAccount } from "../entities/coinbaseaccount.js";
+import { CoinbaseAccount } from "../entities/coinbase.js";
 
 interface CronJobs { 
     [key: string]: () => Promise<void>;
