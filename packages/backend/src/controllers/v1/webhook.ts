@@ -2,7 +2,6 @@ import { BigNumber } from "bignumber.js";
 import { Body, Hidden, Post, Route, Security, SuccessResponse } from "tsoa";
 import { Payment, PendingPayment } from "../../entities/payment.js";
 import { getExchangeRate } from "../../modules/coinbase.js";
-import { HttpError } from "../../modules/error.js";
 
 @Route("/v1/webhook")
 export class WebhookController {
