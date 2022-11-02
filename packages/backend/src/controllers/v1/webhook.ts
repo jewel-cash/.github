@@ -14,13 +14,14 @@ export class WebhookController {
     public async receivedCoinbaseWebhook(@Body() body: any): Promise<void> {
         if (body.type === "wallet:addresses:new-payment") {
             const id: string = body.data.name ?? "";
+            if (id == "") { return; }
             const createdDate: string = body.created_at ?? "";
             const timestamp = new Date(createdDate).toUnix();
             const currency: string = body.additional_data.amount.currency ?? "";
             const amount = new BigNumber(body.additional_data.amount.amount as string);
             const transactionHash: string = body.additional_data.hash ?? "";
             const pending = await PendingPayment.findById(id);
-            if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`);}
+            if (pending == null) { return; }
             const exchangeRate = await getExchangeRate(currency, timestamp);
             const usdEquivalent = amount.multipliedBy(exchangeRate);
             const fee = usdEquivalent.multipliedBy(0.15);
