@@ -2,10 +2,10 @@ import { Get, Post, Route, Body, Request, SuccessResponse } from "tsoa";
 import { createAddress } from "../../modules/coinbase.js";
 import { createChallenge, verifyChallenge } from "../../modules/pow.js";
 import { HttpError } from "../../modules/error.js";
-import { PendingPayment } from "../../entities/pending.js";
-import { CoinbaseAccount } from "../../entities/coinbaseaccount.js";
+import { CoinbaseAccount } from "../../entities/coinbase.js";
 import { UserLink } from "../../entities/link.js";
 import type { ICryptoTokensRequest, ICryptoTokensResponse, ICryptoTokenResponse, ICryptoChallengeResponse, ICryptoAddressRequest, ICryptoAddressResponse } from "core";
+import { PendingPayment } from "../../entities/payment.js";
 
 @Route("/v1/crypto")
 export class CryptoController {

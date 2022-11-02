@@ -3,8 +3,23 @@ import { BigNumber } from "bignumber.js";
 import { BigNumberSchema } from "./types.js";
 import { isValidName } from "core";
 
+export interface IPendingPayment extends mongoose.Document {
+    name: string;
+    message: string;
+    recipientId: string;
+}
+
+export const PendingPaymentSchema = new mongoose.Schema<IPendingPayment>({
+    name: { type: String, required: true, validate: isValidName },
+    message: { type: String, required: true, length: 150 },
+    recipientId: { type: String, required: true }
+});
+
+export const PendingPayment: mongoose.Model<IPendingPayment> = mongoose.model("PendingPayment", PendingPaymentSchema);
+
 export interface IPayment extends mongoose.Document {
     pendingId: string;
+    transactionHash: string;
     name: string;
     message: string;
     recipientId: string;
@@ -19,6 +34,7 @@ export interface IPayment extends mongoose.Document {
 
 export const PaymentSchema = new mongoose.Schema<IPayment>({
     pendingId: { type: String, required: true },
+    transactionHash: {type: String, required: true, unique: true },
     name: { type: String, required: true, validate: isValidName },
     message: { type: String, required: true, length: 150 },
     recipientId: { type: String, required: true },
