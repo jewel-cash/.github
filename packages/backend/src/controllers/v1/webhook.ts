@@ -19,7 +19,7 @@ export class WebhookController {
             const timestamp = new Date(createdDate).toUnix();
             const currency: string = body.additional_data.amount.currency ?? "";
             const amount = new BigNumber(body.additional_data.amount.amount as string);
-
+            const transactionHash: string = body.additional_data.hash ?? ""
             const pending = await PendingPayment.findById(id);
             if (pending == null) { throw new HttpError(404, `No pending payment found for ${id}.`);}
             const exchangeRate = await getExchangeRate(currency, timestamp);
@@ -29,6 +29,7 @@ export class WebhookController {
 
             const payment = new Payment({
                 pendingId: pending.id,
+                transactionHash, 
                 name: pending.name,
                 message: pending.message,
                 recipientId: pending.recipientId,

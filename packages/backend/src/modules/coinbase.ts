@@ -20,6 +20,7 @@ export const createAddress = async (account: string, id: string) => {
     return response.data.address;
 };
 
+
 export const getAllAccounts = async () => {
     let accounts: Array<ICoinbaseAccount> = [];
     let next: string | null = "/v2/accounts";
@@ -34,6 +35,7 @@ export const getAllAccounts = async () => {
     }
     return accounts;
 };
+
 
 export const getExchangeRate = async (currency: string, timestamp: number) => {
     const date = new Date(timestamp * 1000);

@@ -46,11 +46,10 @@ const getUserId: Handler = {
         return await getUserId["token"](req);
     },
     coinbase: async (req: Request) => {
-        if (req.ip !== "54.175.255.192/27") {  throw new Error("WrongSourceIp"); }
         const signature = req.header("CB-SIGNATURE") ?? "";
-        const rawBody = req.body ?? "";
+        const rawBody = req.rawBody.toString();
         const pubKey = process.env.COINBASE_PUB_KEY ?? "";
-        const verify = createVerify("RSA-SHA256")
+        const verify = createVerify("rsa-sha256")
             .update(rawBody)
             .verify(pubKey, signature, "base64");
 
