@@ -7,12 +7,12 @@ import { BigNumber } from "bignumber.js";
 const secretKey = Buffer.from(process.env.JWT_KEY ?? "");
 const issuer = "jewel.cash";
 
-export const createChallenge = async (userId: string) => {
-    const difficulty = new BigNumber(2).pow(255);
+export const createChallenge = async (ip: string) => {
+    const difficulty = new BigNumber(2).pow(240);
 
     const payload: JWTPayload = {
         kid: nanoid(), 
-        dif: difficulty.toString()
+        dif: difficulty.toString(16)
     };
 
     const header: JWTHeaderParameters = {
@@ -24,23 +24,26 @@ export const createChallenge = async (userId: string) => {
         .setProtectedHeader(header)
         .setIssuedAt()
         .setIssuer(issuer)
-        .setAudience(userId)
+        .setAudience(issuer)
+        .setSubject(ip)
         .setExpirationTime("30s")
         .setNotBefore("1s")
         .sign(secretKey);
 };
 
-export const verifyChallenge = async (challenge: string, response: string, userId: string) => {
+export const verifyChallenge = async (challenge: string, ip: string) => {
     try {
+        const originalChallenge = challenge.split("|")[0];
         const options: JWTVerifyOptions = {
-            audience: userId,
-            issuer: issuer
+            audience: issuer,
+            issuer: issuer,
+            subject: ip
         };
-        const claim = await jwtVerify(challenge, secretKey, options);
+        const claim = await jwtVerify(originalChallenge, secretKey, options);
         const difficulty = new BigNumber(claim.payload.dif as string);
     
         const hash = createHash("sha256")
-            .update(response, "hex")
+            .update(challenge, "hex")
             .digest("hex");
     
         const result = new BigNumber(hash, 16);

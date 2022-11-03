@@ -32,7 +32,13 @@ export class AccountController {
         if (existingLink != null) { throw new HttpError(400, `Link "${body.link}" is already taken.`); }
         const userLinks = await UserLink.find({ userId: req.user.userId });
         if (userLinks.length >= 5) { throw new HttpError(400, "Maximum ammount of links already assinged."); }
-        const link = new UserLink({ userId: req.user.userId, link: body.link });
+        const link = new UserLink({ 
+            userId: req.user.userId, 
+            link: body.link,
+            title: body.title,
+            description: body.description,
+            image: body.image
+        });
         await link.save();
         return body;
     }

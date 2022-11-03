@@ -1,8 +1,8 @@
-import "../../styles/dashboard/link.css";
+import "../styles/account.css";
 import React, { Component } from "react";
 
 
-export default class Link extends Component {
+export default class Account extends Component {
 
     render() {
         return (

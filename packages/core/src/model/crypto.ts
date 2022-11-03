@@ -4,9 +4,8 @@ export interface ICryptoAddressRequest {
     currency: string;
     link: string;
     name: string;
-    message: string;
+    message?: string;
     challenge: string;
-    challengeResponse: string;
 }
 
 export const CryptoAddressRequestSchema: JTDSchemaType<ICryptoAddressRequest> = {
@@ -14,9 +13,10 @@ export const CryptoAddressRequestSchema: JTDSchemaType<ICryptoAddressRequest> = 
         currency: { type: "string" },
         link: { type: "string" },
         name: { type: "string" },
-        message: { type: "string" },
-        challenge: { type: "string" },
-        challengeResponse: { type: "string" }
+        challenge: { type: "string" }
+    },
+    optionalProperties: {
+        message: { type: "string" }
     }
 };
 
@@ -54,13 +54,17 @@ export interface ICryptoTokenResponse {
     currency: string;
     color: string;
     icon: string;
+    slug: string;
+    name: string;
 }
 
 export const CryptoTokenResponseSchema: JTDSchemaType<ICryptoTokenResponse> = {
     properties: {
         currency: { type: "string" },
         color: { type: "string" },
-        icon: { type: "string" }
+        icon: { type: "string" },
+        slug: { type: "string" },
+        name: { type: "string" }
     }
 };
 

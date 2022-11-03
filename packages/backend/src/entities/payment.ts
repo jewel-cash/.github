@@ -11,7 +11,7 @@ export interface IPendingPayment extends mongoose.Document {
 
 export const PendingPaymentSchema = new mongoose.Schema<IPendingPayment>({
     name: { type: String, required: true, validate: isValidName },
-    message: { type: String, required: true, length: 150 },
+    message: { type: String, length: 250 },
     recipientId: { type: String, required: true }
 });
 

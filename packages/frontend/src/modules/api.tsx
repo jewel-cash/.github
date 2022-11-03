@@ -1,4 +1,5 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, IAccountTrolleyWidgetRequest, AccountTrolleyWidgetResponseSchema } from "core";
+import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, IAccountTrolleyWidgetRequest, AccountTrolleyWidgetResponseSchema, CryptoChallengeResponseSchema, ICryptoAddressRequest, CryptoAddressResponseScheme } from "core";
+import { solveChallenge } from "./pow";
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 
@@ -39,4 +40,26 @@ export const getTrolleyWidget = async (auth: string, email: string) => {
         body: JSON.stringify(body)
     };
     return await client.request(request, AccountTrolleyWidgetResponseSchema);
+};
+
+export const createCryptoAddress = async (link: string, currency: string, name: string, message?: string) => {
+    const challengeRequest: IRequest = {
+        endpoint: "/v1/crypto/challenge"
+    };
+    const challengeResponse = await client.request(challengeRequest, CryptoChallengeResponseSchema);
+    const challengeAnswer = await solveChallenge(challengeResponse.challenge);
+
+    const body: ICryptoAddressRequest = {
+        link,
+        currency,
+        name,
+        message,
+        challenge: challengeAnswer
+    };
+    const addressRequest: IRequest = {
+        endpoint: "/v1/crypto/address",
+        method: "POST",
+        body: JSON.stringify(body)
+    };
+    return await client.request(addressRequest, CryptoAddressResponseScheme);
 };

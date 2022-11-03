@@ -1,8 +1,8 @@
-import "../../styles/index/app.css";
+import "../styles/app.css";
 import React, { Component } from "react";
-import Dash from "../dashboard/dash";
-import Front from "../frontpage/front";
-import Link from "../payment/link";
+import Dash from "./dash";
+import Front from "./front";
+import Link from "./link";
 import Header from "./header";
 import Footer from "./footer";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";

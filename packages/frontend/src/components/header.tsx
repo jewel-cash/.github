@@ -1,4 +1,4 @@
-import "../../styles/index/header.css";
+import "../styles/header.css";
 import React, { Component } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 

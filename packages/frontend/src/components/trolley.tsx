@@ -1,7 +1,7 @@
-import "../../styles/dashboard/trolley.css";
+import "../styles/trolley.css";
 import React, { Component } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
-import { getTrolleyWidget } from "../../modules/api";
+import { getTrolleyWidget } from "../modules/api";
 
 interface IState {
     widgetLink?: string;
@@ -11,15 +11,15 @@ class Trolley extends Component<WithAuth0Props, IState> {
     constructor(props: any) {
         super(props);
         this.state = { };
+        this.setState = this.setState.bind(this);
     }
     
     componentDidMount() {
         const email = this.props.auth0.user?.email ?? "";
         this.props.auth0.getAccessTokenSilently()
             .then(token => getTrolleyWidget(token, email))
-            .then(res => {
-                this.setState({ widgetLink: res.widgetLink });
-            }).catch(console.log);
+            .then(this.setState)
+            .catch(console.log);
     }
 
     render() {

@@ -33,14 +33,21 @@ const runJobs = async (jobs: CronJobs) => {
 
 const getCoinbaseAccounts = async () => {
     const accounts = await getAllAccounts();
-    const cbAccounts = accounts.map(x => {
-        return {
-            coinbaseId: x.id,
-            currency: x.currency.code,
-            color: x.currency.color,
-            icon: `https://assets.coincap.io/assets/icons/${x.currency.code.toLowerCase()}@2x.png`
-        };
-    });
+    const cbAccounts = accounts
+        .filter(x => x.currency.type === "crypto")
+        .filter(x => x.primary)
+        .filter(x => x.currency.slug != null)
+        .map(x => {
+            return {
+                coinbaseId: x.id,
+                currency: x.currency.code,
+                color: x.currency.color,
+                icon: `https://assets.coincap.io/assets/icons/${x.currency.code.toLowerCase()}@2x.png`,
+                slug: x.currency.slug,
+                name: x.currency.name,
+                position: x.currency.sort_index
+            };
+        });
     await CoinbaseAccount.deleteMany();
     await CoinbaseAccount.insertMany(cbAccounts);
 };

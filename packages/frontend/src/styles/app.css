@@ -1,5 +1,3 @@
-
-
 html {
     scroll-behavior: smooth;
 }
@@ -16,7 +14,11 @@ body {
     "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-button, input[type="submit"], input[type="reset"] {
+[hidden] { 
+    display: none !important;
+}
+
+button {
     background: none;
     color: inherit;
     border: none;
@@ -24,6 +26,11 @@ button, input[type="submit"], input[type="reset"] {
     font: inherit;
     cursor: pointer;
     outline: inherit;
+}
+
+img, a {
+    border:none;
+    outline: none;
 }
 
 @keyframes gradient {
@@ -36,4 +43,20 @@ button, input[type="submit"], input[type="reset"] {
     100% {
         background-position: 0% 50%;
     }
+}
+
+.spinner {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    border: 3px solid transparent;
+    border-radius: 50%;
+    border-top-color: #4c4c4c;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }

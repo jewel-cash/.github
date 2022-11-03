@@ -1,0 +1,135 @@
+.link-content {
+    background-color: #ffffff;
+    border-radius: 24px;
+    width: 35%;
+    filter: drop-shadow(4px 4px 20px #00000020);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 35vw;
+}
+
+@media only screen and (max-width: 1024px) {
+    .link-content {
+        width: 55%;
+        min-height: 55vw;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .link-content {
+        width: 95%;
+        min-height: 95vw;
+    }
+}
+
+.link-image {
+    display: inline-block;
+    margin: 1em;
+    width: 35%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.link-image-placeholder {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.link-image-source {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative
+}
+
+.link-title {
+    display: block;
+    font-weight: bold;
+}
+
+.link-description {
+    display: block;
+}
+
+.link-form {
+    margin: 1em 2em;
+    text-align: start;
+}
+
+.link-form-title {
+    display: block;
+    padding: 1em 0 0.2em 0;
+}
+
+.link-form-select {
+    display: block;
+}
+
+.link-form-select-item {
+    display: block;
+}
+
+.link-form-button {
+    display: block;
+    height: 2.5em;
+    width: 7em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: calc(1.25em - 12px) 1em calc(1.25em - 12px) 1em;
+    color: #ffffff;
+    background-color: #429e61;
+}
+
+.link-form-button:hover:enabled {
+    border: 5px solid #429e61;
+    color: #429e61;
+    background-color: #ffffff;
+}
+
+.link-form-button:disabled {
+    background-color: #b1b1b1;
+    cursor: default;
+}
+
+.link-form-warning {
+    display: block;
+    color: #4c4c4c4c;
+    font-style: italic;
+    padding-top: 0.2em;
+}
+
+.link-form-name {
+    display: block;
+}
+
+.link-form-message {
+    display: block;
+}
+
+.link-address {
+    display: block;
+}
+
+.link-address-qr {
+    position: relative;
+    display: inline-block;
+}
+
+.link-address-text {
+    display: block;
+}
+
+.link-address-copy {
+    display: block;
+}
+
+.link-address-back {
+    position: absolute;
+    left: 25px;
+    top: 25px;
+}

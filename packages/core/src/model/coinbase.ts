@@ -2,19 +2,31 @@ import { JTDSchemaType } from "ajv/dist/jtd.js";
 
 export interface ICoinbaseAccount {
     id: string; 
+    primary: boolean;
     currency: { 
         code: string; 
-        color: string; 
+        color: string;
+        slug?: string;
+        type: string;
+        name: string;
+        sort_index: number;
     };
 } 
 
 export const CoinbaseAccountSchema: JTDSchemaType<ICoinbaseAccount> = {
     properties: {
         id: { type: "string" },
+        primary: { type: "boolean" },
         currency: {
             properties: {
                 code: { type: "string" },
-                color: { type: "string" }
+                color: { type: "string" },
+                type: { type: "string" },
+                name: { type: "string" },
+                sort_index: { type: "int32" }
+            },
+            optionalProperties: {
+                slug: { type: "string" }
             },
             additionalProperties: true
         }
