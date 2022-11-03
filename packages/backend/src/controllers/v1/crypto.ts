@@ -24,7 +24,10 @@ export class CryptoController {
             };
         });
         return {
-            tokens
+            tokens,
+            title: link.title,
+            description: link.description,
+            image: link.image
         };
     }
 

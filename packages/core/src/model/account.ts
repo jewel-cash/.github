@@ -2,11 +2,17 @@ import { JTDSchemaType } from "ajv/dist/jtd";
 
 export interface IAccountLinkResponse {
     link: string;
+    title: string;
+    description: string;
+    image: string;
 }
 
 export const AccountLinkResponseSchema: JTDSchemaType<IAccountLinkResponse> = {
     properties: {
-        link: { type: "string" }
+        link: { type: "string" },
+        title: { type: "string" },
+        description: { type: "string" },
+        image: { type: "string" }
     }
 };
 

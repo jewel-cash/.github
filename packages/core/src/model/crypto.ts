@@ -66,13 +66,19 @@ export const CryptoTokenResponseSchema: JTDSchemaType<ICryptoTokenResponse> = {
 
 export interface ICryptoTokensResponse {
     tokens: Array<ICryptoTokenResponse>;
+    title: string;
+    description: string;
+    image: string;
 }
 
 export const CryptoTokensResponseSchema: JTDSchemaType<ICryptoTokensResponse> = {
     properties: {
         tokens: {
             elements: CryptoTokenResponseSchema
-        }
+        },
+        title: { type: "string" },
+        description: { type: "string" },
+        image: { type: "string" },
     }
 };
 
