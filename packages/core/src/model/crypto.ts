@@ -78,7 +78,7 @@ export const CryptoTokensResponseSchema: JTDSchemaType<ICryptoTokensResponse> = 
         },
         title: { type: "string" },
         description: { type: "string" },
-        image: { type: "string" },
+        image: { type: "string" }
     }
 };
 

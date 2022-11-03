@@ -13,7 +13,10 @@ export class AccountController {
         const links = await UserLink.find({ userId: req.user.userId });
         const mapped = links.map(x => {
             return {
-                link: x.link
+                link: x.link,
+                title: x.title,
+                description: x.description,
+                image: x.image
             };
         });
         return {
