@@ -4,14 +4,13 @@ import { createVerify } from "crypto";
 import { createRemoteJWKSet, JWTVerifyOptions, jwtVerify, decodeJwt } from "jose";
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
-    if (process.env.DEBUG === "true") {
-        return { userId: "TestUserId", scopes: [] };
-    }
-
     try {
         const userId = await getUserId[securityName](req);
         return { userId, scopes };
     } catch {
+        if (process.env.DEBUG === "true") {
+            return { userId: "TestUserId", scopes: [] };
+        }
         throw new HttpError(401, "Invalid or missing authorization.");
     }
 };
