@@ -86,7 +86,6 @@ export default class Link extends Component<IProps, IState> {
     }
 
     backPressed() {
-        console.log(this.state.address);
         this.setState({ address: undefined });
     }
 
