@@ -1,5 +1,5 @@
 import "../styles/footer.css";
-import React, { Component, SyntheticEvent } from "react";
+import React, { Component } from "react";
 import ReactMarkdown from "react-markdown";
 
 interface IState {
