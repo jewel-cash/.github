@@ -29,7 +29,7 @@ class Overview extends Component<WithAuth0Props, IState> {
                 Dashboard
                 <p>Cumlative: {this.state.cumlative?.toFixed(2)} USD</p>
                 <p>Pending: {this.state.pending?.toFixed(2)} USD</p>
-                <p>NextPayment: {this.state.nextDate?.relativeTo()}</p>
+                <p>NextPayment: {this.state.nextPaymentDate?.relativeTo()}</p>
             </div>
         );
     }
