@@ -22,7 +22,7 @@ This repository uses a couple of third party services:
 ## Getting Started
 
 Getting set up with this repository is very easy.
-* Install node and MongoDB - `brew install node mongodb-community` (should work with node 16 or node 18).
+* Install node (16) and MongoDB - `brew install node mongodb-community`.
 * Start MongoDB server - `brew services start mongodb-community`.
 * Clone this repository `git clone https://github.com/jewel-cash/.github`.
 * Fill out the two `.env` files (one for frontend package and one for backend package).
