@@ -27,12 +27,45 @@
     color: #BDBDBD
 }
 
-.footer-contact {
+@media only screen and (max-width: 768px) {
+    .footer-left-long {
+        display: none;
+    }
+    .footer-left-short {
+        display: unset;
+    }
+}
+
+.footer-right {
     float: right;
     margin-right: 20px;
     cursor: pointer;
 }
 
-.footer-contact:hover {
+.footer-right:hover {
     text-decoration: underline;
+}
+
+.footer-legal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #00000020;
+}
+
+.footer-legal-content {
+    padding: 1em 2em;
+    position: fixed;
+    height: 75%;
+    width: 75%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 24px;
+    filter: drop-shadow(4px 4px 20px #00000020);
+    overflow: scroll;
+    overscroll-behavior: contain;
 }
