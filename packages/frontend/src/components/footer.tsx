@@ -1,9 +1,9 @@
 import "../styles/footer.css";
-import React, { Component, createRef, SyntheticEvent } from "react";
-import ReactMarkdown from 'react-markdown'
+import React, { Component, SyntheticEvent } from "react";
+import ReactMarkdown from "react-markdown";
 
 interface IState {
-    legalText?: string
+    legalText?: string;
 }
 
 export default class Footer extends Component<any, IState> {
@@ -24,11 +24,11 @@ export default class Footer extends Component<any, IState> {
             window.fetch(page)
                 .then(x => x.text())
                 .then(x => this.setState({ legalText: x }));
-        }
+        };
     }
 
-    closeModal(event: SyntheticEvent) {
-        this.setState({ legalText: undefined })
+    closeModal() {
+        this.setState({ legalText: undefined });
     }
 
     render() {
