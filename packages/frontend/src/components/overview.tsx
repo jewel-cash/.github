@@ -6,7 +6,7 @@ import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 interface IState {
     cumlative?: number;
     pending?: number;
-    nextDate?: number;
+    nextPaymentDate?: number;
 }
 
 class Overview extends Component<WithAuth0Props, IState> {
