@@ -8,6 +8,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     min-height: 35vw;
+    text-align: center;
 }
 
 @media only screen and (max-width: 1024px) {
