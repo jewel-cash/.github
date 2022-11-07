@@ -70,4 +70,4 @@ export const getDashboardTransactions = async (auth: string) => {
         headers: { "Authorization": `Bearer ${auth}` }
     };
     return await client.request(request, DashboardTransactionsResponseSchema);
-}
+};
