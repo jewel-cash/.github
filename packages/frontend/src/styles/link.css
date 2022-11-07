@@ -79,6 +79,7 @@
     display: block;
     height: 2.5em;
     width: 7em;
+    border-radius: 1px;
     font-weight: bold;
     text-transform: uppercase;
     margin: calc(1.25em - 12px) 1em calc(1.25em - 12px) 1em;

@@ -1,5 +1,5 @@
 import "../styles/footer.css";
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import ReactMarkdown from "react-markdown";
 
 interface IState {
@@ -7,6 +7,8 @@ interface IState {
 }
 
 export default class Footer extends Component<any, IState> {
+    private legalDiv = createRef<HTMLDivElement>();
+
     constructor(props: any) {
         super(props);
         this.state = { };
@@ -28,6 +30,7 @@ export default class Footer extends Component<any, IState> {
     }
 
     closeModal() {
+        this.legalDiv.current?.scrollTo({ top: 0 });
         this.setState({ legalText: undefined });
     }
 
@@ -45,7 +48,7 @@ export default class Footer extends Component<any, IState> {
                     <span className="footer-right" onClick={this.sendEmail}>Contact</span>
                 </div>
                 <div className="footer-legal-overlay" hidden={this.state.legalText == null} onClick={this.closeModal} />
-                <div className="footer-legal-content" hidden={this.state.legalText == null}>
+                <div className="footer-legal-content" hidden={this.state.legalText == null} ref={this.legalDiv}>
                     <ReactMarkdown>{this.state.legalText ?? ""}</ReactMarkdown>
                 </div>
             </div>
