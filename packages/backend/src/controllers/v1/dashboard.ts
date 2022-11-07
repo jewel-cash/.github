@@ -40,7 +40,8 @@ export class DashboardController {
                 currency: x.currency,
                 exchangeRate: x.exchangeRate.toNumber(),
                 proceeds: x.proceeds.toNumber(),
-                fee: x.fee.toNumber()
+                fee: x.fee.toNumber(),
+                timestamp: x.timestamp
             };
         });
         return {

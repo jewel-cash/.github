@@ -8,6 +8,7 @@ export interface IDashboardTransactionResponse {
     exchangeRate: number;
     proceeds: number;
     fee: number;
+    timestamp: number;
 }
 
 export const DashboardTransactionResponseSchema: JTDSchemaType<IDashboardTransactionResponse> = {
@@ -18,7 +19,8 @@ export const DashboardTransactionResponseSchema: JTDSchemaType<IDashboardTransac
         currency: { type: "string" },
         exchangeRate: { type: "float32" },
         proceeds: { type: "float32" },
-        fee: { type: "float32" }
+        fee: { type: "float32" },
+        timestamp: { type: "int32" }
     }
 };
 

@@ -1,0 +1,28 @@
+.transaction {
+    padding: 0 16px;
+}
+
+.transaction-title {
+    padding-top: 16px;
+    padding-bottom: 4px;
+    display: block;
+    font-weight: bold;
+}
+
+.transaction-recent-list {
+    position: relative;
+}
+
+.transaction-list { 
+    border-radius: 4px;
+    border: 1px solid rgb(225, 228, 231);
+}
+
+.transaction-empty {
+    padding: 24px 8px;
+    color: #8695a5;
+    display: block;
+    text-align: center;
+    line-height: 1.5;
+    font-size: 12px;
+}

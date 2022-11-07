@@ -4,7 +4,8 @@ import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";
 import Account from "./account";
 import Overview from "./overview";
-import Stripe from "./trolley";
+import Trolley from "./trolley";
+import Transaction from "./transaction";
 
 interface IState {
     tiles: Array<ReactNode>;
@@ -12,8 +13,9 @@ interface IState {
 
 const defaultTiles: Array<ReactNode> = [
     <div key="overview" className="tile"><Overview /></div>,
+    <div key="transaction" className="tile"><Transaction /></div>,
     <div key="account" className="tile"><Account /></div>,
-    <div key="stripe" className="tile"><Stripe /></div>
+    <div key="trolley" className="tile"><Trolley /></div>
 ];
 
 const adminTiles: Array<ReactNode> = [

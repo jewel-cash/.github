@@ -25,8 +25,8 @@ class Trolley extends Component<WithAuth0Props, IState> {
     render() {
         return (
             <div className="trolley">
-                { this.state.widgetLink == null && "Loading" }
-                { this.state.widgetLink != null && <iframe src={this.state.widgetLink} className="trolley-frame" /> }
+                <div className="spinner" hidden={this.state.widgetLink != null}></div>
+                <iframe className="trolley-frame" src={this.state.widgetLink} hidden={this.state.widgetLink == null} />
             </div>
         );
     }
