@@ -3,21 +3,21 @@ import { BigNumber } from "bignumber.js";
 import { BigNumberSchema } from "./types.js";
 import { isValidName } from "core";
 
-export interface IPendingPayment extends mongoose.Document {
+export interface IPendingTransaction extends mongoose.Document {
     name: string;
     message: string;
     recipientId: string;
 }
 
-export const PendingPaymentSchema = new mongoose.Schema<IPendingPayment>({
+export const PendingTransactionSchema = new mongoose.Schema<IPendingTransaction>({
     name: { type: String, required: true, validate: isValidName },
     message: { type: String, length: 250 },
     recipientId: { type: String, required: true }
 });
 
-export const PendingPayment: mongoose.Model<IPendingPayment> = mongoose.model("PendingPayment", PendingPaymentSchema);
+export const PendingTransaction: mongoose.Model<IPendingTransaction> = mongoose.model("pending-transactions", PendingTransactionSchema);
 
-export interface IPayment extends mongoose.Document {
+export interface ITransaction extends mongoose.Document {
     pendingId: string;
     hash: string;
     name: string;
@@ -32,7 +32,7 @@ export interface IPayment extends mongoose.Document {
     payedOut: boolean;
 }
 
-export const PaymentSchema = new mongoose.Schema<IPayment>({
+export const TransactionSchema = new mongoose.Schema<ITransaction>({
     pendingId: { type: String, required: true },
     hash: {type: String, required: true, unique: true },
     name: { type: String, required: true, validate: isValidName },
@@ -47,4 +47,4 @@ export const PaymentSchema = new mongoose.Schema<IPayment>({
     payedOut: { type: Boolean, default: false }
 });
 
-export const Payment: mongoose.Model<IPayment> = mongoose.model("Payment", PaymentSchema);
+export const Transaction: mongoose.Model<ITransaction> = mongoose.model("completed-transactions", TransactionSchema);

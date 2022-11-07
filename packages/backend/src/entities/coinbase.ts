@@ -20,4 +20,4 @@ export const CoinbaseAccountScheme = new mongoose.Schema<ICoinbaseAccount>({
     position: { type: Number, required: true }
 });
 
-export const CoinbaseAccount: mongoose.Model<ICoinbaseAccount> = mongoose.model("CoinbaseAccount", CoinbaseAccountScheme);
+export const CoinbaseAccount: mongoose.Model<ICoinbaseAccount> = mongoose.model("coinbase-accounts", CoinbaseAccountScheme);

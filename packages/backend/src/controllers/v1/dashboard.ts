@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import { Get, Route, Security, Request } from "tsoa";
-import { Payment } from "../../entities/payment.js";
+import { Transaction } from "../../entities/transaction.js";
 import { nextMonday } from "core"; 
 import type { IDashboardOverviewResponse, IDashboardTransactionsResponse } from "core";
 
@@ -9,7 +9,7 @@ import type { IDashboardOverviewResponse, IDashboardTransactionsResponse } from 
 export class DashboardController {
     @Get("/overview")
     public async getOverview(@Request() req: any): Promise<IDashboardOverviewResponse> {
-        const payments = await Payment.find({ recipientId: req.user.userId });
+        const payments = await Transaction.find({ recipientId: req.user.userId });
         let cumlative = new BigNumber(0);
         let pending = new BigNumber(0);
 
@@ -31,7 +31,7 @@ export class DashboardController {
 
     @Get("/trasactions")
     public async getTransactions(@Request() req: any): Promise<IDashboardTransactionsResponse> {
-        const payments = await Payment.find({ recipientId: req.user.userId });
+        const payments = await Transaction.find({ recipientId: req.user.userId });
         const transactions = payments.map(x => {
             return {
                 from: x.name,

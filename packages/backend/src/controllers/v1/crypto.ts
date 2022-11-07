@@ -5,7 +5,7 @@ import { HttpError } from "../../modules/error.js";
 import { CoinbaseAccount } from "../../entities/coinbase.js";
 import { UserLink } from "../../entities/link.js";
 import type { ICryptoTokensRequest, ICryptoTokensResponse, ICryptoTokenResponse, ICryptoChallengeResponse, ICryptoAddressRequest, ICryptoAddressResponse } from "core";
-import { PendingPayment } from "../../entities/payment.js";
+import { PendingTransaction } from "../../entities/transaction.js";
 
 @Route("/v1/crypto")
 export class CryptoController {
@@ -48,7 +48,7 @@ export class CryptoController {
 
         const userLink = await UserLink.findOne({ link: body.link });
         if (userLink == null) { throw new HttpError(404, `Link "${body.link}" not found.`);}
-        const pendingPayment = new PendingPayment({ name: body.name, message: body.message, recipientId: userLink.userId });
+        const pendingPayment = new PendingTransaction({ name: body.name, message: body.message, recipientId: userLink.userId });
         await pendingPayment.save();
 
         const account = await CoinbaseAccount.findOne({ slug: body.currency });

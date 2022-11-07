@@ -17,4 +17,4 @@ export const UserLinkScheme = new mongoose.Schema<IUserLink>({
     image: { type: String, required: true }
 });
 
-export const UserLink: mongoose.Model<IUserLink> = mongoose.model("Link", UserLinkScheme);
+export const UserLink: mongoose.Model<IUserLink> = mongoose.model("account-links", UserLinkScheme);

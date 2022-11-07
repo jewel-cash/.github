@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import { Get, Route, Security, Hidden } from "tsoa";
-import { Payment } from "../../entities/payment.js";
+import { Transaction } from "../../entities/transaction.js";
 import { nextMonday } from "core";
 import type { IAdminOverviewResponse, IAdminTransactionsResponse, IAdminUsersResponse } from "core";
 
@@ -10,7 +10,7 @@ import type { IAdminOverviewResponse, IAdminTransactionsResponse, IAdminUsersRes
 export class AdminController {
     @Get("/overview")
     public async getOverview(): Promise<IAdminOverviewResponse> {
-        const payments = await Payment.find();
+        const payments = await Transaction.find();
 
         let payedOut = new BigNumber(0);
         let pendingPayments = new BigNumber(0);
@@ -40,7 +40,7 @@ export class AdminController {
 
     @Get("/transactions")
     public async getTransactions(): Promise<IAdminTransactionsResponse> {
-        const payments = await Payment.find();
+        const payments = await Transaction.find();
         const transactions = payments.map(x => {
             return {
                 recipient: x.recipientId,
