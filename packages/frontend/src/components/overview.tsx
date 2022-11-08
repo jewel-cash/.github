@@ -38,7 +38,7 @@ class Overview extends Component<WithAuth0Props, IState> {
                     <span className="overview-sub">Next payment<sup>*</sup></span>
                     <span className="overview-main">{this.state.nextPaymentDate?.relativeTo()}</span>
                     <span className="overview-disclaimer">
-                        <sup>*</sup>Pending balance will be paid out if it exceeds $100. Pending balance not paid out will carry over to the next payment date.
+                        <sup>*</sup>Pending balance will be paid out only if it exceeds $100. Pending balance not paid out will carry over to the period.
                     </span>
                 </div>
             </div>
