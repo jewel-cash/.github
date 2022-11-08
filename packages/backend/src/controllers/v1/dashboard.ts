@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
-import { Get, Route, Security, Request, Response } from "tsoa";
-import { Transaction, ITransaction } from "../../entities/transaction.js";
+import { Get, Route, Security, Request } from "tsoa";
+import { Transaction } from "../../entities/transaction.js";
 import { DashboardTransactionResponseSchema, nextMonday } from "core"; 
 import type { IDashboardOverviewResponse, IDashboardTransactionsResponse } from "core";
 
