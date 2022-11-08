@@ -1,7 +1,7 @@
 import { BigNumber } from "bignumber.js";
-import { Get, Route, Security, Request } from "tsoa";
-import { Transaction } from "../../entities/transaction.js";
-import { nextMonday } from "core"; 
+import { Get, Route, Security, Request, Response } from "tsoa";
+import { Transaction, ITransaction } from "../../entities/transaction.js";
+import { DashboardTransactionResponseSchema, nextMonday } from "core"; 
 import type { IDashboardOverviewResponse, IDashboardTransactionsResponse } from "core";
 
 @Route("/v1/dashboard")
@@ -47,5 +47,20 @@ export class DashboardController {
         return {
             transactions
         };
+    }
+
+    @Get("/export")
+    public async exportTransactions(@Request() req: any): Promise<void> {
+        const payments = await this.getTransactions(req);
+        const keys = Object.keys(DashboardTransactionResponseSchema.properties);
+        const values = payments.transactions as Record<string, any>[];
+
+        const data = [
+            keys.join(","),
+            values.map(t => keys.map(k => `${t[k]}`)).join(",")
+        ].join("\n");
+
+        req.res.attachment("transactions.csv");
+        req.res.end(Buffer.from(data));
     }
 }

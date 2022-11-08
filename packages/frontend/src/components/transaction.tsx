@@ -2,7 +2,7 @@ import "../styles/transaction.css";
 import React, { Component } from "react";
 import { IDashboardTransactionsResponse, IDashboardTransactionResponse } from "core";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
-import { getDashboardTransactions } from "../modules/api";
+import { downloadDashboardTransactions, getDashboardTransactions } from "../modules/api";
 
 interface IState {
     recent?: Array<IDashboardTransactionResponse>;
@@ -14,6 +14,7 @@ class Transaction extends Component<WithAuth0Props, IState> {
         super(props);
         this.state = { };
         this.sortTransactions = this.sortTransactions.bind(this);
+        this.downloadTransactions = this.downloadTransactions.bind(this);
     }
 
     componentDidMount() {
@@ -30,6 +31,12 @@ class Transaction extends Component<WithAuth0Props, IState> {
             top,
             recent
         });
+    }
+    
+    downloadTransactions() {
+        this.props.auth0.getAccessTokenSilently()
+            .then(downloadDashboardTransactions)
+            .catch(console.log);
     }
 
     render() {
@@ -54,6 +61,7 @@ class Transaction extends Component<WithAuth0Props, IState> {
                         { this.state.top?.map((x, i) => <span key={i}>{x.from}</span>) }
                     </div>
                 </div>
+                <button className="transaction-download" hidden={this.state.recent == null || this.state.top == null} onClick={this.downloadTransactions}>Download</button>
             </div>
         );
     }

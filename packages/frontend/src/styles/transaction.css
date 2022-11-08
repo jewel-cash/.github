@@ -26,3 +26,20 @@
     line-height: 1.5;
     font-size: 12px;
 }
+
+.transaction-download {
+    display: block;
+    height: 2.5em;
+    width: 7em;
+    border-radius: 1px;
+    font-weight: bold;
+    margin: 1em auto;
+    color: #ffffff;
+    background-color: #429e61;
+}
+
+.transaction-download:hover {
+    border: 5px solid #429e61;
+    color: #429e61;
+    background-color: #ffffff;
+}

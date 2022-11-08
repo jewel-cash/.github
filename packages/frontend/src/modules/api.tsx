@@ -71,3 +71,14 @@ export const getDashboardTransactions = async (auth: string) => {
     };
     return await client.request(request, DashboardTransactionsResponseSchema);
 };
+
+export const downloadDashboardTransactions = async (auth: string) => {
+    const request: IRequest = {
+        endpoint: "/v1/dashboard/export",
+        headers: { "Authorization": `Bearer ${auth}` }
+    };
+    const res = await client.request(request);
+    const blob = await res.blob();
+    const cache = window.URL.createObjectURL(blob);
+    window.open(cache, "_blank")?.focus();
+};

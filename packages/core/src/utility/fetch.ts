@@ -26,7 +26,7 @@ export class Client {
         }
     }
 
-    public async request<T>(req: IRequest, schema: JTDSchemaType<T>): Promise<T> {
+    public async request<T>(req: IRequest, schema?: JTDSchemaType<T>): Promise<T | any> {
         const infix = req.endpoint.startsWith("/") ? "" : "/";
         const url: RequestInfo = this.baseUrl + infix + req.endpoint;
         const headers: HeadersInit = {
@@ -40,6 +40,7 @@ export class Client {
         };
         const res = await this.fetch(url, request);
         if (res.status < 200 && res.status >= 300) { throw new Error(`BadStatusCode${res.status}`); }
+        if (schema == null) { return res; }
         const json = await res.json();
 
         const validate = ajv.compile(schema);
