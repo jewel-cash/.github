@@ -24,7 +24,7 @@ class Transaction extends Component<WithAuth0Props, IState> {
             .catch(console.log);
     }
 
-    sortTransactions(response: IDashboardTransactionsResponse) {
+    private sortTransactions(response: IDashboardTransactionsResponse) {
         const top = response.transactions.sort((a, b) => b.proceeds - a.proceeds).slice(0, 5);
         const recent = response.transactions.sort((a, b) => a.timestamp - b.timestamp).slice(0, 5);
         this.setState({
@@ -33,7 +33,7 @@ class Transaction extends Component<WithAuth0Props, IState> {
         });
     }
     
-    downloadTransactions() {
+    private downloadTransactions() {
         this.props.auth0.getAccessTokenSilently()
             .then(downloadDashboardTransactions)
             .catch(console.log);

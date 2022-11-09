@@ -16,7 +16,7 @@ class App extends Component<WithAuth0Props> {
         this.link = hash.length === 0 ? null : hash;
     }
 
-    content() {
+    private content() {
         if (this.link != null) {
             return (<Link link={this.link} />);
         }

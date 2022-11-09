@@ -37,7 +37,7 @@ class Dash extends Component<WithAuth0Props, IState> {
             .then(this.showAdminTilesIfNeeded);
     }
 
-    showAdminTilesIfNeeded(token: string) {
+    private showAdminTilesIfNeeded(token: string) {
         const claim = decodeJwt(token);
         const roles = claim.permissions as Array<string>;
         if (roles.includes("admin")) {

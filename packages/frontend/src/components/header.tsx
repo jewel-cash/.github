@@ -12,7 +12,7 @@ class Header extends Component<IProps> {
         this.loginPressed = this.loginPressed.bind(this);
     }
 
-    loginPressed() {
+    private loginPressed() {
         if (this.props.auth0.isAuthenticated) {
             this.props.auth0.logout();
         } else {
@@ -20,7 +20,7 @@ class Header extends Component<IProps> {
         }
     }
 
-    isLoginButtonHidden() {
+    private isLoginButtonHidden() {
         if (this.props.auth0.isLoading) { return false; }
         return !this.props.showLoginButton;
     }

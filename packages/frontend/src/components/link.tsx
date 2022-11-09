@@ -46,13 +46,13 @@ export default class Link extends Component<IProps, IState> {
             .catch(this.redirectToHome);
     }
 
-    redirectToHome() {
+    private redirectToHome() {
         const hash = window.location.hash;
         const current = window.location.href;
         window.location.href = current.replace(hash, "");
     }
 
-    submitSelection() {
+    private submitSelection() {
         if (this.state.tokens == null) { return; }
         const currencyIndex = parseInt(this.currencyField.current?.value ?? "");
         if (isNaN(currencyIndex)) { return; }
@@ -70,7 +70,7 @@ export default class Link extends Component<IProps, IState> {
             .catch(console.log);
     }
 
-    inputChanged() {
+    private inputChanged() {
         const currencyIndex = parseInt(this.currencyField.current?.value ?? "");
         const currencyValid = !isNaN(currencyIndex);
         const name = this.nameField.current?.value.trim() ?? "";
@@ -81,11 +81,11 @@ export default class Link extends Component<IProps, IState> {
         this.setState({ submitEnabled: allFieldsValid });
     }
 
-    copyAddressToClipboard() {
+    private copyAddressToClipboard() {
         navigator.clipboard.writeText(this.state.address ?? "");
     }
 
-    backPressed() {
+    private backPressed() {
         this.setState({ address: undefined });
     }
 

@@ -9,10 +9,6 @@
     font-weight: bold;
 }
 
-.transaction-recent-list {
-    position: relative;
-}
-
 .transaction-list { 
     border-radius: 4px;
     border: 1px solid rgb(225, 228, 231);

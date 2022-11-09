@@ -17,11 +17,11 @@ export default class Footer extends Component<any, IState> {
         this.closeModal = this.closeModal.bind(this);
     }
 
-    sendEmail() {
+    private sendEmail() {
         window.location.href = "mailto:contact@jewel.cash";
     }
 
-    openModal(page: string) {
+    private openModal(page: string) {
         return () => {
             window.fetch(page)
                 .then(x => x.text())
@@ -29,7 +29,7 @@ export default class Footer extends Component<any, IState> {
         };
     }
 
-    closeModal() {
+    private closeModal() {
         this.legalDiv.current?.scrollTo({ top: 0 });
         this.setState({ legalText: undefined });
     }
