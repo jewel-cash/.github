@@ -1,4 +1,4 @@
-import { Body, Delete, Get, Post, Route, SuccessResponse, Request, Security } from "tsoa";
+import { Body, Delete, Get, Post, Route, SuccessResponse, Request, Security, Put } from "tsoa";
 import { UserLink } from "../../entities/link.js";
 import type { IAccountLinksResponse, IAccountLinkResponse, IAccountTrolleyWidgetRequest, IAccountTrolleyWidgetResponse } from "core";
 import { HttpError } from "../../modules/error.js";
@@ -8,12 +8,12 @@ import { createWidgetLink } from "../../modules/trolley.js";
 @Security("token")
 export class AccountController {
 
-    @Get("/link")
+    @Get("/links")
     public async getLink(@Request() req: any): Promise<IAccountLinksResponse> {
         const links = await UserLink.find({ userId: req.user.userId });
         const mapped = links.map(x => {
             return {
-                link: x.link,
+                slug: x.slug,
                 title: x.title,
                 description: x.description,
                 image: x.image
@@ -24,17 +24,16 @@ export class AccountController {
         };
     } 
 
-    @Post("/link")
+    @Post("/links")
     @SuccessResponse(201)
     public async createLink(@Request() req: any, @Body() body: IAccountLinkResponse): Promise<IAccountLinkResponse> {
-        if (body.link.length < 3) { throw new HttpError(400, "Link needs to be at least 3 characters."); }
-        const existingLink = await UserLink.findOne({ link: body.link });
-        if (existingLink != null) { throw new HttpError(400, `Link "${body.link}" is already taken.`); }
+        const existingLink = await UserLink.findOne({ slug: body.slug });
+        if (existingLink != null) { throw new HttpError(400, `Link "${body.slug}" is already taken.`); }
         const userLinks = await UserLink.find({ userId: req.user.userId });
         if (userLinks.length >= 5) { throw new HttpError(400, "Maximum ammount of links already assinged."); }
         const link = new UserLink({ 
             userId: req.user.userId, 
-            link: body.link,
+            slug: body.slug,
             title: body.title,
             description: body.description,
             image: body.image
@@ -43,10 +42,19 @@ export class AccountController {
         return body;
     }
 
-    @Delete("/link")
+    @Put("/links")
+    public async updateLink(@Request() req: any, @Body() body: IAccountLinkResponse): Promise<IAccountLinkResponse> {
+        const query = { slug: body.slug, userId: req.user.userId };
+        const update = { title: body.title, description: body.description, image: body.image };
+        const status = await UserLink.updateOne(query, update);
+        if (!status.acknowledged || status.modifiedCount !== 1) { throw new HttpError(400, `Update "${body.slug}" failed.`); }
+        return body;
+    }
+
+    @Delete("/links")
     @SuccessResponse(204)
     public async DeleteLink(@Request() req: any, @Body() body: IAccountLinkResponse): Promise<void> {
-        await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.link });
+        await UserLink.findOneAndDelete({ userId: req.user.userId, link: body.slug });
     }
 
     @Post("/trolley")

@@ -1,4 +1,4 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, IAccountTrolleyWidgetRequest, AccountTrolleyWidgetResponseSchema, CryptoChallengeResponseSchema, ICryptoAddressRequest, CryptoAddressResponseScheme, DashboardTransactionsResponseSchema } from "core";
+import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, IAccountTrolleyWidgetRequest, AccountTrolleyWidgetResponseSchema, CryptoChallengeResponseSchema, ICryptoAddressRequest, CryptoAddressResponseScheme, DashboardTransactionsResponseSchema, AccountLinksResponseSchema, IAccountLinkResponse } from "core";
 import { solveChallenge } from "./pow";
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
@@ -81,4 +81,42 @@ export const downloadDashboardTransactions = async (auth: string) => {
     const blob = await res.blob();
     const cache = window.URL.createObjectURL(blob);
     window.open(cache, "_blank")?.focus();
+};
+
+export const getAccountLinks = async (auth: string) => {
+    const request: IRequest = {
+        endpoint: "/v1/account/links",
+        headers: { "Authorization": `Bearer ${auth}` }
+    };
+    return await client.request(request, AccountLinksResponseSchema);
+};
+
+export const createAccountLink = async (auth: string, link: IAccountLinkResponse) => {
+    const request: IRequest = {
+        endpoint: "/v1/account/links",
+        method: "POST",
+        headers: { "Authorization": `Bearer ${auth}` },
+        body: JSON.stringify(link)
+    };
+    return await client.request(request, AccountLinksResponseSchema);
+};
+
+export const updateAccountLink = async (auth: string, link: IAccountLinkResponse) => {
+    const request: IRequest = {
+        endpoint: "/v1/account/links",
+        method: "PUT",
+        headers: { "Authorization": `Bearer ${auth}` },
+        body: JSON.stringify(link)
+    };
+    return await client.request(request, AccountLinksResponseSchema);
+};
+
+export const deleteAccountLink = async (auth: string, link: IAccountLinkResponse) => {
+    const request: IRequest = {
+        endpoint: "/v1/account/links",
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${auth}` },
+        body: JSON.stringify(link)
+    };
+    return await client.request(request, AccountLinksResponseSchema);
 };

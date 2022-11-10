@@ -1,7 +1,7 @@
 import { JTDSchemaType } from "ajv/dist/jtd";
 
 export interface IAccountLinkResponse {
-    link: string;
+    slug: string;
     title: string;
     description: string;
     image: string;
@@ -9,7 +9,7 @@ export interface IAccountLinkResponse {
 
 export const AccountLinkResponseSchema: JTDSchemaType<IAccountLinkResponse> = {
     properties: {
-        link: { type: "string" },
+        slug: { type: "string" },
         title: { type: "string" },
         description: { type: "string" },
         image: { type: "string" }
