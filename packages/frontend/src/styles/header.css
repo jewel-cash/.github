@@ -1,5 +1,5 @@
 .header {
-    height: 5em;
+    height: 80px;
     width: 100%;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -11,7 +11,7 @@
 
 .header-content {
     width: 100%;
-    height: 5em;
+    height: 80px;
     position: fixed;
     top: 0;
     color: #ffffff;
@@ -27,7 +27,7 @@
     width: 100%;
     height: 100%;
     border-radius: 24px;
-    box-shadow: 0px -24px 0px 5em #429e61;
+    box-shadow: 0px -24px 0px 80px #429e61;
     z-index: -1;
 }
 
@@ -48,9 +48,9 @@
 }
 
 .header-logo {
-    height: 2.5em;
-    width: 2.5em;
-    margin: calc(1.25em - 12px) 1em calc(1.25em - 12px) 1em;
+    height: 40px;
+    width: 40px;
+    margin: 8px 16px;
 }
 
 .header-title {
@@ -62,12 +62,12 @@
 
 .header-login {
     float: right;
-    height: 2.5em;
-    width: 7em;
+    height: 40px;
+    width: 100px;
+    padding: 0;
     border-radius: 1px;
-    font-weight: bold;
     text-transform: uppercase;
-    margin: calc(1.25em - 12px) 1em calc(1.25em - 12px) 1em;
+    margin: 8px 16px;
     background-color: #ffffff;
     color: #429e61;
 }

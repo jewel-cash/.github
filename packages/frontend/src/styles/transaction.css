@@ -25,17 +25,10 @@
 
 .transaction-download {
     display: block;
-    height: 2.5em;
-    width: 7em;
-    border-radius: 1px;
-    font-weight: bold;
-    margin: 1em auto;
-    color: #ffffff;
-    background-color: #429e61;
+    float: right;
+    margin-top: 8px;
 }
 
-.transaction-download:hover {
-    border: 5px solid #429e61;
-    color: #429e61;
-    background-color: #ffffff;
+.transaction-download-icon {
+    margin-right: 8px;
 }

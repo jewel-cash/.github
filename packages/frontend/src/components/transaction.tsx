@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { IDashboardTransactionsResponse, IDashboardTransactionResponse } from "core";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { downloadDashboardTransactions, getDashboardTransactions } from "../modules/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
 interface IState {
     recent?: Array<IDashboardTransactionResponse>;
@@ -61,7 +63,10 @@ class Transaction extends Component<WithAuth0Props, IState> {
                         { this.state.top?.map((x, i) => <span key={i}>{x.from}</span>) }
                     </div>
                 </div>
-                <button className="transaction-download" hidden={this.state.recent == null || this.state.top == null} onClick={this.downloadTransactions}>Download</button>
+                <button className="transaction-download" hidden={this.state.recent == null || this.state.top == null} onClick={this.downloadTransactions}>
+                    <FontAwesomeIcon className="transaction-download-icon" icon={faFileDownload} />
+                    Download All Donations
+                </button>
             </div>
         );
     }

@@ -2,7 +2,7 @@ import "../styles/dash.css";
 import React, { Component, ReactNode } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";
-import Account from "./account";
+import Page from "./page";
 import Overview from "./overview";
 import Trolley from "./trolley";
 import Transaction from "./transaction";
@@ -14,7 +14,7 @@ interface IState {
 const defaultTiles: Array<ReactNode> = [
     <div key="overview" className="tile"><Overview /></div>,
     <div key="transaction" className="tile"><Transaction /></div>,
-    <div key="account" className="tile"><Account /></div>,
+    <div key="account" className="tile"><Page /></div>,
     <div key="trolley" className="tile"><Trolley /></div>
 ];
 

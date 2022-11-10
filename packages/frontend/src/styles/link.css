@@ -27,7 +27,7 @@
 
 .link-image {
     display: inline-block;
-    margin: 1em;
+    margin: 16px;
     width: 35%;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -58,13 +58,13 @@
 }
 
 .link-form {
-    margin: 1em 2em;
+    margin: 16px 32px;
     text-align: start;
 }
 
 .link-form-title {
     display: block;
-    padding: 1em 0 0.2em 0;
+    padding: 16px 0 4px 0;
 }
 
 .link-form-select {
@@ -77,32 +77,14 @@
 
 .link-form-button {
     display: block;
-    height: 2.5em;
-    width: 7em;
-    border-radius: 1px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: calc(1.25em - 12px) 1em calc(1.25em - 12px) 1em;
-    color: #ffffff;
-    background-color: #429e61;
-}
-
-.link-form-button:hover:enabled {
-    border: 5px solid #429e61;
-    color: #429e61;
-    background-color: #ffffff;
-}
-
-.link-form-button:disabled {
-    background-color: #b1b1b1;
-    cursor: default;
+    margin-top: 8px;
 }
 
 .link-form-warning {
     display: block;
     color: #4c4c4c4c;
     font-style: italic;
-    padding-top: 0.2em;
+    padding-top: 4px;
 }
 
 .link-form-name {

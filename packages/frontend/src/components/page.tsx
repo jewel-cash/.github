@@ -1,15 +1,17 @@
-import "../styles/account.css";
+import "../styles/page.css";
 import React, { Component } from "react";
 import { IAccountLinkResponse } from "core";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { createAccountLink, deleteAccountLink, getAccountLinks, updateAccountLink } from "../modules/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface IState {
     links?: Array<IAccountLinkResponse>;
     edit?: IAccountLinkResponse;
 }
 
-class Account extends Component<WithAuth0Props, IState> {
+class Page extends Component<WithAuth0Props, IState> {
     constructor(props: WithAuth0Props) {
         super(props);
         this.state = { };
@@ -74,24 +76,27 @@ class Account extends Component<WithAuth0Props, IState> {
 
     render() {
         return (
-            <div className="account">
+            <div className="page">
                 <div className="spinner" hidden={this.state.links != null}></div>
-                <div className="account-edit" hidden={this.state.edit == null}>
+                <div className="page-edit" hidden={this.state.edit == null}>
 
                 </div>
-                <div className="account-recent" hidden={this.state.links == null}>
-                    <span className="account-title">Pages</span>
-                    <div className="account-list">
-                        <span className="account-empty" hidden={this.state.links?.length !== 0}>
+                <div className="page-recent" hidden={this.state.links == null}>
+                    <span className="page-title">Pages</span>
+                    <div className="page-list">
+                        <span className="page-empty" hidden={this.state.links?.length !== 0}>
                             You haven&apos;t created any pages yet
                         </span>
                         { this.state.links?.map((x, i) => <span key={i}>{x.slug}</span>) }
                     </div>
                 </div>
-                <button className="transaction-download" hidden={this.state.links == null} onClick={this.didPressNew} disabled={this.state.links?.length === 5}>New</button>
+                <button className="page-create" hidden={this.state.links == null} onClick={this.didPressNew} disabled={this.state.links?.length === 5}>
+                    <FontAwesomeIcon className="page-create-icon" icon={faPlus} />
+                    Add New Page
+                </button>
             </div>
         );
     }
 }
 
-export default withAuth0(Account);
+export default withAuth0(Page);
