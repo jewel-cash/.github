@@ -21,6 +21,8 @@ interface IState {
 }
 
 export default class Link extends Component<IProps, IState> {
+    private parent = createRef<HTMLDivElement>();
+    private content = createRef<HTMLDivElement>();
     private currencyField = createRef<HTMLInputElement>();
     private nameField = createRef<HTMLInputElement>();
     private messageField = createRef<HTMLInputElement>();
@@ -37,13 +39,32 @@ export default class Link extends Component<IProps, IState> {
         this.inputChanged = this.inputChanged.bind(this);
         this.copyAddressToClipboard = this.copyAddressToClipboard.bind(this);
         this.backPressed = this.backPressed.bind(this);
+        this.updateParentDisplay = this.updateParentDisplay.bind(this);
     }
 
     componentDidMount() {
+        window.addEventListener("resize", this.updateParentDisplay);
         getTokens(this.props.link)
             .then(this.setState)
             .then(() => this.setState({ isLoading: false }))
             .catch(this.redirectToHome);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateParentDisplay);
+    }
+
+    componentDidUpdate() {
+        this.updateParentDisplay();
+    }
+
+    private updateParentDisplay() {
+        if (this.parent.current == null) { return; }
+        if (this.content.current == null) { return; }
+        const contentHeight = this.content.current.clientHeight + 60;
+        const parentHeight = this.parent.current.clientHeight;
+        const shouldScroll = contentHeight > parentHeight;
+        this.parent.current.className = shouldScroll ? "link" : "link link-flex";
     }
 
     private redirectToHome() {
@@ -91,8 +112,8 @@ export default class Link extends Component<IProps, IState> {
 
     render() {
         return (
-            <div className="link">
-                <div className="link-content">
+            <div className="link" ref={this.parent}>
+                <div className="link-content" ref={this.content}>
                     <div className="spinner" hidden={!this.state.isLoading}></div>
 
                     <div className="link-image">
