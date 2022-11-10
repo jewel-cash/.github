@@ -1,3 +1,11 @@
 .front {
+    padding: 0 16px;
+    overflow-y: overlay;
+    height: calc(100vh - 56px);
+}
+
+.front-content {
+    padding-top: 24px;
+    padding-bottom: 36px;
     height: 3000px;
 }

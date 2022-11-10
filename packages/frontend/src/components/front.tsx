@@ -5,7 +5,9 @@ export default class Front extends Component {
     render() {
         return (
             <div className="front">
-                Home
+                <div className="front-content">
+                    Home
+                </div>
             </div>
         );
     }

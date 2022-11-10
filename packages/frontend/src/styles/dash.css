@@ -1,6 +1,13 @@
 .dash {
+    padding: 0 16px;
+    overflow-y: overlay;
+    height: calc(100vh - 56px);
+}
+
+.dash-content {
     display: grid;
-    margin: 0 10px;
+    padding-top: 24px;
+    padding-bottom: 36px;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 512px;
     grid-row-gap: 10px;
@@ -8,13 +15,13 @@
 }
 
 @media only screen and (max-width: 1024px) {
-    .dash {
+    .dash-content {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media only screen and (max-width: 768px) {
-    .dash {
+    .dash-content {
         grid-template-columns: repeat(1, 1fr);
     }
 }
