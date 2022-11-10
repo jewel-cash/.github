@@ -48,7 +48,9 @@ class Dash extends Component<WithAuth0Props, IState> {
     render() {
         return (
             <div className="dash">
-                {this.state.tiles}
+                <div className="dash-content">
+                    {this.state.tiles}
+                </div>
             </div>
         );
     }

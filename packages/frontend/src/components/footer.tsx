@@ -37,9 +37,6 @@ export default class Footer extends Component<any, IState> {
     render() {
         return (
             <div className="footer">
-                <div className="footer-phantom">
-                    <span>Copyright © 2022 jewel.cash</span>
-                </div>
                 <div className="footer-content">
                     <span className="footer-left-long">Copyright © 2022 jewel.cash</span>
                     <span className="footer-left-short">© 2022</span>

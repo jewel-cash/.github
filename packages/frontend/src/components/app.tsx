@@ -22,7 +22,7 @@ class App extends Component<WithAuth0Props> {
         }
 
         if (this.props.auth0.isLoading) {
-            return (<div>Loading...</div>);
+            return (<div className="spinner"></div>);
         }
 
         if (this.props.auth0.isAuthenticated) {

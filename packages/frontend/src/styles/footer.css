@@ -7,14 +7,6 @@
     user-select: none;
 }
 
-.footer-phantom {
-    display: block;
-    margin: 10px;
-    width: 100%;
-    color: transparent;
-    font-size: 12px;
-}
-
 .footer-content {
     padding: 10px;
     font-size: 12px;
@@ -23,8 +15,13 @@
     left: 0;
     bottom: 0;
     width: 100%;
+    height: 16px;
     backdrop-filter: blur(2px);
     color: #BDBDBD
+}
+
+.footer-left-short {
+    display: none;
 }
 
 @media only screen and (max-width: 768px) {
