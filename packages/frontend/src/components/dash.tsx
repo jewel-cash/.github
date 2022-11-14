@@ -19,9 +19,10 @@ const defaultTiles: Array<ReactNode> = [
 ];
 
 const adminTiles: Array<ReactNode> = [
-    <div key="7" className="tile">1</div>,
-    <div key="8" className="tile">2</div>,
-    <div key="9" className="tile">3</div>
+    <div key="admin-overview" className="tile">Overview</div>,
+    <div key="admin-transactions" className="tile">Transactions</div>,
+    <div key="admin-users" className="tile">Users</div>,
+    <div key="admin-currencies" className="tile">Currency distribution</div>
 ];
 
 class Dash extends Component<WithAuth0Props, IState> {

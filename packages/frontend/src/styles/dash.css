@@ -1,5 +1,5 @@
 .dash {
-    padding: 0 16px;
+    padding: 0 24px;
     overflow-y: overlay;
     height: calc(100vh - 56px);
 }

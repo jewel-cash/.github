@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
+        "target": "esnext",
         "lib": [
             "dom",
             "dom.iterable",
             "esnext"
         ],
         "outDir": "./build",
-        "module": "ESNext",
-        "moduleResolution": "Node",
+        "module": "esnext",
+        "moduleResolution": "node",
         "jsx": "react-jsx",
         "strict": true,
         "removeComments": true,
