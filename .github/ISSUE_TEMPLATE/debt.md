@@ -6,11 +6,11 @@ labels: technical-debt
 assignees: ''
 ---
 
-**Describe the improvement**
+**Details**
 A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
+**Alternatives considered**
 A clear and concise description of any alternative solutions or features you've considered.
 
-**Describe what would happen if we leave it as is**
+**Risks**
 A clear and concise description of why this change is necessary.

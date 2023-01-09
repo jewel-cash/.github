@@ -1,4 +1,4 @@
 # Reporting a Vulnerability
 
-For reporting vulnerabilities please send an email to [vulnerabilities@jewel.cash](mailto:vulnerabilities@jewel.cash).
+For reporting vulnerabilities please send an email to [vulnerabilities@jewel.app](mailto:vulnerabilities@jewel.app).
 

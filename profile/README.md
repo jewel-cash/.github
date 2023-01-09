@@ -1,3 +1,3 @@
-# jewel.cash
+# Jewel
 
-*Receive payments and donations through Crypto - get payed out in Fiat.*
+*Crypto [dollar cost averaging (DCA)](https://www.investopedia.com/terms/d/dollarcostaveraging.asp) made easy.*

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Redirecting to jewel.app</title>
+        <script type="text/javascript">
+            const l = window.location;
+            const port = l.port ? `:${l.port}` : "";
+            l.replace(`${l.protocol}//${l.hostname}${port}/#${l.pathname}`);
+        </script>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+    </body>
+</html>
