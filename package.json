@@ -54,6 +54,7 @@
     "jest": {
         "preset": "ts-jest/presets/default-esm",
         "moduleNameMapper": {
+            "^(\\.{1,2}/.*)\\.js$": "$1",
             "^.*\\.(css|less|sass|scss)$": "identity-obj-proxy",
             "^jewel-core$": "<rootDir>/core/src/index"
         }

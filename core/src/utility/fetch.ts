@@ -1,4 +1,4 @@
-import Ajv, { JTDSchemaType } from "ajv/dist/jtd";
+import Ajv, { JTDSchemaType } from "ajv/dist/jtd.js";
 
 const ajv = new Ajv();
 

@@ -35,8 +35,7 @@ Getting set up with this repository is very easy.
 Each command will be resolved for all components. These can be run from the root of the repository. Basically this will try to run a command with a similar name for each individual component, skipping the component if that specific command is not present.
 
 Below is a (non-exhaustive) list of available commands:
-* `npm run start` - start up the frontend and backend server (separate instances).
-* `npm run watch` - start up the frontend and backend server and watch for changes in the source files.
+* `npm run start` - start up the individual packages (separate instances).
 * `npm run build` - compile the TypeScript code for deployment or serving.
 * `npm run test` - runs the [Jest](https://jestjs.io) unit tests.
 * `npm run lint` - runs [ESLint](https://eslint.org) to check for bugs and code conventions.

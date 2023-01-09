@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { HttpError } from "./error";
+import { HttpError } from "./error.js";
 import { createVerify } from "crypto";
 import { createRemoteJWKSet, JWTVerifyOptions, jwtVerify, decodeJwt } from "jose";
 

@@ -1,4 +1,4 @@
-import { JTDSchemaType } from "ajv/dist/jtd";
+import { JTDSchemaType } from "ajv/dist/jtd.js";
 
 export interface IPingResponse {
     message: string;
