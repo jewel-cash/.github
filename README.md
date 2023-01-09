@@ -18,12 +18,12 @@ This repository uses a couple of third party services:
 * The deployments are hosted on [DigitalOcean](https://digitalocean.com).
 * Authentication and authorization are managed by [Auth0](https://auth0.com).
 * Secure financial payments are managed through [Stripe](https://stripe.com).
-* Crytp transactions and purchases are managed through [Coinbase](https://coinbase.com).
+* Crypto transactions and purchases are managed through [Coinbase](https://coinbase.com).
 
 ## Getting Started
 
 Getting set up with this repository is very easy.
-* Install node (16) and MongoDB - `brew install node mongodb-community`.
+* Install node and MongoDB - `brew install node mongodb-community`.
 * Start MongoDB server - `brew services start mongodb-community`.
 * Clone this repository `git clone https://github.com/jewel-app/.github`.
 * Create the `.env` files for each component that you want to run.
@@ -36,6 +36,7 @@ Each command will be resolved for all components. These can be run from the root
 
 Below is a (non-exhaustive) list of available commands:
 * `npm run start` - start up the individual packages (separate instances).
+* `npm run watch` - start up the frontend and backend server and watch for changes in the source files.
 * `npm run build` - compile the TypeScript code for deployment or serving.
 * `npm run test` - runs the [Jest](https://jestjs.io) unit tests.
 * `npm run lint` - runs [ESLint](https://eslint.org) to check for bugs and code conventions.
