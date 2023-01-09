@@ -1,3 +1,3 @@
-# jewel.cash
+# Jewel
 
-*Receive payments and donations through Crypto - get payed out in Fiat.*
+*Crypto DCA made easy*
