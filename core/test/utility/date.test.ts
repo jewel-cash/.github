@@ -1,4 +1,4 @@
-import { now } from "../../src/utility/date.js";
+import { now } from "../../src/utility/date";
 
 it("Now should return unix timestamp", () => {
     const object = now();

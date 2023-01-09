@@ -1,4 +1,4 @@
-import { EnvKeyTransform, extractFromEnv } from "../../src/utility/env.js";
+import { EnvKeyTransform, extractFromEnv } from "../../src/utility/env";
 
 const testEnv = {
     "ABC": "value1",

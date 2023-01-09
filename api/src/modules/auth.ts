@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { HttpError } from "./error.js";
+import { HttpError } from "./error";
 import { createVerify } from "crypto";
 import { createRemoteJWKSet, JWTVerifyOptions, jwtVerify, decodeJwt } from "jose";
 
@@ -27,7 +27,7 @@ interface Handler {
 const getUserId: Handler = {
     token: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
-        if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
+        if (!authorizationToken) { throw new Error("no authorization header"); }
         const options: JWTVerifyOptions = {
             audience: auth0Audience,
             issuer: auth0Domain
@@ -37,11 +37,11 @@ const getUserId: Handler = {
     },
     admin: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
-        if (!authorizationToken) { throw new Error("NoAuthorizationHeader"); }
+        if (!authorizationToken) { throw new Error("no authorization header"); }
         const authorizationClaim = decodeJwt(authorizationToken);
         const roles = authorizationClaim.permissions as Array<string>;
         const hasAdminRole = roles.includes("admin");
-        if (!hasAdminRole) { throw new Error("InsufficientPermissions"); }
+        if (!hasAdminRole) { throw new Error("user has insufficient permissions"); }
         return await getUserId["token"](req);
     },
     coinbase: async (req: Request) => {
@@ -52,7 +52,7 @@ const getUserId: Handler = {
             .update(rawBody)
             .verify(pubKey, signature, "base64");
 
-        if (!verify) { throw new Error("SignatureDoesNotVerify"); }
+        if (!verify) { throw new Error("coinbase signature does not verify"); }
         return "Coinbase";
     }
 };

@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
-import { Client, IRequest, CoinbaseAddressSchema, CoinbaseAccountsSchema, ICoinbaseAccount, CoinbaseExchangeRateSchema } from "core";
+import { Client, IRequest, CoinbaseExchangeRateSchema } from "jewel-core";
 import fetch from "node-fetch";
 
 const staticHeaders: Record<string, string> = {
@@ -9,31 +9,6 @@ const staticHeaders: Record<string, string> = {
     "CB-VERSION": "2022-03-03"
 };
 const client = new Client("https://api.coinbase.com", fetch, staticHeaders);
-
-export const createAddress = async (account: string, id: string) => {
-    const request = addHeadersToRequest({
-        method: "POST",
-        endpoint: `/v2/accounts/${account}/addresses`,
-        body: JSON.stringify({ name: id })
-    });
-    const response = await client.request(request, CoinbaseAddressSchema);
-    return response.data.address;
-};
-
-export const getAllAccounts = async () => {
-    let accounts: Array<ICoinbaseAccount> = [];
-    let next: string | null = "/v2/accounts";
-    while (next != null) {
-        const request = addHeadersToRequest({
-            endpoint: next
-        });
-        const response = await client.request(request, CoinbaseAccountsSchema);
-        next = response.pagination.next_uri;
-
-        accounts = accounts.concat(response.data);
-    }
-    return accounts;
-};
 
 export const getExchangeRate = async (currency: string, timestamp: number) => {
     const date = new Date(timestamp * 1000);

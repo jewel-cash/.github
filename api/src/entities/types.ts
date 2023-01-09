@@ -9,7 +9,7 @@ export class BigNumberSchema extends mongoose.SchemaType<BigNumber> {
     cast(val: any) {
         const value = new BigNumber(val);
         if (value.isNaN()) {
-            throw new Error("BigNumber is NaN");
+            throw new Error("value for BigNumber cannot be NaN");
         }
         return value;
     }

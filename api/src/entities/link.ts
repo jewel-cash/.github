@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { isValidName } from "core";
+import { isValidName } from "jewel-core";
 
 export interface IUserLink extends Document {
     userId: string;

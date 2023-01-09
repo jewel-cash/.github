@@ -1,11 +1,11 @@
 import express, { Application } from "express";
 import mongoose from "mongoose";
-import { RegisterRoutes } from "./modules/routes.gen.js.js";
-import { RegisterLogger } from "./modules/log.js";
-import { RegisterRequestParser } from "./modules/request.js";
-import { RegisterErrorCatcher } from "./modules/error.js";
-import { RegisterDocs } from "./modules/docs.js";
-import { RegisterSecurityMiddleware } from "./modules/security.js";
+import { RegisterRoutes } from "./modules/routes.gen";
+import { RegisterLogger } from "./modules/log";
+import { RegisterRequestParser } from "./modules/request";
+import { RegisterErrorCatcher } from "./modules/error";
+import { RegisterDocs } from "./modules/docs";
+import { RegisterSecurityMiddleware } from "./modules/security";
 
 await mongoose.connect(process.env.MONGO_URL ?? "");
 const app: Application = express();

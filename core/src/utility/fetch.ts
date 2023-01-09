@@ -39,7 +39,7 @@ export class Client {
             body: req.body
         };
         const res = await this.fetch(url, request);
-        if (res.status < 200 && res.status >= 300) { throw new Error(`BadStatusCode${res.status}`); }
+        if (res.status < 200 && res.status >= 300) { throw new Error(`received a status code of ${res.status}`); }
         if (schema == null) { return res; }
         const json = await res.json();
 

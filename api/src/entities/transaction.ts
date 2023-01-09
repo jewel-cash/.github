@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { BigNumber } from "bignumber.js";
-import { BigNumberSchema } from "./types.js";
-import { isValidName } from "core";
+import { BigNumberSchema } from "./types";
+import { isValidName } from "jewel-core";
 
 export interface IPendingTransaction extends mongoose.Document {
     name: string;

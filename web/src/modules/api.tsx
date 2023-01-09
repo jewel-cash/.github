@@ -1,5 +1,5 @@
-import { Client, IRequest, CryptoTokensResponseSchema, ICryptoTokensRequest, DashboardOverviewResponseSchema, IAccountTrolleyWidgetRequest, AccountTrolleyWidgetResponseSchema, CryptoChallengeResponseSchema, ICryptoAddressRequest, CryptoAddressResponseScheme, DashboardTransactionsResponseSchema, AccountLinksResponseSchema, IAccountLinkResponse } from "core";
-import { solveChallenge } from "./pow";
+import { Client } from "jewel-core";
+
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 
@@ -7,116 +7,7 @@ const staticHeaders = {
     "Content-Type": "application/json"
 };
 const fetch = window.fetch.bind(window);
-const client = new Client(baseUrl, fetch, staticHeaders);
 
-export const getTokens = async (link: string) => {
-    const body: ICryptoTokensRequest = {
-        link
-    };
-    const request: IRequest = {
-        endpoint: "/v1/crypto/tokens",
-        method: "POST",
-        body: JSON.stringify(body)
-    };
-    return await client.request(request, CryptoTokensResponseSchema);
-};
+//TODO: remove export when implemented
+export const client = new Client(baseUrl, fetch, staticHeaders);
 
-export const getDashboardOverview = async (auth: string) => {
-    const request: IRequest = {
-        endpoint: "/v1/dashboard/overview",
-        headers: { "Authorization": `Bearer ${auth}` }
-    };
-    return await client.request(request, DashboardOverviewResponseSchema);
-};
-
-export const getTrolleyWidget = async (auth: string, email: string) => {
-    const body: IAccountTrolleyWidgetRequest = {
-        email
-    };
-    const request: IRequest = {
-        endpoint: "/v1/account/trolley",
-        headers: { "Authorization": `Bearer ${auth}` },
-        method: "POST",
-        body: JSON.stringify(body)
-    };
-    return await client.request(request, AccountTrolleyWidgetResponseSchema);
-};
-
-export const createCryptoAddress = async (link: string, currency: string, name: string, message?: string) => {
-    const challengeRequest: IRequest = {
-        endpoint: "/v1/crypto/challenge"
-    };
-    const challengeResponse = await client.request(challengeRequest, CryptoChallengeResponseSchema);
-    const challengeAnswer = await solveChallenge(challengeResponse.challenge);
-
-    const body: ICryptoAddressRequest = {
-        link,
-        currency,
-        name,
-        message,
-        challenge: challengeAnswer
-    };
-    const addressRequest: IRequest = {
-        endpoint: "/v1/crypto/address",
-        method: "POST",
-        body: JSON.stringify(body)
-    };
-    return await client.request(addressRequest, CryptoAddressResponseScheme);
-};
-
-export const getDashboardTransactions = async (auth: string) => {
-    const request: IRequest = {
-        endpoint: "/v1/dashboard/trasactions",
-        headers: { "Authorization": `Bearer ${auth}` }
-    };
-    return await client.request(request, DashboardTransactionsResponseSchema);
-};
-
-export const downloadDashboardTransactions = async (auth: string) => {
-    const request: IRequest = {
-        endpoint: "/v1/dashboard/export",
-        headers: { "Authorization": `Bearer ${auth}` }
-    };
-    const res = await client.request(request);
-    const blob = await res.blob();
-    const cache = window.URL.createObjectURL(blob);
-    window.open(cache, "_blank")?.focus();
-};
-
-export const getAccountLinks = async (auth: string) => {
-    const request: IRequest = {
-        endpoint: "/v1/account/links",
-        headers: { "Authorization": `Bearer ${auth}` }
-    };
-    return await client.request(request, AccountLinksResponseSchema);
-};
-
-export const createAccountLink = async (auth: string, link: IAccountLinkResponse) => {
-    const request: IRequest = {
-        endpoint: "/v1/account/links",
-        method: "POST",
-        headers: { "Authorization": `Bearer ${auth}` },
-        body: JSON.stringify(link)
-    };
-    return await client.request(request, AccountLinksResponseSchema);
-};
-
-export const updateAccountLink = async (auth: string, link: IAccountLinkResponse) => {
-    const request: IRequest = {
-        endpoint: "/v1/account/links",
-        method: "PUT",
-        headers: { "Authorization": `Bearer ${auth}` },
-        body: JSON.stringify(link)
-    };
-    return await client.request(request, AccountLinksResponseSchema);
-};
-
-export const deleteAccountLink = async (auth: string, link: IAccountLinkResponse) => {
-    const request: IRequest = {
-        endpoint: "/v1/account/links",
-        method: "DELETE",
-        headers: { "Authorization": `Bearer ${auth}` },
-        body: JSON.stringify(link)
-    };
-    return await client.request(request, AccountLinksResponseSchema);
-};
