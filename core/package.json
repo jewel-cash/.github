@@ -1,5 +1,5 @@
 {
-    "name": "jewel-core",
+    "name": "jewl-core",
     "private": true,
     "type": "module",
     "main": "./build/index.js",

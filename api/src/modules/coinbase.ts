@@ -1,6 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
-import { Client, IRequest, CoinbaseExchangeRateSchema } from "jewel-core";
+import { Client, IRequest, CoinbaseExchangeRateSchema } from "jewl-core";
 import fetch from "node-fetch";
 
 const staticHeaders: Record<string, string> = {

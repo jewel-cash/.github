@@ -1,8 +1,8 @@
 {
-    "name": "jewel-web",
+    "name": "jewl-web",
     "private": true,
     "type": "module",
-    "homepage": "https://jewel.app",
+    "homepage": "https://jewl.app",
     "scripts": {
         "build": "react-scripts build",
         "start": "node -r dotenv/config ./serve.js"
@@ -13,7 +13,7 @@
         "@fortawesome/free-brands-svg-icons": "^6.1.2",
         "@fortawesome/free-solid-svg-icons": "^6.1.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
-        "jewel-core": "*",
+        "jewl-core": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-markdown": "^8.0.3",

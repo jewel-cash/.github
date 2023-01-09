@@ -1,5 +1,5 @@
 {
-    "name": "jewel-root",
+    "name": "jewl-root",
     "private": true,
     "scripts": {
         "build": "nx run-many --target build",
@@ -56,7 +56,7 @@
         "moduleNameMapper": {
             "^(\\.{1,2}/.*)\\.js$": "$1",
             "^.*\\.(css|less|sass|scss)$": "identity-obj-proxy",
-            "^jewel-core$": "<rootDir>/core/src/index"
+            "^jewl-core$": "<rootDir>/core/src/index"
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Client } from "jewel-core";
+import { Client } from "jewl-core";
 
 const baseUrl = process.env.REACT_APP_SERVER_URL ?? "";
 
