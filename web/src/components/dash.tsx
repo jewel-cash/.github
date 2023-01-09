@@ -21,6 +21,7 @@ const defaultTiles: Array<ReactNode> = [
 const adminTiles: Array<ReactNode> = [
     <div key="admin-overview" className="tile">Overview</div>,
     <div key="admin-transactions" className="tile">Transactions</div>,
+    <div key="admin-pending" className="tile">Pending Transactions & Payout</div>,
     <div key="admin-users" className="tile">Users</div>,
     <div key="admin-currencies" className="tile">Currency distribution</div>
 ];
