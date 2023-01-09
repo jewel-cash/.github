@@ -43,4 +43,4 @@ Below is a (non-exhaustive) list of available commands:
 
 If you look closely, the commands in the root of the repository just call individual commands specified in the component's `package.json` file. These commands should not be run by themselves as it will not resolve the right dependencies and will not execute the prerequisites. Instead you can specify which app to run with `--projects web`, `--projects api` or `--projects lambda`.
 
-*Copyright (c) 2023 jewl.app*
+*Copyright © 2023 jewl.app*
