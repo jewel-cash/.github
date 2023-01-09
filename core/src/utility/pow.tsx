@@ -1,13 +1,14 @@
 import { SignJWT, JWTVerifyOptions, jwtVerify, decodeJwt, JWTPayload, JWTHeaderParameters } from "jose";
 import { nanoid } from "nanoid";
-import { createHash, randomBytes } from "crypto";
+import { createHash } from "crypto";
 import { BigNumber } from "bignumber.js";
 
-const secretKey = randomBytes(32);
+
 const issuer = "jewl.app";
 
-export const createChallenge = async (ip: string) => {
+export const createChallenge = async (ip: string, key: string) => {
     const difficulty = new BigNumber(2).pow(240);
+    const secretKey = Buffer.from(key);
 
     const payload: JWTPayload = {
         kid: nanoid(), 
@@ -47,7 +48,8 @@ export const solveChallenge = async (challenge: string) => {
     return `${challenge}|${iterator}`;
 };
 
-export const verifyChallenge = async (challenge: string, ip: string) => {
+export const verifyChallenge = async (challenge: string, ip: string, key: string) => {
+    const secretKey = Buffer.from(key);
     const originalChallenge = challenge.split("|")[0];
     const options: JWTVerifyOptions = {
         audience: issuer,
