@@ -24,18 +24,6 @@ it("PoW solve challenge should solve a challenge with the correct response", asy
     expect(parts[1]).toStrictEqual(challengeResponse);
 });
 
-it("hello", async () => {
-    let iterator = 0;
-    let challenge = "";
-    do {
-        challenge = await createChallenge(validIp);
-        const response = await solveChallenge(challenge);
-        const parts = response.split("|");
-        iterator = parseInt(parts[1]);
-    } while (iterator > 100);
-    console.log(challenge, iterator);
-});
-
 it("PoW verify challenge should verify a valid challenge", async () => {
     jest.useFakeTimers();
     jest.setSystemTime(validTime);
