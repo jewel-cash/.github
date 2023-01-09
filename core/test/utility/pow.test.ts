@@ -3,9 +3,10 @@ import {jest} from "@jest/globals";
 
 const validIp = "abc";
 const invalidIp = "abcd";
-const challenge = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJraWQiOiJxS0pVRmxfT0xqeEVzS2xBQkNHZ1IiLCJkaWYiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIiwiaWF0IjoxNjczMjYzODgwLCJpc3MiOiJqZXdlbC5hcHAiLCJhdWQiOiJqZXdlbC5hcHAiLCJzdWIiOiJhYmMiLCJleHAiOjE2NzMyNjM5MTAsIm5iZiI6MTY3MzI2Mzg4MX0.r7mww9fm1lj9O7Y9WgQs8mbQhiJru--G2cCafX1q8BGzbdfyr8XbTEFY9BTFFkWGDzyPXxBPtcGbap-ZU_Sl7g";
-const challengeResponse = "73";
-const invalidChallengeResponse = "75";
+const challenge = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJraWQiOiJqWmVRZFFsTnFqcHVUN1FBNF9yaTUiLCJkaWYiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIiwiaWF0IjoxNjczMjgyMzE2LCJpc3MiOiJqZXdsLmFwcCIsImF1ZCI6Impld2wuYXBwIiwic3ViIjoiYWJjIiwiZXhwIjoxNjczMjgyMzQ2LCJuYmYiOjE2NzMyODIzMTd9.Z0XS-T4-J37YKF0C1O2n5ts4elTL0GIHdfGPmI5BWJgYstrQBXAagjLXNmbavZcVT2L5hkOUZzru1z5bFO-V5g";
+const invalidChallenge = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJraWQiOiJxS0pVRmxfT0xqeEVzS2xBQkNHZ1IiLCJkaWYiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIiwiaWF0IjoxNjczMjYzODgwLCJpc3MiOiJqZXdlbC5hcHAiLCJhdWQiOiJqZXdlbC5hcHAiLCJzdWIiOiJhYmMiLCJleHAiOjE2NzMyNjM5MTAsIm5iZiI6MTY3MzI2Mzg4MX0.r7mww9fm1lj9O7Y9WgQs8mbQhiJru--G2cCafX1q8BGzbdfyr8XbTEFY9BTFFkWGDzyPXxBPtcGbap-ZU_Sl7g";
+const challengeResponse = "90";
+const invalidChallengeResponse = "73";
 
 const validTime = 1673263890000;
 const tooEarly = 1673263790000;
@@ -21,6 +22,18 @@ it("PoW solve challenge should solve a challenge with the correct response", asy
     const response = await solveChallenge(challenge);
     const parts = response.split("|");
     expect(parts[1]).toStrictEqual(challengeResponse);
+});
+
+it("hello", async () => {
+    let iterator = 0;
+    let challenge = "";
+    do {
+        challenge = await createChallenge(validIp);
+        const response = await solveChallenge(challenge);
+        const parts = response.split("|");
+        iterator = parseInt(parts[1]);
+    } while (iterator > 100);
+    console.log(challenge, iterator);
 });
 
 it("PoW verify challenge should verify a valid challenge", async () => {
@@ -65,5 +78,14 @@ it("PoW verify challenge should not verify an expired challenge", async () => {
     const response = `${challenge}|${challengeResponse}`;
     const method = async () => await verifyChallenge(response, validIp);
     await expect(method()).rejects.toThrowError(new Error("\"exp\" claim timestamp check failed"));
+    jest.useRealTimers();
+});
+
+it("PoW verify challenge should not verify with a spoofed challenge", async () => {
+    jest.useFakeTimers();
+    jest.setSystemTime(validTime);
+    const response = `${invalidChallenge}|${invalidChallengeResponse}`;
+    const method = async () => await verifyChallenge(response, validIp);
+    await expect(method()).rejects.toThrowError(new Error("signature verification failed"));
     jest.useRealTimers();
 });
