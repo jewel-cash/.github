@@ -1,10 +1,10 @@
 import { SignJWT, JWTVerifyOptions, jwtVerify, decodeJwt, JWTPayload, JWTHeaderParameters } from "jose";
 import { nanoid } from "nanoid";
-import { createHash } from "crypto";
+import { createHash, randomBytes } from "crypto";
 import { BigNumber } from "bignumber.js";
 
-const secretKey = Buffer.from(process.env.JWT_KEY ?? "");
-const issuer = "jewel.app";
+const secretKey = randomBytes(32);
+const issuer = "jewl.app";
 
 export const createChallenge = async (ip: string) => {
     const difficulty = new BigNumber(2).pow(240);

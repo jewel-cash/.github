@@ -18,7 +18,7 @@ export default class Footer extends Component<any, IState> {
     }
 
     private sendEmail() {
-        window.location.href = "mailto:contact@jewel.app";
+        window.location.href = "mailto:contact@jewl.app";
     }
 
     private openModal(page: string) {
@@ -38,7 +38,7 @@ export default class Footer extends Component<any, IState> {
         return (
             <div className="footer">
                 <div className="footer-content">
-                    <span className="footer-left-long">Copyright © 2023 Jewel</span>
+                    <span className="footer-left-long">Copyright © 2023 jewl.app</span>
                     <span className="footer-left-short">© 2022</span>
                     <span className="footer-right" onClick={this.openModal("./privacy.md")}>Privacy Policy</span>
                     <span className="footer-right" onClick={this.openModal("./terms.md")}>Terms of Service</span>

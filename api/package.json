@@ -1,5 +1,5 @@
 {
-    "name": "jewel-api",
+    "name": "jewl-api",
     "private": true,
     "type": "module",
     "scripts": {
@@ -8,7 +8,7 @@
     },
     "dependencies": {
         "bignumber.js": "^9.1.0",
-        "jewel-core": "*",
+        "jewl-core": "*",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "express-slow-down": "^1.5.0",
