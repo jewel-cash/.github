@@ -7,7 +7,7 @@
             "ESNext"
         ],
         "outDir": "./build",
-        "module": "NodeNext",
+        "module": "ESNext",
         "moduleResolution": "Node",
         "jsx": "react-jsx",
         "strict": true,

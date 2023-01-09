@@ -35,9 +35,19 @@
         "ts-jest": "^29.0.3",
         "typescript": "^4.9.4"
     },
-    "workspaces": [ "api", "core", "lambda", "web" ],
+    "workspaces": [
+        "api",
+        "core",
+        "lambda",
+        "web"
+    ],
     "nodemonConfig": {
-        "watch": [ "api/src", "pcore/src", "lambda/src", "web/src" ],
+        "watch": [
+            "api/src",
+            "pcore/src",
+            "lambda/src",
+            "web/src"
+        ],
         "ext": "*",
         "exec": "npm run start"
     },
