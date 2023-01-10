@@ -38,6 +38,7 @@ Below is a (non-exhaustive) list of available commands:
 * `npm run start` - start up one (or more) of the components (local).
 * `npm run watch` - start up one (or more) of the components and watch for changes in the source files (local).
 * `npm run build` - compile the TypeScript code for deployment or serving (local).
+* `npm run clean` - clean up all local build products (global).
 * `npm run test` - runs the [Jest](https://jestjs.io) unit tests (global).
 * `npm run lint` - runs [ESLint](https://eslint.org) to check for bugs and code conventions (global).
 
