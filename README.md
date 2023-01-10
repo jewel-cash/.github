@@ -32,15 +32,15 @@ Getting set up with this repository is very easy.
 
 ## Commands
 
-Each command will be resolved for all components. These can be run from the root of the repository. Basically this will try to run a command with a similar name for each individual component, skipping the component if that specific command is not present.
+All commands should be run from the root of the repository. Some commands will be resolved for each components individually (local) whereas others will just execute once (global). The local commands commands will try to run a command with the same name for each individual component, skipping the component if that specific command does not exist.
 
 Below is a (non-exhaustive) list of available commands:
-* `npm run start` - start up the individual packages (separate instances).
-* `npm run watch` - start up the frontend and backend server and watch for changes in the source files.
-* `npm run build` - compile the TypeScript code for deployment or serving.
-* `npm run test` - runs the [Jest](https://jestjs.io) unit tests.
-* `npm run lint` - runs [ESLint](https://eslint.org) to check for bugs and code conventions.
+* `npm run start` - start up one (or more) of the components (local).
+* `npm run watch` - start up one (or more) of the components and watch for changes in the source files (local).
+* `npm run build` - compile the TypeScript code for deployment or serving (local).
+* `npm run test` - runs the [Jest](https://jestjs.io) unit tests (global).
+* `npm run lint` - runs [ESLint](https://eslint.org) to check for bugs and code conventions (global).
 
-If you look closely, the commands in the root of the repository just call individual commands specified in the component's `package.json` file. These commands should not be run by themselves as it will not resolve the right dependencies and will not execute the prerequisites. Instead you can specify which app to run with `--projects web`, `--projects api` or `--projects lambda`.
+If you look closely, the local commands just call individual commands specified in the component's `package.json` file. These commands should not be run by themselves as it will not resolve the right dependencies and will not execute the prerequisites. Instead you can specify which app to run with `-- web`, `-- api` or `-- lambda`.
 
 *Copyright © 2023 jewl.app*
