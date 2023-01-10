@@ -4,8 +4,8 @@
     "type": "module",
     "homepage": "https://jewl.app",
     "scripts": {
-        "build": "react-scripts build",
-        "start": "node -r dotenv/config ./serve.js"
+        "build": "react-scripts build > /dev/null",
+        "start": "node -r dotenv/config ../node_modules/.bin/serve -l $PORT -s build -n"
     },
     "dependencies": {
         "@auth0/auth0-react": "^1.12.0",

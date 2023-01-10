@@ -8,15 +8,16 @@
     },
     "dependencies": {
         "bignumber.js": "^9.1.0",
-        "jewl-core": "*",
+        "chalk": "^5.2.0",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "express-slow-down": "^1.5.0",
+        "jewl-core": "*",
         "jose": "^4.11.0",
         "mongoose": "^6.7.2",
-        "morgan": "^1.10.0",
         "node-cron": "^3.0.2",
         "node-fetch": "^3.3.0",
+        "on-finished": "^2.4.1",
         "swagger-ui-express": "^4.6.0",
         "tsoa": "^4.1.3"
     }
