@@ -3,6 +3,7 @@
     "private": true,
     "scripts": {
         "build": "nx run-many --target build --projects",
+        "clean": "rm -rf $(node -pe 'JSON.parse(process.argv[1]).workspaces.map((x) => `./${x}/build`).join(\" \")' \"$(cat package.json)\")",
         "start": "nx run-many --target start --projects",
         "watch": "nodemon --quiet --watch api/src,core/src,lambda/src,web/src --ext \"*\" --exec npm start",
         "test": "node --experimental-vm-modules --no-warnings ./node_modules/.bin/jest -u",
