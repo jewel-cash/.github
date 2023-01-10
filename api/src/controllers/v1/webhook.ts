@@ -10,4 +10,12 @@ export class WebhookController {
     public async receivedCoinbaseWebhook(@Body() body: any): Promise<void> {
         console.log(body.type);
     }
+
+    @Post("/stripe")
+    @Security("stripe")
+    @Hidden()
+    @SuccessResponse("204")
+    public async receivedStripeWebhook(@Body() body: any): Promise<void> {
+        console.log(body.type);
+    }
 }
