@@ -2,6 +2,7 @@ import { Request } from "express";
 import { HttpError } from "./error.js";
 import { createVerify } from "crypto";
 import { createRemoteJWKSet, JWTVerifyOptions, jwtVerify, decodeJwt } from "jose";
+import { queryToObject } from "jewl-core";
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
     try {
@@ -54,5 +55,23 @@ const getUserId: Handler = {
 
         if (!verify) { throw new Error("coinbase signature does not verify"); }
         return "Coinbase";
+    },
+    stripe: async (req: Request) => {
+        const signatureHeader = req.header("Stripe-Signature") ?? "";
+        const signatureClaim = queryToObject(signatureHeader);
+        const timestamp = parseInt(signatureClaim.t);
+        if (!timestamp.isNow()) { throw new Error("request has expired"); }
+
+        const signature = signatureClaim.v1;
+        const rawBody = req.body ?? "";
+        const preimage = `${timestamp}.${rawBody}`;
+        const secret = process.env.STRIPE_SECRET ?? "";
+
+        const verify = createVerify("SHA256")
+            .update(preimage)
+            .verify(secret, signature, "hex");
+
+        if (!verify) { throw new Error("stripe signature is invalid"); }
+        return "Stripe";
     }
 };
