@@ -2,11 +2,11 @@
     "name": "jewl-root",
     "private": true,
     "scripts": {
-        "build": "nx run-many --target build",
+        "build": "nx run-many --target build --projects",
         "start": "nx run-many --target start",
-        "watch": "nodemon -q",
+        "watch": "nodemon --quiet --watch api/src,core/src,lambda/src,web/src --ext \"*\" --exec npm start",
         "test": "node --experimental-vm-modules --no-warnings ./node_modules/.bin/jest -u",
-        "lint": "eslint .",
+        "lint": "node ./node_modules/.bin/eslint . --fix",
         "deploy": "nx run-many --target deploy"
     },
     "devDependencies": {
@@ -41,16 +41,6 @@
         "lambda",
         "web"
     ],
-    "nodemonConfig": {
-        "watch": [
-            "api/src",
-            "pcore/src",
-            "lambda/src",
-            "web/src"
-        ],
-        "ext": "*",
-        "exec": "npm run start"
-    },
     "jest": {
         "preset": "ts-jest/presets/default-esm",
         "moduleNameMapper": {
