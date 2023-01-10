@@ -1,6 +1,4 @@
-import Ajv, { JTDSchemaType } from "ajv/dist/jtd.js";
-
-const ajv = new Ajv();
+import { Model } from "mongoose";
 
 export interface IRequest {
     method?: string;
@@ -26,7 +24,7 @@ export class Client {
         }
     }
 
-    public async request<T>(req: IRequest, schema?: JTDSchemaType<T>): Promise<T | any> {
+    public async request<T>(req: IRequest, schema: Model<T>): Promise<T> {
         const infix = req.endpoint.startsWith("/") ? "" : "/";
         const url: RequestInfo = this.baseUrl + infix + req.endpoint;
         const headers: HeadersInit = {
@@ -40,12 +38,12 @@ export class Client {
         };
         const res = await this.fetch(url, request);
         if (res.status < 200 && res.status >= 300) { throw new Error(`received a status code of ${res.status}`); }
-        if (schema == null) { return res; }
         const json = await res.json();
-
-        const validate = ajv.compile(schema);
-        if (!validate(json)) { throw validate.errors; }
-        return json as T;
+        const model = new schema(json);
+        return new Promise<T>((resolve, reject) => {
+            model.validate((err) => {
+                err == null ? resolve(model) : reject(err);
+            });
+        });
     }
-
 }

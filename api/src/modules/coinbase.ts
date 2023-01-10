@@ -1,6 +1,5 @@
-import { BigNumber } from "bignumber.js";
 import { createHmac } from "crypto";
-import { Client, IRequest, CoinbaseExchangeRateSchema } from "jewl-core";
+import { Client, IRequest, CoinbaseExchangeRate, DateTime, PreciseNumber } from "jewl-core";
 import fetch from "node-fetch";
 
 const staticHeaders: Record<string, string> = {
@@ -10,17 +9,17 @@ const staticHeaders: Record<string, string> = {
 };
 const client = new Client("https://api.coinbase.com", fetch, staticHeaders);
 
-export const getExchangeRate = async (currency: string, timestamp: number) => {
-    const date = new Date(timestamp * 1000);
+export const getExchangeRate = async (currency: string, timestamp: DateTime) => {
+    const date = new Date(timestamp.valueOf() * 1000);
     const request = addHeadersToRequest({
         endpoint: `/v2/prices/${currency}-USD/spot?date=${date.toISOString()}`
     });
 
-    const response = await client.request(request, CoinbaseExchangeRateSchema);
+    const response = await client.request(request, CoinbaseExchangeRate);
 
-    let rate = new BigNumber(response.data.amount);
+    let rate = response.data.amount;
     if (response.data.base !== currency) {
-        rate = new BigNumber(1).dividedBy(rate);
+        rate = new PreciseNumber(1).dividedBy(rate);
     }
     return rate;
 };

@@ -2,7 +2,7 @@ import { Request } from "express";
 import { HttpError } from "./error.js";
 import { createVerify } from "crypto";
 import { createRemoteJWKSet, JWTVerifyOptions, jwtVerify, decodeJwt } from "jose";
-import { queryToObject } from "jewl-core";
+import { DateTime, queryToObject } from "jewl-core";
 
 export const expressAuthentication = async (req: Request, securityName: string, scopes: string[]) => {
     try {
@@ -59,7 +59,7 @@ const getUserId: Handler = {
     stripe: async (req: Request) => {
         const signatureHeader = req.header("Stripe-Signature") ?? "";
         const signatureClaim = queryToObject(signatureHeader);
-        const timestamp = parseInt(signatureClaim.t);
+        const timestamp = new DateTime(signatureClaim.t);
         if (!timestamp.isNow()) { throw new Error("request has expired"); }
 
         const signature = signatureClaim.v1;

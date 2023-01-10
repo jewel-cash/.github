@@ -1,5 +1,5 @@
 import { Get, Route } from "tsoa";
-import { IPingResponse } from "jewl-core";
+import type { IPingResponse } from "jewl-core";
 
 @Route("/v1/ping")
 export class PingController {
