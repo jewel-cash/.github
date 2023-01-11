@@ -28,7 +28,7 @@ interface Handler {
 const getUserId: Handler = {
     token: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
-        if (!authorizationToken) { throw new Error("no authorization header"); }
+        if (authorizationToken == null) { throw new Error("no authorization header"); }
         const options: JWTVerifyOptions = {
             audience: auth0Audience,
             issuer: auth0Domain
@@ -38,7 +38,7 @@ const getUserId: Handler = {
     },
     admin: async (req: Request) => {
         const authorizationToken = req.header("Authorization")?.replace("Bearer ", "");
-        if (!authorizationToken) { throw new Error("no authorization header"); }
+        if (authorizationToken == null) { throw new Error("no authorization header"); }
         const authorizationClaim = decodeJwt(authorizationToken);
         const roles = authorizationClaim.permissions as Array<string>;
         const hasAdminRole = roles.includes("admin");

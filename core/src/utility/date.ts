@@ -23,8 +23,8 @@ export class DateTime {
         const isAfter = thisBegin > otherBegin;
         const diff = Math.abs(thisBegin - otherBegin);
         const days = Math.floor(diff / 8.64e4);
-        if (days == 0) { return "today"; }
-        const denotion = days == 1 ? " day" : " days";
+        if (days === 0) { return "today"; }
+        const denotion = days === 1 ? " day" : " days";
         const prefix = isAfter ? "in " : "";
         const suffix = isAfter ? "" : " ago";
         return `${prefix}${Math.abs(days)}${denotion}${suffix}`;

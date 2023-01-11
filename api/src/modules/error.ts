@@ -15,10 +15,11 @@ export const RegisterErrorCatcher = (app: Application) => {
         throw new HttpError(404, `"${req.url}" is not found.`);
     });
     
-    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
         if (process.env.DEBUG === "true") {
             console.error(chalk.bgRed.bold(" ERROR "), err);
         }
-        res.status(err.status || 500).send(err.message);
+        const status = err instanceof HttpError ? err.status : 500;
+        res.status(status).send(err.message);
     });
 };

@@ -7,12 +7,8 @@ import Footer from "./footer";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 
 class App extends Component<WithAuth0Props> {
-    private link: string | null;
-
     constructor(props: any) {
         super(props);
-        const hash = window.location.hash.slice(2);
-        this.link = hash.length === 0 ? null : hash;
     }
 
     private content() {
@@ -30,7 +26,7 @@ class App extends Component<WithAuth0Props> {
     render() {
         return (
             <div className="app">
-                <Header showLoginButton={this.link == null} />
+                <Header />
                 {this.content()}
                 <Footer />
             </div>

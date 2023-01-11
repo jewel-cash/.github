@@ -11,7 +11,7 @@ export const extractFromEnv = (prefix = "", transform: EnvKeyTransform = EnvKeyT
     const keys = Object.keys(env);
     const selected = keys.filter(x => x.toLowerCase().startsWith(search));
     const pairs = selected.map(x => [ x.slice(prefixCount), env[x] ?? "" ] );
-    const filtered = pairs.filter(x => x[1] != "");
+    const filtered = pairs.filter(x => x[1] !== "");
     const mappedKeys = filtered.map(x => [transformKey(transform, x[0]), x[1]]);
     return Object.fromEntries(mappedKeys);
 };

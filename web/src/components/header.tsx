@@ -2,12 +2,8 @@ import "../styles/header.css";
 import React, { Component } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 
-interface IProps extends WithAuth0Props {
-    showLoginButton?: boolean;
-}
-
-class Header extends Component<IProps> {
-    constructor(props: IProps) {
+class Header extends Component<WithAuth0Props> {
+    constructor(props: WithAuth0Props) {
         super(props);
         this.loginPressed = this.loginPressed.bind(this);
     }
@@ -20,11 +16,6 @@ class Header extends Component<IProps> {
         }
     }
 
-    private isLoginButtonHidden() {
-        if (this.props.auth0.isLoading) { return false; }
-        return !this.props.showLoginButton;
-    }
-
     render() {
         return (
             <div className="header">
@@ -33,7 +24,7 @@ class Header extends Component<IProps> {
                         <img src="/apple-touch-icon.png" className="header-logo" />
                         <span className="header-title">jewl.app</span>
                     </a>
-                    <button onClick={this.loginPressed} className="header-login" hidden={this.isLoginButtonHidden()}>
+                    <button onClick={this.loginPressed} className="header-login">
                         {this.props.auth0.isAuthenticated ? "Logout" : "Login"}
                     </button>
                 </div>
