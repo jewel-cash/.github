@@ -1,4 +1,5 @@
-import { Schema, Model, model } from "mongoose";
+import { Schema, Model } from "mongoose";
+import { createModel } from "../utility/mongo.js";
 
 export interface IPingResponse {
     message: string;
@@ -8,4 +9,4 @@ export const PingResponseSchema = new Schema<IPingResponse>({
     message: { type: String, required: true }
 });
 
-export const PingResponse: Model<IPingResponse> = model("ping", PingResponseSchema);
+export const PingResponse: Model<IPingResponse> = createModel(PingResponseSchema);

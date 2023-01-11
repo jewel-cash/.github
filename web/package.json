@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "react-scripts build > /dev/null",
+        "build": "react-scripts build",
         "start": "node -r dotenv/config ../node_modules/.bin/serve -l $PORT -s build -n"
     },
     "dependencies": {

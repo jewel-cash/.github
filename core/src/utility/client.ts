@@ -1,4 +1,5 @@
 import { Model } from "mongoose";
+import isomorphic from "jewl-isomorphic";
 
 export interface IRequest {
     method?: string;
@@ -10,12 +11,10 @@ export interface IRequest {
 export class Client {
     private baseUrl: string;
     private headers: Record<string, string>;
-    private fetch: (url: string, req: any) => any;
 
-    constructor(baseUrl: string, fetch: (url: any, req: any) => any, headers?: Record<string, string> ) {
+    public constructor(baseUrl: string, headers?: Record<string, string> ) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         this.headers = headers ?? { };
-        this.fetch = fetch;
     }
 
     public updateHeaders(update: Record<string, string>) {
@@ -36,9 +35,17 @@ export class Client {
             method: req.method,
             body: req.body
         };
-        const res = await this.fetch(url, request);
+        const res = await isomorphic.fetch(url, request);
         if (res.status < 200 && res.status >= 300) { throw new Error(`received a status code of ${res.status}`); }
-        const json = await res.json();
+        let json = await res.json();
+
+        switch (typeof json) {
+        case "string": json = { text: json }; break;
+        case "number": json = { number: json }; break;
+        case "boolean": json = { bool: json }; break;
+        case "object": json = Array.isArray(json) ? { list: json } : json;
+        }
+
         const model = new schema(json);
         return new Promise<T>((resolve, reject) => {
             model.validate((err) => {

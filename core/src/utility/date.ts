@@ -1,11 +1,3 @@
-import { Schema, SchemaType, AnyObject } from "mongoose";
-
-declare global {
-    interface Number {
-        isNow(tolerance?: number): boolean;
-        relativeTo(other?: number): string;
-    }
-}
 
 export class DateTime {
     private timestamp: number;
@@ -43,23 +35,8 @@ export class DateTime {
     }
 }
 
-
-export class DateTimeSchema extends SchemaType<DateTime> {
-    constructor(key: string, options: AnyObject) {
-        super(key, options, "DateTime");
-    }
-    
-    cast(val: any) {
-        return new DateTime(val);
-    }
-}
-
-declare module "mongoose" {
-    namespace Schema {
-        namespace Types {
-            class DateTimeSchema extends SchemaType {}
-        }
-    }
-}
-
-Schema.Types.DateTimeSchema = DateTimeSchema;
+export const DateTimeSchema = {
+    type: Number,
+    get: (x: string) => new DateTime(x),
+    set: (x: DateTime) => x.valueOf()
+};

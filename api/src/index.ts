@@ -1,5 +1,4 @@
 import express, { Application } from "express";
-import mongoose from "mongoose";
 import chalk from "chalk";
 import { RegisterRoutes } from "./modules/routes.gen.js";
 import { RegisterLogger } from "./modules/log.js";
@@ -7,9 +6,10 @@ import { RegisterRequestParser } from "./modules/request.js";
 import { RegisterErrorCatcher } from "./modules/error.js";
 import { RegisterDocs } from "./modules/docs.js";
 import { RegisterSecurityMiddleware } from "./modules/security.js";
+import { mongoConnect } from "jewl-core";
 
-mongoose.set("strictQuery", false);
-await mongoose.connect(process.env.MONGO_URL ?? "");
+await mongoConnect(process.env.MONGO_URL ?? "");
+
 const app: Application = express();
 const middlewares = [
     RegisterLogger, 

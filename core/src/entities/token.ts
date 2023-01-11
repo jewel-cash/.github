@@ -1,4 +1,5 @@
-import { Schema, model, Model } from "mongoose";
+import { Schema, Model } from "mongoose";
+import { createModel } from "../utility/mongo.js";
 import { PreciseNumber, PreciseNumberSchema } from "../utility/number.js";
 
 export interface ITokenResponse {
@@ -15,10 +16,10 @@ export interface ITokensResponse {
 }
 
 export const TokensResponseSchema = new Schema<ITokensResponse>({
-    tokens: { elements: TokenResponseSchema },
+    tokens: { type: [TokenResponseSchema], default: undefined, required: true },
     suggestedSplit: { type: Map, of: PreciseNumberSchema, required: true }
 });
 
-export const TokensResponse: Model<ITokensResponse> = model("tokens-response", TokensResponseSchema);
+export const TokensResponse: Model<ITokensResponse> = createModel(TokensResponseSchema);
 
 

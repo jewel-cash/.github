@@ -2,6 +2,7 @@ import "../styles/dash.css";
 import React, { Component } from "react";
 import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";
+import { coinbaseClient } from "../modules/network";
 
 class Dash extends Component<WithAuth0Props, any> {
 
@@ -12,6 +13,8 @@ class Dash extends Component<WithAuth0Props, any> {
     componentDidMount() {
         this.props.auth0.getAccessTokenSilently()
             .then(this.handleAuthToken);
+
+        coinbaseClient.getProducts().then(x => console.log(x.map(y => y.id)));
     }
 
     private handleAuthToken(token: string) {

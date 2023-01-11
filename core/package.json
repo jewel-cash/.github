@@ -8,6 +8,7 @@
         "build": "tsc"
     },
     "dependencies": {
+        "jewl-isomorphic": "*",
         "mongoose": "^6.7.2",
         "bignumber.js": "^9.1.0",
         "nanoid": "^4.0.0",

@@ -1,0 +1,14 @@
+{
+    "name": "jewl-isomorphic",
+    "private": true,
+    "type": "module",
+    "main": "./build/node.js",
+    "browser": "./build/browser.js",
+    "types": "./build/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "node-fetch": "^3.3.0"
+    }
+}

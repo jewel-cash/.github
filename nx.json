@@ -1,34 +1,23 @@
 {
-  "extends": "nx/presets/npm.json",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build"
-        ]
-      }
-    }
-  },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ]
+    "extends": "nx/presets/npm.json",
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": [ "build" ]
+            }
+        }
     },
-    "start": {
-      "dependsOn": [
-        "build"
-      ]
+    "targetDefaults": {
+        "build": {
+            "dependsOn": [ "^build" ]
+        },
+        "start": {
+            "dependsOn": [ "build" ]
+        }
     },
-    "deploy": {
-      "dependsOn": [
-        "build"
-      ]
-    }
-  },
-  "affected": {
-    "defaultBase": "main"
-  },
-  "$schema": "./node_modules/nx/schemas/nx-schema.json"
+    "affected": {
+        "defaultBase": "main"
+    },
+    "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }

@@ -1,5 +1,6 @@
-import { Schema, Model, model } from "mongoose";
+import { Schema, Model } from "mongoose";
 import { DateTime, DateTimeSchema } from "../utility/date.js";
+import { createModel } from "../utility/mongo.js";
 import { PreciseNumber, PreciseNumberSchema } from "../utility/number.js";
 import { URLSchema } from "../utility/url.js";
 
@@ -27,14 +28,14 @@ export interface ITransaction extends Document {
 
 export const TransactionSchema = new Schema<ITransaction>({
     state: { type: Number, enum: TransactionState, required: true },
-    notBefore: { type: DateTimeSchema, required: true },
-    amount: { type: PreciseNumberSchema, required: true },
+    notBefore: { ...DateTimeSchema, required: true },
+    amount: { ...PreciseNumberSchema, required: true },
     percentages: { type: Map, of: PreciseNumberSchema, required: true },
     purchased: { type: Map, of: PreciseNumberSchema },
     receipts: { type: Map, of: URLSchema }
 });
 
-export const Transaction: Model<ITransaction> = model("transactions", TransactionSchema);
+export const Transaction: Model<ITransaction> = createModel(TransactionSchema, "transactions");
 
 export interface IInitiateTransactionRequest {
     amount: string;
@@ -44,4 +45,4 @@ export const InitiateTransactionRequestSchema = new Schema<IInitiateTransactionR
     amount: { type: String, required: true }
 });
 
-export const InitiateTransactionRequest: Model<IInitiateTransactionRequest> = model("initiate-transaction-request", InitiateTransactionRequestSchema);
+export const InitiateTransactionRequest: Model<IInitiateTransactionRequest> = createModel(InitiateTransactionRequestSchema);

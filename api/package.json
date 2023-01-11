@@ -14,7 +14,6 @@
         "jewl-core": "*",
         "jose": "^4.11.0",
         "node-cron": "^3.0.2",
-        "node-fetch": "^3.3.0",
         "on-finished": "^2.4.1",
         "swagger-ui-express": "^4.6.0",
         "tsoa": "^5.0.0"

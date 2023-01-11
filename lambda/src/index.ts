@@ -1,9 +1,12 @@
-import { getAndStoreTokens } from "./modules/tokens";
-import { updateAllTransactions } from "./modules/transaction";
+import { updateAllTransactions } from "./modules/transaction.js";
+import { mongoConnect, mongoDisconnect } from "jewl-core";
+
+await mongoConnect(process.env.MONGO_URL ?? "");
 
 const tasks = [
-    getAndStoreTokens,
-    updateAllTransactions
+    updateAllTransactions()
 ];
 
 await Promise.all(tasks);
+
+await mongoDisconnect();
