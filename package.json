@@ -7,7 +7,7 @@
         "start": "nx run-many --target start --projects",
         "watch": "nodemon --quiet --watch api/src,core/src,lambda/src,web/src,isomorphic/src --ext \"*\" --exec npm start",
         "test": "node --experimental-vm-modules --no-warnings ./node_modules/.bin/jest -u",
-        "lint": "node ./node_modules/.bin/eslint . --fix"
+        "lint": "node ./node_modules/.bin/eslint ."
     },
     "devDependencies": {
         "@types/cors": "^2.8.13",

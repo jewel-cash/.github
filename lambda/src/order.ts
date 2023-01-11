@@ -1,7 +1,6 @@
 import { DateTime, TransactionState } from "jewl-core";
 import { Task } from "./task";
 
-
 export class OrdersTask extends Task {
 
     public async finalize(): Promise<void> {
