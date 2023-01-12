@@ -22,7 +22,7 @@
         "react",
         "@typescript-eslint"
    ],
-    "ignorePatterns": ["build"],
+    "ignorePatterns": ["build", "*.gen.*"],
     "rules": {
         "arrow-parens": ["error", "as-needed"],
         "array-element-newline": ["error", "consistent"],
