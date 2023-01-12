@@ -7,14 +7,14 @@ export class WebhookController {
     @Post("/coinbase")
     @Security("coinbase")
     @SuccessResponse("204")
-    public async receivedCoinbaseWebhook(@Body() body: any): Promise<void> {
-        console.log(body.type);
+    public receivedCoinbaseWebhook(@Body() body: object): void {
+        console.log(body);
     }
 
     @Post("/stripe")
     @Security("stripe")
     @SuccessResponse("204")
-    public async receivedStripeWebhook(@Body() body: any): Promise<void> {
-        console.log(body.type);
+    public receivedStripeWebhook(@Body() body: object): void {
+        console.log(body);
     }
 }

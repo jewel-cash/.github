@@ -1,5 +1,5 @@
 import { createChallenge, solveChallenge, verifyChallenge } from "../../src/utility/pow";
-import {jest} from "@jest/globals";
+import { jest } from "@jest/globals";
 
 const mockSecretKey = "";
 const validIp = "abc";
@@ -14,13 +14,13 @@ const tooEarly = 1673263790000;
 const tooLate = 1673263990000;
 
 it("PoW create challenge should be valid jwt", async () => {
-    const challenge = await createChallenge(validIp, mockSecretKey);
-    const parts = challenge.split(".");
+    const createdChallenge = await createChallenge(validIp, mockSecretKey);
+    const parts = createdChallenge.split(".");
     expect(parts.length).toStrictEqual(3);
 });
 
-it("PoW solve challenge should solve a challenge with the correct response", async () => {
-    const response = await solveChallenge(challenge);
+it("PoW solve challenge should solve a challenge with the correct response", () => {
+    const response = solveChallenge(challenge);
     const parts = response.split("|");
     expect(parts[1]).toStrictEqual(challengeResponse);
 });
@@ -29,7 +29,7 @@ it("PoW verify challenge should verify a valid challenge", async () => {
     jest.useFakeTimers();
     jest.setSystemTime(validTime);
     const response = `${challenge}|${challengeResponse}`;
-    const method = async () => await verifyChallenge(response, validIp, mockSecretKey);
+    const method = async (): Promise<void> => verifyChallenge(response, validIp, mockSecretKey);
     await expect(method()).resolves.not.toThrowError();
     jest.useRealTimers();
 });
@@ -38,7 +38,7 @@ it("PoW verify challenge should not verify an invalid challenge", async () => {
     jest.useFakeTimers();
     jest.setSystemTime(validTime);
     const response = `${challenge}|${invalidChallengeResponse}`;
-    const method = async () => await verifyChallenge(response, validIp, mockSecretKey);
+    const method = async (): Promise<void> => verifyChallenge(response, validIp, mockSecretKey);
     await expect(method()).rejects.toThrowError(new Error("challenge response invalid"));
     jest.useRealTimers();
 });
@@ -47,7 +47,7 @@ it("PoW verify challenge should not verify a challenge from an invalid subject",
     jest.useFakeTimers();
     jest.setSystemTime(validTime);
     const response = `${challenge}|${challengeResponse}`;
-    const method = async () => await verifyChallenge(response, invalidIp, mockSecretKey);
+    const method = async (): Promise<void> => verifyChallenge(response, invalidIp, mockSecretKey);
     await expect(method()).rejects.toThrowError(new Error("unexpected \"sub\" claim value"));
     jest.useRealTimers();
 });
@@ -56,7 +56,7 @@ it("PoW verify challenge should not verify a faked challenge", async () => {
     jest.useFakeTimers();
     jest.setSystemTime(tooEarly);
     const response = `${challenge}|${challengeResponse}`;
-    const method = async () => await verifyChallenge(response, validIp, mockSecretKey);
+    const method = async (): Promise<void> => verifyChallenge(response, validIp, mockSecretKey);
     await expect(method()).rejects.toThrowError(new Error("\"nbf\" claim timestamp check failed"));
     jest.useRealTimers();
 });
@@ -65,7 +65,7 @@ it("PoW verify challenge should not verify an expired challenge", async () => {
     jest.useFakeTimers();
     jest.setSystemTime(tooLate);
     const response = `${challenge}|${challengeResponse}`;
-    const method = async () => await verifyChallenge(response, validIp, mockSecretKey);
+    const method = async (): Promise<void> => verifyChallenge(response, validIp, mockSecretKey);
     await expect(method()).rejects.toThrowError(new Error("\"exp\" claim timestamp check failed"));
     jest.useRealTimers();
 });
@@ -74,7 +74,7 @@ it("PoW verify challenge should not verify with a spoofed challenge", async () =
     jest.useFakeTimers();
     jest.setSystemTime(validTime);
     const response = `${invalidChallenge}|${invalidChallengeResponse}`;
-    const method = async () => await verifyChallenge(response, validIp, mockSecretKey);
+    const method = async (): Promise<void> => verifyChallenge(response, validIp, mockSecretKey);
     await expect(method()).rejects.toThrowError(new Error("signature verification failed"));
     jest.useRealTimers();
 });

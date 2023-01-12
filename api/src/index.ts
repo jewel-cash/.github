@@ -1,4 +1,5 @@
-import express, { Application } from "express";
+import type { Application } from "express";
+import express from "express";
 import chalk from "chalk";
 import { RegisterRoutes } from "./modules/routes.gen.js";
 import { RegisterLogger } from "./modules/log.js";
@@ -12,9 +13,9 @@ await mongoConnect(process.env.MONGO_URL ?? "");
 
 const app: Application = express();
 const middlewares = [
-    RegisterLogger, 
-    RegisterRequestParser, 
-    RegisterSecurityMiddleware, 
+    RegisterLogger,
+    RegisterRequestParser,
+    RegisterSecurityMiddleware,
     RegisterRoutes,
     RegisterDocs,
     RegisterErrorCatcher

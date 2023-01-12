@@ -1,13 +1,15 @@
-import { Schema, Model } from "mongoose";
+import { Schema } from "mongoose";
 import { createModel } from "../utility/mongo.js";
-import { PreciseNumber, PreciseNumberSchema } from "../utility/number.js";
+import type { PreciseNumber } from "../utility/number.js";
+import { PreciseNumberSchema } from "../utility/number.js";
 
 export interface ITokenResponse {
     coinbaseId: string;
 }
 
 export const TokenResponseSchema = new Schema<ITokenResponse>({
-    coinbaseId: { type: String, required: true }
+    coinbaseId: { type: String,
+        required: true }
 });
 
 export interface ITokensResponse {
@@ -16,10 +18,14 @@ export interface ITokensResponse {
 }
 
 export const TokensResponseSchema = new Schema<ITokensResponse>({
-    tokens: { type: [TokenResponseSchema], default: undefined, required: true },
-    suggestedSplit: { type: Map, of: PreciseNumberSchema, required: true }
+    tokens: { type: [TokenResponseSchema],
+        default: undefined,
+        required: true },
+    suggestedSplit: { type: Map,
+        of: PreciseNumberSchema,
+        required: true }
 });
 
-export const TokensResponse: Model<ITokensResponse> = createModel(TokensResponseSchema);
+export const TokensResponse = createModel<ITokensResponse>(TokensResponseSchema);
 
 

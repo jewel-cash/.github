@@ -6,29 +6,29 @@ import type { IInitiateTransactionRequest } from "jewl-core";
 export class TransactionController {
 
     @Get("/tokens")
-    public async getAllTokens(): Promise<void> {
-        //includes suggested split
+    public getAllTokens(): void {
+        // Includes suggested split
         console.log("A");
     }
-    
+
     @Post("/initiate")
-    public async initiateTransaction(@Body() _: IInitiateTransactionRequest): Promise<void> {
-        // generate transactions and create stripe payment
+    public initiateTransaction(@Body() _: IInitiateTransactionRequest): void {
+        // Generate transactions and create stripe payment
         console.log("A");
     }
 
     @Get("/pending")
-    public async getPendingTransactions(): Promise<void> {
+    public getPendingTransactions(): void {
         console.log("A");
     }
 
     @Delete("/pending")
-    public async cancelPendingTransactions(): Promise<void> {
+    public cancelPendingTransactions(): void {
         console.log("A");
     }
 
     @Get("/completed")
-    public async getCompletedTransactions(): Promise<void> {
+    public getCompletedTransactions(): void {
         console.log("A");
     }
 }

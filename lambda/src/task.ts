@@ -1,12 +1,12 @@
-import { ITransaction } from "jewl-core";
-import { Document } from "mongoose";
+import type { ITransaction } from "jewl-core";
+import type { Document } from "mongoose";
 
 export abstract class Task {
-    protected pending: Array<ITransaction & Document> = [];
+    protected pending: Array<Document & ITransaction> = [];
 
-    public collect(transaction: ITransaction & Document) {
+    public collect(transaction: Document & ITransaction): void {
         this.pending.push(transaction);
     }
 
-    public abstract finalize(): Promise<void>
+    public abstract finalize(): Promise<void>;
 }

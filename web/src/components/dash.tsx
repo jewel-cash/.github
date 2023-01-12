@@ -1,32 +1,42 @@
 import "../styles/dash.css";
+import type { ReactElement } from "react";
 import React, { Component } from "react";
-import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
+import type { WithAuth0Props } from "@auth0/auth0-react";
+import { withAuth0 } from "@auth0/auth0-react";
 import { decodeJwt } from "jose";
 import { coinbaseClient } from "../modules/network";
 
-class Dash extends Component<WithAuth0Props, any> {
+class Dash extends Component<WithAuth0Props, object> {
 
-    constructor(props: WithAuth0Props) {
+    public constructor(props: WithAuth0Props) {
         super(props);
+        this.handleAuthToken = this.handleAuthToken.bind(this);
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.props.auth0.getAccessTokenSilently()
-            .then(this.handleAuthToken);
+            .then(this.handleAuthToken.bind(this))
+            .catch(console.log);
 
-        coinbaseClient.getProducts().then(x => console.log(x.map(y => y.id)));
+        coinbaseClient.getProducts()
+            .then(x => console.log(x.map(y => y.id)))
+            .catch(console.log);
     }
 
-    private handleAuthToken(token: string) {
+    private handleAuthToken(token: string): void {
         const claim = decodeJwt(token);
         const roles = claim.permissions as Array<string>;
         if (roles.includes("admin")) {
-            //TODO: Implement:
+            // TODO: Implement:
             console.log("isAdmin: true");
         }
     }
 
-    render() {
+    public shouldComponentUpdate(): boolean {
+        return true;
+    }
+
+    public render(): ReactElement {
         return (
             <div className="dash">
                 Hello

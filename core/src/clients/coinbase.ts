@@ -1,6 +1,8 @@
-import { Model } from "mongoose";
-import { CoinbaseProducts, ICoinbaseProduct } from "../entities/coinbase.js";
-import { Client, IRequest } from "../utility/client.js";
+import type { Model } from "mongoose";
+import type { ICoinbaseProduct } from "../entities/coinbase.js";
+import { CoinbaseProducts } from "../entities/coinbase.js";
+import type { IRequest } from "../utility/client.js";
+import { Client } from "../utility/client.js";
 import isomorphic from "jewl-isomorphic";
 
 export class CoinbasePublicClient extends Client {
@@ -24,7 +26,7 @@ export class CoinbasePublicClient extends Client {
 }
 
 export class CoinbaseClient extends Client {
-    private secret: string;
+    private readonly secret: string;
 
     public constructor(key: string, secret: string) {
         const staticHeaders: Record<string, string> = {
@@ -40,8 +42,8 @@ export class CoinbaseClient extends Client {
         const timestamp = Math.floor(Date.now() / 1000);
         const method = req.method ?? "GET";
         const body = req.body ?? "";
-        
-        const message = timestamp + method + req.endpoint + body;
+
+        const message = timestamp.toString() + method + req.endpoint + body;
         const signature = isomorphic.sha256Hmac(message, this.secret);
 
         const originalHeaders = req.headers ?? { };

@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./components/app";
@@ -8,7 +9,7 @@ const authId = process.env.REACT_APP_AUTH0_ID ?? "";
 const audience = process.env.REACT_APP_SERVER_URL ?? "";
 const redirect = process.env.REACT_APP_REDIRECT_URL ?? "";
 
-const Root = () => {
+const Root = (): ReactElement => {
     return (
         <StrictMode>
             <Auth0Provider domain={authDomain} clientId={authId} redirectUri={redirect} audience={audience}>

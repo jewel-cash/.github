@@ -1,7 +1,7 @@
 {
     "entryFile": "src/index.ts",
     "noImplicitAdditionalProperties": "throw-on-extras",
-    "controllerPathGlobs": [ "src/controllers/**/*.ts" ],
+    "controllerPathGlobs": ["src/controllers/**/*.ts"],
     "spec": {
         "outputDirectory": "public",
         "specFileBaseName": "swagger.gen",

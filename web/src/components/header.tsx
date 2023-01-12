@@ -1,22 +1,29 @@
 import "../styles/header.css";
+import type { ReactElement } from "react";
 import React, { Component } from "react";
-import { withAuth0, WithAuth0Props } from "@auth0/auth0-react";
+import type { WithAuth0Props } from "@auth0/auth0-react";
+import { withAuth0 } from "@auth0/auth0-react";
 
 class Header extends Component<WithAuth0Props> {
-    constructor(props: WithAuth0Props) {
+    public constructor(props: WithAuth0Props) {
         super(props);
-        this.loginPressed = this.loginPressed.bind(this);
     }
 
-    private loginPressed() {
-        if (this.props.auth0.isAuthenticated) {
-            this.props.auth0.logout();
-        } else {
-            this.props.auth0.loginWithRedirect();
-        }
+    private loginPressed(): () => void {
+        return (): void => {
+            if (this.props.auth0.isAuthenticated) {
+                this.props.auth0.logout();
+            } else {
+                void this.props.auth0.loginWithRedirect();
+            }
+        };
     }
 
-    render() {
+    public shouldComponentUpdate(): boolean {
+        return true;
+    }
+
+    public render(): ReactElement {
         return (
             <div className="header">
                 <div className="header-content">
@@ -24,7 +31,7 @@ class Header extends Component<WithAuth0Props> {
                         <img src="/apple-touch-icon.png" className="header-logo" />
                         <span className="header-title">jewl.app</span>
                     </a>
-                    <button onClick={this.loginPressed} className="header-login">
+                    <button type="button" onClick={this.loginPressed()} className="header-login">
                         {this.props.auth0.isAuthenticated ? "Logout" : "Login"}
                     </button>
                 </div>

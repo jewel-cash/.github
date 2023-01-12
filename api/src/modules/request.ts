@@ -1,4 +1,5 @@
-import express, { Application, Request } from "express";
+import type { Application, Request } from "express";
+import express from "express";
 
 declare global {
     namespace Express {
@@ -8,7 +9,7 @@ declare global {
     }
 }
 
-export const RegisterRequestParser = (app: Application) => {
+export const RegisterRequestParser = (app: Application): void => {
     app.use(express.json({
         verify: (req: Request, _, buf) => {
             req.rawBody = buf;

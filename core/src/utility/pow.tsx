@@ -1,4 +1,5 @@
-import { SignJWT, JWTVerifyOptions, jwtVerify, decodeJwt, JWTPayload, JWTHeaderParameters } from "jose";
+import type { JWTVerifyOptions, JWTPayload, JWTHeaderParameters } from "jose";
+import { SignJWT, jwtVerify, decodeJwt } from "jose";
 import { nanoid } from "nanoid";
 import { createHash } from "crypto";
 import { BigNumber } from "bignumber.js";
@@ -6,12 +7,12 @@ import { BigNumber } from "bignumber.js";
 
 const issuer = "jewl.app";
 
-export const createChallenge = async (ip: string, key: string) => {
+export const createChallenge = async (ip: string, key: string): Promise<string> => {
     const difficulty = new BigNumber(2).pow(240);
     const secretKey = Buffer.from(key);
 
     const payload: JWTPayload = {
-        kid: nanoid(), 
+        kid: nanoid(),
         dif: difficulty.toString(16)
     };
 
@@ -20,7 +21,7 @@ export const createChallenge = async (ip: string, key: string) => {
         typ: "JWT"
     };
 
-    return await new SignJWT(payload)
+    return new SignJWT(payload)
         .setProtectedHeader(header)
         .setIssuedAt()
         .setIssuer(issuer)
@@ -31,7 +32,7 @@ export const createChallenge = async (ip: string, key: string) => {
         .sign(secretKey);
 };
 
-export const solveChallenge = async (challenge: string) => {
+export const solveChallenge = (challenge: string): string => {
     const claim = decodeJwt(challenge);
     const difficulty = new BigNumber(claim.dif as string, 16);
 
@@ -48,12 +49,12 @@ export const solveChallenge = async (challenge: string) => {
     return `${challenge}|${iterator}`;
 };
 
-export const verifyChallenge = async (challenge: string, ip: string, key: string) => {
+export const verifyChallenge = async (challenge: string, ip: string, key: string): Promise<void> => {
     const secretKey = Buffer.from(key);
     const originalChallenge = challenge.split("|")[0];
     const options: JWTVerifyOptions = {
         audience: issuer,
-        issuer: issuer,
+        issuer,
         subject: ip
     };
     const claim = await jwtVerify(originalChallenge, secretKey, options);
@@ -65,5 +66,7 @@ export const verifyChallenge = async (challenge: string, ip: string, key: string
 
     const result = new BigNumber(hash, 16);
 
-    if (result.gte(difficulty)) { throw new Error("challenge response invalid"); }
+    if (result.gte(difficulty)) {
+        throw new Error("challenge response invalid");
+    }
 };

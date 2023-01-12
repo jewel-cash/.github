@@ -1,5 +1,5 @@
 
-it("Sample should be equal to sample",  async () => {
+it("Sample should be equal to sample", () => {
     expect("Sample").toStrictEqual("Sample");
 });
 

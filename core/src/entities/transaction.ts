@@ -1,7 +1,9 @@
-import { Schema, Model } from "mongoose";
-import { DateTime, DateTimeSchema } from "../utility/date.js";
+import { Schema } from "mongoose";
+import type { DateTime } from "../utility/date.js";
+import { DateTimeSchema } from "../utility/date.js";
 import { createModel } from "../utility/mongo.js";
-import { PreciseNumber, PreciseNumberSchema } from "../utility/number.js";
+import type { PreciseNumber } from "../utility/number.js";
+import { PreciseNumberSchema } from "../utility/number.js";
 import { URLSchema } from "../utility/url.js";
 
 export enum TransactionState {
@@ -14,7 +16,7 @@ export enum TransactionState {
     transferCompleted = 6, // Crypto transactions finallized
     refundPending = 7, // Payment refund pending through stripe
     refundInitiated = 8, // Payment refund initiated through stripe
-    refundCompleted = 9, // Payment refund completed through stripe
+    refundCompleted = 9 // Payment refund completed through stripe
 }
 
 export interface ITransaction extends Document {
@@ -27,22 +29,31 @@ export interface ITransaction extends Document {
 }
 
 export const TransactionSchema = new Schema<ITransaction>({
-    state: { type: Number, enum: TransactionState, required: true },
-    notBefore: { ...DateTimeSchema, required: true },
-    amount: { ...PreciseNumberSchema, required: true },
-    percentages: { type: Map, of: PreciseNumberSchema, required: true },
-    purchased: { type: Map, of: PreciseNumberSchema },
-    receipts: { type: Map, of: URLSchema }
+    state: { type: Number,
+        enum: TransactionState,
+        required: true },
+    notBefore: { ...DateTimeSchema,
+        required: true },
+    amount: { ...PreciseNumberSchema,
+        required: true },
+    percentages: { type: Map,
+        of: PreciseNumberSchema,
+        required: true },
+    purchased: { type: Map,
+        of: PreciseNumberSchema },
+    receipts: { type: Map,
+        of: URLSchema }
 });
 
-export const Transaction: Model<ITransaction> = createModel(TransactionSchema, "transactions");
+export const Transaction = createModel<ITransaction>(TransactionSchema, "transactions");
 
 export interface IInitiateTransactionRequest {
     amount: string;
 }
 
-export const InitiateTransactionRequestSchema = new Schema<IInitiateTransactionRequest>({ 
-    amount: { type: String, required: true }
+export const InitiateTransactionRequestSchema = new Schema<IInitiateTransactionRequest>({
+    amount: { type: String,
+        required: true }
 });
 
-export const InitiateTransactionRequest: Model<IInitiateTransactionRequest> = createModel(InitiateTransactionRequestSchema);
+export const InitiateTransactionRequest = createModel<IInitiateTransactionRequest>(InitiateTransactionRequestSchema);

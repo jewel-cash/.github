@@ -1,8 +1,8 @@
-import { Application } from "express";
+import type { Application } from "express";
 import cors from "cors";
 import slowDown from "express-slow-down";
 
-export const RegisterSecurityMiddleware = (app: Application) => {
+export const RegisterSecurityMiddleware = (app: Application): void => {
     app.use(cors());
     app.use(slowDown({
         windowMs: 60,

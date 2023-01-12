@@ -1,4 +1,4 @@
-import { Schema, Model } from "mongoose";
+import { Schema } from "mongoose";
 import { createModel } from "../utility/mongo.js";
 
 export interface ICoinbaseProduct {
@@ -18,7 +18,9 @@ export interface ICoinbaseProducts {
 }
 
 export const CoinbaseProductsSchema = new Schema<ICoinbaseProducts>({
-    list: { type: [CoinbaseProductSchema], default: undefined, required: true }
+    list: { type: [CoinbaseProductSchema],
+        default: undefined,
+        required: true }
 });
 
-export const CoinbaseProducts: Model<ICoinbaseProducts> = createModel(CoinbaseProductsSchema);
+export const CoinbaseProducts = createModel<ICoinbaseProducts>(CoinbaseProductsSchema);

@@ -4,7 +4,7 @@ import type { IPingResponse } from "jewl-core";
 @Route("/v1/ping")
 export class PingController {
     @Get("/")
-    public async getMessage(): Promise<IPingResponse> {
+    public getMessage(): IPingResponse {
         return { message: "pong" };
     }
 }
